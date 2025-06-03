@@ -1,6 +1,7 @@
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import Form from "react-bootstrap/Form";
+import meditationImg from "../../assets/meditation.png";
 
 const LoginForm = ({ setActiveLogin }) => {
   const handleSubmit = (e) => {
@@ -13,38 +14,33 @@ const LoginForm = ({ setActiveLogin }) => {
     console.log(email, password);
   };
 
-  return (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
-        alignItems: "center",
-        height: "100%",
-        gap: 20,
-      }}
-    >
-      <Card style={{ width: "22rem" }} className="p-3">
-        <Card.Body>
-          <Card.Title className="mb-3 text-center">Iniciar Sesión</Card.Title>
+   return (
+    <div className="fullscreen-center">
+      <Card style={{ width: "22rem", border: "none"}} className="p-3">
+        <Card.Body className="text-center">
+          
+          <div className="mb-4" style={{ marginTop: '-20px' }}> 
+            <img 
+              src={meditationImg} 
+              alt="Meditación" 
+              style={{ 
+                width: '200px', 
+                height: 'auto',
+                borderRadius: '50%',
+                objectFit: 'cover'
+              }} 
+            />
+          </div>
 
-          {/* {showAlert && (
-            <Alert
-              variant="danger"
-              onClose={() => setShowAlert(false)}
-              dismissible
-            >
-              Credenciales incorrectas
-            </Alert>
-          )} */}
+          <h4 className="mb-3 text-center">Inicia Sesión</h4>
 
           <Form onSubmit={handleSubmit}>
-            <Form.Group className="mb-3" controlId="dni">
+            <Form.Group className="mb-3 text-start" controlId="dni">
               <Form.Label>DNI</Form.Label>
-              <Form.Control type="number" placeholder="Ingresá tu DNI" />
+              <Form.Control type="number" placeholder="Ingresá tu documento" />
             </Form.Group>
 
-            <Form.Group className="mb-3" controlId="password">
+            <Form.Group className="mb-3 text-start" controlId="password">
               <Form.Label>Contraseña</Form.Label>
               <Form.Control
                 type="password"
@@ -52,30 +48,30 @@ const LoginForm = ({ setActiveLogin }) => {
               />
             </Form.Group>
 
-            <Button variant="primary" type="submit" className="w-100">
-              Entrar
+            <Button style={{
+              background: "linear-gradient(to right, #d3dec3,rgb(165, 180, 142))", borderColor: "rgb(180, 190, 164)", color: "#fff",}} type="submit" className="w-100 mb-3">
+              Iniciar Sesión
             </Button>
           </Form>
+
+          <div className="text-end mb-3">
+            <a href="#" className="text-decoration-none" style={{ color: "#515151", fontSize: "0.8rem"}}>
+              <strong>Olvidaste tu contraseña?</strong>
+            </a>
+          </div>
+
+          <hr className="my-4" />
+
+  
+          <Button style={{
+              background: "linear-gradient(to left, #d3dec3,rgb(165, 180, 142))", borderColor: "rgb(180, 190, 164)", color: "#fff",}} type="submit" className="w-100 mb-3">
+              Registrarse
+            </Button>
         </Card.Body>
       </Card>
-
-      <svg
-        onClick={() => setActiveLogin(false)}
-        xmlns="http://www.w3.org/2000/svg"
-        width="16"
-        height="16"
-        fill="currentColor"
-        class="bi bi-arrow-left"
-        viewBox="0 0 16 16"
-        style={{ cursor: "pointer" }}
-      >
-        <path
-          fill-rule="evenodd"
-          d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8"
-        />
-      </svg>
     </div>
   );
 };
+
 
 export default LoginForm;

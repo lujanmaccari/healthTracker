@@ -13,7 +13,7 @@ function App() {
       <Route path="/goals" element={<GoalsView />} />
       <Route path="/categories/:category" element={<CategoryView />} />
       <Route path="/user" element={<UserView />} />
-      <Route path="/about" element={<AboutYou />} />
+    {/*  <Route path="/about" element={<AboutYou />} /> */}
     </Routes>
   );
 }
