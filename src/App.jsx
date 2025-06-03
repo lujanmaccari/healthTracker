@@ -1,7 +1,7 @@
 import { Route, Routes } from "react-router-dom";
 import CategoryView from "./screens/CategoryView";
 import GoalsView from "./screens/GoalsView";
-import SignIn from "./screens/SignIn";
+import SignIn from "./screens/login/SignIn";
 import UserView from "./screens/User";
 import Home from "./screens/Home";
 
