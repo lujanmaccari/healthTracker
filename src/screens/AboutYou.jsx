@@ -1,8 +1,4 @@
-import React from "react";
-
-
-
-const AboutMe = () => {
+const AboutYou = () => {
   return (
     <div
       className="fullscreen-center"
@@ -12,7 +8,7 @@ const AboutMe = () => {
         flexDirection: "column",
         justifyContent: "start",
         alignItems: "center",
-        backgroundColor: "#F5F5F5",
+        // backgroundColor: "#F5F5F5",
         padding: "2rem",
       }}
     >
@@ -26,7 +22,9 @@ const AboutMe = () => {
       </div>
 
       {/* Título */}
-      <h2 style={{ fontSize: "1.4rem", fontWeight: "bold", marginBottom: "1rem" }}>
+      <h2
+        style={{ fontSize: "1.4rem", fontWeight: "bold", marginBottom: "1rem" }}
+      >
         Acerca de Ti
       </h2>
 
@@ -40,12 +38,22 @@ const AboutMe = () => {
           marginBottom: "1.5rem",
         }}
       >
-        Con esta información, Health Tracker calcula las calorías, la distancia y la intensidad de tu actividad, y puede ofrecerte sugerencias de entrenamiento personalizadas.
+        Con esta información, Health Tracker calcula las calorías, la distancia
+        y la intensidad de tu actividad, y puede ofrecerte sugerencias de
+        entrenamiento personalizadas.
       </p>
 
       {/* Campos */}
       <div style={{ width: "100%", maxWidth: "320px" }}>
-        <label style={{ fontSize: "0.9rem", marginBottom: "0.3rem", display: "block" }}>Género</label>
+        <label
+          style={{
+            fontSize: "0.9rem",
+            marginBottom: "0.3rem",
+            display: "block",
+          }}
+        >
+          Género
+        </label>
         <select style={fieldStyle}>
           <option>Selecciona</option>
           <option>Femenino</option>
@@ -101,4 +109,4 @@ const labelStyle = {
   display: "block",
 };
 
-export default AboutMe;
+export default AboutYou;

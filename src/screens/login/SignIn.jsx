@@ -4,7 +4,7 @@ import LoginForm from "./LoginForm";
 
 const SignIn = () => {
   const [activeLogin, setActiveLogin] = useState(false);
-
+  
   return (
     <div
       className="fullscreen-center"
@@ -19,7 +19,7 @@ const SignIn = () => {
       {!activeLogin ? (
         <Landing setActiveLogin={setActiveLogin} />
       ) : (
-        <LoginForm setActiveLogin={setActiveLogin} />
+        <LoginForm />
       )}
     </div>
   );
