@@ -1,28 +1,49 @@
+import { Formik } from "formik";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import Form from "react-bootstrap/Form";
 import { useNavigate } from "react-router-dom";
-import meditationImg from "../../assets/meditation.png";
-import { Formik } from "formik";
 import * as Yup from "yup";
+import meditationImg from "../../assets/meditation.png";
+import { supabase } from "./../../../supabaseClient";
 
 const LoginForm = () => {
   const navigate = useNavigate();
 
   const initialValues = {
-    dni: "",
+    email: "",
     password: "",
   };
 
   const validationSchema = Yup.object({
-    dni: Yup.string()
-      .required("El DNI es obligatorio")
-      .matches(/^\d+$/, "Solo se permiten números"),
+    email: Yup.string().required("El email es obligatorio"),
     password: Yup.string().required("La contraseña es obligatoria"),
   });
 
-  const handleSubmit = (values) => {
-    console.log(values.dni, values.password);
+  const handleSubmit = async (values) => {
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email: values.email,
+      password: values.password,
+    });
+
+    if (error) {
+      console.error("Error al iniciar sesión:", error);
+    } else {
+      navigate("/home");
+    }
+
+    // REGISTRAR USUARIO
+    // const { data, error } = await supabase.auth.signUp({
+    //   email: values.email,
+    //   password: values.password,
+    // });
+
+    // if (error) {
+    //   console.error("Error al registrarse:", error.message);
+    // } else {
+    //   console.log("Usuario registrado:", data);
+    //   navigate("/aboutYou");
+    // }
   };
 
   const redirect = () => {
@@ -68,19 +89,18 @@ const LoginForm = () => {
               errors,
             }) => (
               <Form noValidate onSubmit={handleSubmit}>
-                <Form.Group className="mb-3 text-start" controlId="dni">
-                  <Form.Label>DNI</Form.Label>
+                <Form.Group className="mb-3 text-start" controlId="email">
+                  <Form.Label>email</Form.Label>
                   <Form.Control
-                    type="number"
-                    name="dni"
-                    value={values.dni}
+                    name="email"
+                    value={values.email}
                     onChange={handleChange}
                     onBlur={handleBlur}
                     placeholder="Ingresá tu documento"
-                    isInvalid={touched.dni && !!errors.dni}
+                    isInvalid={touched.email && !!errors.email}
                   />
                   <Form.Control.Feedback type="invalid">
-                    {errors.dni}
+                    {errors.email}
                   </Form.Control.Feedback>
                 </Form.Group>
 

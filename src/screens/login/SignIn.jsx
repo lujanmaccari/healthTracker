@@ -4,7 +4,7 @@ import LoginForm from "./LoginForm";
 
 const SignIn = () => {
   const [activeLogin, setActiveLogin] = useState(false);
-  
+
   return (
     <div
       className="fullscreen-center"
