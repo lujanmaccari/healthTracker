@@ -1,3 +1,5 @@
+import meditationImg from "../assets/meditation.png"; 
+
 const AboutYou = () => {
   return (
     <div
@@ -15,7 +17,7 @@ const AboutYou = () => {
       {/* Icono */}
       <div style={{ marginTop: "1rem", marginBottom: "1rem" }}>
         <img
-          src="/icono.png"
+          src={meditationImg} 
           alt="icono"
           style={{ height: "50px", opacity: 0.7 }}
         />
