@@ -10,6 +10,7 @@ import ProtectedRoutes from "./auth/ProtecterRoutes";
 function App() {
   return (
     <Routes>
+     
       <Route path="/" element={<SignIn />} />
       <Route element={<ProtectedRoutes />}>
         <Route path="/home" element={<Home />} />
@@ -17,6 +18,7 @@ function App() {
         <Route path="/categories/:category" element={<CategoryView />} />
         <Route path="/user" element={<UserView />} />
         <Route path="/aboutYou" element={<AboutYou />} />
+       
       </Route>
     </Routes>
   );
