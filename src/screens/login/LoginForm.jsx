@@ -6,9 +6,11 @@ import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 import meditationImg from "../../assets/meditation.png";
 import { supabase } from "./../../../supabaseClient";
+import { useToast } from "../../contexts/ToastContext";
 
 const LoginForm = () => {
   const navigate = useNavigate();
+  const { showToast } = useToast();
 
   const initialValues = {
     email: "",
@@ -20,13 +22,17 @@ const LoginForm = () => {
     password: Yup.string().required("La contraseña es obligatoria"),
   });
 
-  const handleSubmit = async (values) => {
-    const { data, error } = await supabase.auth.signInWithPassword({
-      email: values.email,
-      password: values.password,
+  const handleSubmit = async ({ email, password }) => {
+    const { error } = await supabase.auth.signInWithPassword({
+      email,
+      password,
     });
 
     if (error) {
+      showToast(
+        "Hubo un Error al iniciar Sesion, Revise su Correo y Contraseña a la vez que verifique que haya aceptado la confirmación por correo electronico.",
+        "danger"
+      );
       console.error("Error al iniciar sesión:", error);
     } else {
       navigate("/home");

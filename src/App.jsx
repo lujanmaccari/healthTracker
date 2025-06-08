@@ -6,21 +6,22 @@ import UserView from "./screens/User";
 import Home from "./screens/Home";
 import AboutYou from "./screens/AboutYou";
 import ProtectedRoutes from "./auth/ProtecterRoutes";
+import { ToastProvider } from "./contexts/ToastContext";
 
 function App() {
   return (
-    <Routes>
-     
-      <Route path="/" element={<SignIn />} />
-      <Route element={<ProtectedRoutes />}>
-        <Route path="/home" element={<Home />} />
-        <Route path="/goals" element={<GoalsView />} />
-        <Route path="/categories/:category" element={<CategoryView />} />
-        <Route path="/user" element={<UserView />} />
-        <Route path="/aboutYou" element={<AboutYou />} />
-       
-      </Route>
-    </Routes>
+    <ToastProvider>
+      <Routes>
+        <Route path="/" element={<SignIn />} />
+        <Route element={<ProtectedRoutes />}>
+          <Route path="/home" element={<Home />} />
+          <Route path="/goals" element={<GoalsView />} />
+          <Route path="/categories/:category" element={<CategoryView />} />
+          <Route path="/user" element={<UserView />} />
+          <Route path="/aboutYou" element={<AboutYou />} />
+        </Route>
+      </Routes>
+    </ToastProvider>
   );
 }
 
