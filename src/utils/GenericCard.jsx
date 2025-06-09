@@ -1,13 +1,74 @@
-import { Card } from "react-bootstrap";
+import { Card, Container } from "react-bootstrap";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faFire, faSpa, faBed } from "@fortawesome/free-solid-svg-icons";
 
-const GenericCard = ({ title, body }) => {
+const GenericCard = ({ title, body, icon }) => {
+  switch (icon) {
+    case "fire":
+      icon = faFire;
+      break;
+    case "mood":
+      icon = faSpa;
+      break;
+    case "sleep":
+      icon = faBed;
+      break;
+    default:
+      break;
+  }
+
   return (
-    <Card style={{ width: "18rem" }}>
+    <Card
+      style={{
+        width: "18rem",
+        background: "#dfdfdf",
+        border: "none",
+        width: "80vw",
+        boxShadow: "-10px 10px 10px -2px rgba(0, 0, 0, 0.2)",
+      }}
+    >
+      <Container
+        style={{
+          display: "flex",
+          alignItems: "center",
+          gap: "1rem",
+        }}
+      >
+        <FontAwesomeIcon
+          icon={icon}
+          style={{ color: "#a5b48e", height: "8vh" }}
+        />
+
+        <Card.Title
+          style={{
+            color: "#737d63",
+            fontWeight: "bold",
+          }}
+        >
+          {title}
+        </Card.Title>
+
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          fill="currentColor"
+          style={{
+            width: "2rem",
+            height: "2rem",
+            color: "#a5b48e",
+            marginLeft: "auto",
+          }}
+        >
+          <path
+            fillRule="evenodd"
+            d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25Zm4.28 10.28a.75.75 0 0 0 0-1.06l-3-3a.75.75 0 1 0-1.06 1.06l1.72 1.72H8.25a.75.75 0 0 0 0 1.5h5.69l-1.72 1.72a.75.75 0 1 0 1.06 1.06l3-3Z"
+            clipRule="evenodd"
+          />
+        </svg>
+      </Container>
+
       <Card.Body>
-        <Card.Title>{title}</Card.Title>
-        <Card.Text>
-          {Array.isArray(body) ? body.join(" | ") : body}
-        </Card.Text>
+        <Card.Text>{Array.isArray(body) ? body.join(" | ") : body}</Card.Text>
       </Card.Body>
     </Card>
   );

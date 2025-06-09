@@ -11,7 +11,7 @@ function Landing({ setActiveLogin }) {
           alt="Meditation"
           className="img-fluid"
           style={{
-            maxHeight: "50vh",
+            maxHeight: "70vh",
             objectFit: "contain",
             borderRadius: "12px",
             position: "relative",

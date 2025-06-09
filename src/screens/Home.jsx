@@ -1,8 +1,7 @@
 import { Container } from "react-bootstrap";
 import "../App.css";
 import GenericCard from "../utils/GenericCard";
-import userexampleImg from "../assets/userexample.png";
-
+import meditationImg from "../assets/meditation.png";
 import { useUser } from "../contexts/UserContext";
 
 function Home() {
@@ -15,8 +14,8 @@ function Home() {
     >
       <div className="mb-2">
         <img
-          src={userexampleImg}
-          alt="Userexample"
+          src={meditationImg}
+          alt="meditationImg"
           style={{
             width: "100px",
             height: "100px",
@@ -26,14 +25,12 @@ function Home() {
         />
       </div>
 
-      <h3 className="mb-3">{user?.name || "Lolu"}</h3>
-      <div className="d-flex justify-content-between align-items-center w-100 mb-3">
-        <h5 className="text-muted mb-3">Datos Anclados</h5>
-        <button className="btn btn-sm btn-outline-secondary">Editar</button>
-      </div>
+      <h3 className="mb-3">{user?.name || "-"}</h3>
+      <h5 className="text-muted mb-3">Resumen</h5>
 
       <GenericCard
         title="Actividad"
+        icon="fire"
         body={
           <div
             className="d-flex justify-content-between text-center"
@@ -63,6 +60,7 @@ function Home() {
 
       <GenericCard
         title="Estado de ánimo"
+        icon="mood"
         body={
           <div className="px-2">
             <div className="medium">Un momento ligeramente agradable</div>
@@ -73,6 +71,7 @@ function Home() {
 
       <GenericCard
         title="Sueño"
+        icon="sleep"
         body={
           <div
             className="d-flex justify-content-around align-items-center px-2"
