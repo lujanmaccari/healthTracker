@@ -1,8 +1,10 @@
 import { Card, Container } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFire, faSpa, faBed } from "@fortawesome/free-solid-svg-icons";
+import { useNavigate } from "react-router-dom";
 
-const GenericCard = ({ title, body, icon }) => {
+const GenericCard = ({ title, body, icon, href }) => {
+  const navigate = useNavigate();
   switch (icon) {
     case "fire":
       icon = faFire;
@@ -16,7 +18,11 @@ const GenericCard = ({ title, body, icon }) => {
     default:
       break;
   }
-
+  const redirect = () => {
+    if (href) {
+      navigate(href);
+    }
+  };
   return (
     <Card
       style={{
@@ -49,6 +55,7 @@ const GenericCard = ({ title, body, icon }) => {
         </Card.Title>
 
         <svg
+          onClick={redirect}
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 24 24"
           fill="currentColor"
@@ -57,6 +64,7 @@ const GenericCard = ({ title, body, icon }) => {
             height: "2rem",
             color: "#a5b48e",
             marginLeft: "auto",
+            cursor: "pointer",
           }}
         >
           <path
