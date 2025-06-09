@@ -1,6 +1,12 @@
-import { Card, Container } from "react-bootstrap";
+import {
+  faAppleWhole,
+  faBed,
+  faBookOpen,
+  faFire,
+  faSpa,
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faFire, faSpa, faBed } from "@fortawesome/free-solid-svg-icons";
+import { Card, Container } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 
 const GenericCard = ({ title, body, icon, href }) => {
@@ -14,6 +20,12 @@ const GenericCard = ({ title, body, icon, href }) => {
       break;
     case "sleep":
       icon = faBed;
+      break;
+    case "study":
+      icon = faBookOpen;
+      break;
+    case "food":
+      icon = faAppleWhole;
       break;
     default:
       break;

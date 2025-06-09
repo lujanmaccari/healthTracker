@@ -1,8 +1,8 @@
 import { Container } from "react-bootstrap";
 import "../App.css";
-import GenericCard from "../utils/GenericCard";
 import meditationImg from "../assets/meditation.png";
 import { useUser } from "../contexts/UserContext";
+import GenericCard from "../utils/GenericCard";
 
 function Home() {
   const user = useUser();
@@ -92,6 +92,8 @@ function Home() {
           </div>
         }
       />
+      <GenericCard title="Horas de estudio" icon="study" body="estudio" />
+      <GenericCard title="Alimentación" icon="food" body="alimentación" />
     </Container>
   );
 }
