@@ -22,7 +22,7 @@ function App() {
           <Route path="/categories/:category" element={<CategoryView />} />
           <Route path="/user" element={<UserView />} />
           <Route path="/aboutYou" element={<AboutYou />} />
-          <Route path="/weeklyActivity" element={<WeeklyActivity />} />
+          <Route path="/addActivity" element={<WeeklyActivity />} />
           <Route path="/activity" element={<ActivityChart />} />
         </Route>
       </Routes>

@@ -1,14 +1,15 @@
 import {
-    BarElement,
-    CategoryScale,
-    Chart as ChartJS,
-    Legend,
-    LinearScale,
-    Tooltip,
+  BarElement,
+  CategoryScale,
+  Chart as ChartJS,
+  Legend,
+  LinearScale,
+  Tooltip,
 } from "chart.js";
-import { Button, Container } from "react-bootstrap";
+import { Container } from "react-bootstrap";
 import { Bar } from "react-chartjs-2";
 import { useNavigate } from "react-router-dom";
+import HeaderSection from "../../utils/HeaderSection";
 ChartJS.register(BarElement, CategoryScale, LinearScale, Tooltip, Legend);
 
 const ActivityChart = () => {
@@ -62,14 +63,11 @@ const ActivityChart = () => {
 
   return (
     <Container>
-      <Button
-        className="btnApp"
-        onClick={() => {
-          navigate("/weeklyActivity");
-        }}
-      >
-        Agregar Actividad
-      </Button>
+      <HeaderSection
+        title="Actividad"
+        buttonTitle="Agregar actividad"
+        hrefButton="/addActivity"
+      />
 
       <Bar data={data} options={options} />
     </Container>
