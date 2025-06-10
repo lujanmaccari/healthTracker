@@ -31,7 +31,7 @@ function Home() {
       <GenericCard
         title="Actividad"
         icon="fire"
-        href="/weeklyActivity"
+        href="/activity"
         body={
           <div
             className="d-flex justify-content-between text-center"

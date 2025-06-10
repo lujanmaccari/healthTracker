@@ -7,7 +7,8 @@ import Home from "./screens/Home";
 import AboutYou from "./screens/AboutYou";
 import ProtectedRoutes from "./auth/ProtecterRoutes";
 import { ToastProvider } from "./contexts/ToastContext";
-import WeeklyActivity from "./screens/ActivityRegister";
+import WeeklyActivity from "./screens/activity/ActivityRegister";
+import ActivityChart from "./screens/activity/ActivityChart";
 
 
 function App() {
@@ -22,6 +23,7 @@ function App() {
           <Route path="/user" element={<UserView />} />
           <Route path="/aboutYou" element={<AboutYou />} />
           <Route path="/weeklyActivity" element={<WeeklyActivity />} />
+          <Route path="/activity" element={<ActivityChart />} />
         </Route>
       </Routes>
     </ToastProvider>

@@ -26,6 +26,13 @@ html {
   filter: drop-shadow(0 0 2em #61dafbaa);
 }
 
+.btnApp{
+  background-color: #a5b48e !important;
+  border-radius: 20px !important;
+  border: none !important;
+
+}
+
 @keyframes logo-spin {
   from {
     transform: rotate(0deg);

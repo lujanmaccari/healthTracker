@@ -1,6 +1,6 @@
-import { Container, Form, Button } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { Button, Container, Form } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 
 const AddActivity = () => {
   const navigate = useNavigate();
@@ -23,7 +23,7 @@ const AddActivity = () => {
     >
       {/* Flecha de volver */}
       <div
-        onClick={() => navigate("/home")}
+        onClick={() => navigate("/activity")}
         style={{
           alignSelf: "flex-start",
           cursor: "pointer",
@@ -72,15 +72,8 @@ const AddActivity = () => {
           />
         </Form.Group>
 
-        {/* Botón Guardar */}
         <div className="d-flex justify-content-center mt-4">
-          <Button
-            variant="success"
-            disabled
-            style={{ backgroundColor: "#a5b48e", border: "none" }}
-          >
-            Guardar
-          </Button>
+          <Button className="btnApp">Guardar</Button>
         </div>
       </Form>
     </Container>
@@ -88,4 +81,3 @@ const AddActivity = () => {
 };
 
 export default AddActivity;
-

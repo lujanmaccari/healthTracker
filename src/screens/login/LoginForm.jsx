@@ -126,16 +126,7 @@ const LoginForm = () => {
                   </Form.Control.Feedback>
                 </Form.Group>
 
-                <Button
-                  style={{
-                    background:
-                      "linear-gradient(to right, #d3dec3,rgb(165, 180, 142))",
-                    borderColor: "rgb(180, 190, 164)",
-                    color: "#fff",
-                  }}
-                  type="submit"
-                  className="w-100 mb-3"
-                >
+                <Button className="btnApp" type="submit">
                   Iniciar Sesión
                 </Button>
               </Form>
@@ -143,16 +134,7 @@ const LoginForm = () => {
           </Formik>
           <hr />
 
-          <Button
-            type="button"
-            onClick={redirect}
-            style={{
-              backgroundColor: "transparent",
-              border: "none",
-              color: "rgb(118, 129, 103)",
-              fontWeight: "bold",
-            }}
-          >
+          <Button type="button" onClick={redirect} className="btnApp">
             Registrarse
           </Button>
         </Card.Body>
