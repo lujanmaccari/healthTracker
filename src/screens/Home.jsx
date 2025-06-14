@@ -3,9 +3,15 @@ import "../App.css";
 import meditationImg from "../assets/meditation.png";
 import { useUser } from "../contexts/UserContext";
 import GenericCard from "../utils/GenericCard";
+import CommonModal from "../utils/CommonModal";
+import { useState } from "react";
 
 function Home() {
   const user = useUser();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalContent, setModalContent] = useState(null);
+
+  const modalAlimentacion = () => <>Ingrese Como fue su Alimetación hoy</>;
 
   return (
     <Container
@@ -28,6 +34,9 @@ function Home() {
       <h3 className="mb-3">{user?.name || "-"}</h3>
       <h5 className="text-muted mb-3">Resumen</h5>
 
+      <CommonModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
+        {modalContent}
+      </CommonModal>
       <GenericCard
         title="Actividad"
         icon="fire"
@@ -92,8 +101,11 @@ function Home() {
           </div>
         }
       />
-      <GenericCard title="Alimentación" icon="food" body={
-        <div
+      <GenericCard
+        title="Alimentación"
+        icon="food"
+        body={
+          <div
             className="d-flex justify-content-around align-items-center px-2"
             style={{ gap: "1rem" }}
           >
@@ -110,11 +122,16 @@ function Home() {
             </div>
           </div>
         }
-      
-      
+        onClickIcon={() => {
+          setModalContent(modalAlimentacion());
+          setIsModalOpen(true);
+        }}
       />
-      <GenericCard title="Horas de estudio" icon="study" body={
-        <div
+      <GenericCard
+        title="Horas de estudio"
+        icon="study"
+        body={
+          <div
             className="d-flex justify-content-around align-items-center px-2"
             style={{ gap: "1rem" }}
           >
@@ -124,7 +141,7 @@ function Home() {
             </div>
           </div>
         }
-      />
+      ></GenericCard>
     </Container>
   );
 }
