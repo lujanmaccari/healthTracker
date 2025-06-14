@@ -38,7 +38,6 @@ const GenericCard = ({ title, body, icon, href }) => {
   return (
     <Card
       style={{
-        width: "18rem",
         background: "#dfdfdf",
         border: "none",
         width: "80vw",

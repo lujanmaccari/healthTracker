@@ -92,8 +92,39 @@ function Home() {
           </div>
         }
       />
-      <GenericCard title="Horas de estudio" icon="study" body="estudio" />
-      <GenericCard title="Alimentación" icon="food" body="alimentación" />
+      <GenericCard title="Alimentación" icon="food" body={
+        <div
+            className="d-flex justify-content-around align-items-center px-2"
+            style={{ gap: "1rem" }}
+          >
+            <div className="text-center">
+              <div className="text-muted small">Kcal diarios</div>
+              <div className="fw-bold">2500</div>
+            </div>
+
+            <div className="text-muted d-none d-md-block">|</div>
+
+            <div className="text-center">
+              <div className="text-muted small">Litros diarios</div>
+              <div className="fw-bold">2 lts</div>
+            </div>
+          </div>
+        }
+      
+      
+      />
+      <GenericCard title="Horas de estudio" icon="study" body={
+        <div
+            className="d-flex justify-content-around align-items-center px-2"
+            style={{ gap: "1rem" }}
+          >
+            <div className="text-center">
+              <div className="text-muted small">Semanalmente</div>
+              <div className="fw-bold">44 hs</div>
+            </div>
+          </div>
+        }
+      />
     </Container>
   );
 }
