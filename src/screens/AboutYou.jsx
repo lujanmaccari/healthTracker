@@ -22,13 +22,14 @@ const AboutYou = () => {
 
   const handleSubmit = async (values) => {
     try {
-      const { email, password, gender, age, height, weight } = values;
+      const { email, password, gender, age, name } = values;
 
       // 1. Crear usuario en Supabase Auth
-      const { data: signUpData, error: signUpError } = await supabase.auth.signUp({
-        email,
-        password,
-      });
+      const { data: signUpData, error: signUpError } =
+        await supabase.auth.signUp({
+          email,
+          password,
+        });
 
       if (signUpError) {
         console.error(signUpError);
@@ -49,10 +50,9 @@ const AboutYou = () => {
         {
           id: userId,
           email,
+          name,
           gender,
           age,
-          height,
-          weight,
         },
       ]);
 
@@ -63,7 +63,10 @@ const AboutYou = () => {
       }
 
       // 3. Éxito
-      showToast("¡Registro exitoso! Revisa tu correo para confirmar tu cuenta.", "success");
+      showToast(
+        "¡Registro exitoso! Revisa tu correo para confirmar tu cuenta.",
+        "success"
+      );
       navigate("/home");
     } catch (err) {
       console.error(err);
@@ -96,8 +99,9 @@ const AboutYou = () => {
       </div>
 
       <p className="text-center text-muted small mb-4">
-        Con esta información, Health Tracker calcula las calorías, la distancia y la intensidad
-        de tu actividad, y puede ofrecerte sugerencias de entrenamiento personalizadas.
+        Con esta información, Health Tracker calcula las calorías, la distancia
+        y la intensidad de tu actividad, y puede ofrecerte sugerencias de
+        entrenamiento personalizadas.
       </p>
 
       <Formik
@@ -123,7 +127,11 @@ const AboutYou = () => {
                 <option value="Masculino">Masculino</option>
                 <option value="Otro">Otro</option>
               </Field>
-              <ErrorMessage name="gender" component="div" className="text-danger small" />
+              <ErrorMessage
+                name="gender"
+                component="div"
+                className="text-danger small"
+              />
             </div>
 
             <div className="col-6 mb-3">
@@ -134,7 +142,11 @@ const AboutYou = () => {
                 placeholder="Ej: 25"
                 className="form-control"
               />
-              <ErrorMessage name="age" component="div" className="text-danger small" />
+              <ErrorMessage
+                name="age"
+                component="div"
+                className="text-danger small"
+              />
             </div>
 
             <div className="col-6 mb-3">
@@ -145,7 +157,11 @@ const AboutYou = () => {
                 placeholder="Ej: 165"
                 className="form-control"
               />
-              <ErrorMessage name="height" component="div" className="text-danger small" />
+              <ErrorMessage
+                name="height"
+                component="div"
+                className="text-danger small"
+              />
             </div>
 
             <div className="col-6 mb-3">
@@ -156,7 +172,26 @@ const AboutYou = () => {
                 placeholder="Ej: 60"
                 className="form-control"
               />
-              <ErrorMessage name="weight" component="div" className="text-danger small" />
+              <ErrorMessage
+                name="weight"
+                component="div"
+                className="text-danger small"
+              />
+            </div>
+
+            <div className="col-12 mb-3">
+              <label className="form-label">Nombre</label>
+              <Field
+                name="name"
+                type="text"
+                placeholder="Ej: Natalia Natalia"
+                className="form-control"
+              />
+              <ErrorMessage
+                name="name"
+                component="div"
+                className="text-danger small"
+              />
             </div>
 
             <div className="col-12 mb-3">
@@ -167,7 +202,11 @@ const AboutYou = () => {
                 placeholder="Ej: ejemplo@mail.com"
                 className="form-control"
               />
-              <ErrorMessage name="email" component="div" className="text-danger small" />
+              <ErrorMessage
+                name="email"
+                component="div"
+                className="text-danger small"
+              />
             </div>
 
             <div className="col-12 mb-3">
@@ -178,7 +217,11 @@ const AboutYou = () => {
                 placeholder="********"
                 className="form-control"
               />
-              <ErrorMessage name="password" component="div" className="text-danger small" />
+              <ErrorMessage
+                name="password"
+                component="div"
+                className="text-danger small"
+              />
             </div>
           </div>
 
@@ -209,5 +252,3 @@ const AboutYou = () => {
 };
 
 export default AboutYou;
-
-
