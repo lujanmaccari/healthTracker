@@ -26,7 +26,6 @@ function App() {
           <Route path="/aboutYou" element={<AboutYou />} />
           <Route path="/addActivity" element={<WeeklyActivity />} />
           <Route path="/activity" element={<ActivityChart />} />
-          <Route path="/addFeeling" element={<AddFeeling/>} />
           <Route path="/feeling" element={<FeelingChart/>} /> 
         </Route>
       </Routes>

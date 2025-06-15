@@ -1,13 +1,16 @@
+{/* ESTE ARCHIVO NO SE USA :) */}
+
+
 import { useState } from "react";
 import { Container } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
+import CommonModal from "../../utils/CommonModal";
 
 const AddFeeling = () => {
   const navigate = useNavigate();
   const [mood, setMood] = useState(50);  // automatico mete en 50%
   const [selectedEmotion, setSelectedEmotion] = useState(null);
 
-  
 
   const getMoodLabel = () => {
     if (mood < 20) return "Muy mal";
@@ -29,7 +32,7 @@ const AddFeeling = () => {
   };
 
   return (
-    <Container
+    <CommonModal isOpen={true} onClose={() => navigate("/feeling")} onConfirm={handleSubmit}
       className="d-flex flex-column align-items-center mt-3 gap-3"
       style={{
         maxWidth: "400px",
@@ -39,17 +42,6 @@ const AddFeeling = () => {
       }}
     >
      
-      <div
-        onClick={() => navigate("/feeling")}
-        style={{
-          alignSelf: "flex-start",
-          cursor: "pointer",
-          color: "#a5b48e",
-          fontSize: "1.5rem",
-        }}
-      >
-        ←
-      </div>
 
       <h2 style={{ alignSelf: "flex-start", marginBottom: "1.5rem" }}>Lolu</h2>
 
@@ -68,7 +60,7 @@ const AddFeeling = () => {
          
         </div>
 
-        {/* Barra deslizante */}
+      
         <div style={{ width: "100%", margin: "1.5rem 0" }}>
           <input
             type="range"
@@ -109,26 +101,8 @@ const AddFeeling = () => {
           {getMoodLabel()}
         </div>
 
-       
-        <button
-          onClick={handleSubmit}
-          style={{
-            width: "45%",
-            padding: "0.75rem",
-            backgroundColor: "#a5b48e",
-            color: "white",
-            border: "none",
-            borderRadius: "5px",
-            fontWeight: "bold",
-            fontSize: "1rem",
-            marginTop: "1rem",
-            cursor: "pointer",
-          }}
-        >
-          Agregar
-        </button>
       </div>
-    </Container>
+    </CommonModal>
   );
 };
 

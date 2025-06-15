@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Button, Container } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 
-const HeaderSection = ({ title, buttonTitle, hrefButton }) => {
+const HeaderSection = ({ title, buttonTitle, hrefButton, onClickButton }) => {
   const navigate = useNavigate();
 
   const goBack = () => {
@@ -13,6 +13,9 @@ const HeaderSection = ({ title, buttonTitle, hrefButton }) => {
   const redirectButton = () => {
     if (hrefButton) {
       navigate(hrefButton);
+    }
+    if (onClickButton) {
+      onClickButton();
     }
   };
   

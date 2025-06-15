@@ -9,14 +9,16 @@ import {
 } from "chart.js";
 import { Container } from "react-bootstrap";
 import { Bar } from "react-chartjs-2";
-import { useNavigate } from "react-router-dom";
 import HeaderSection from "../../utils/HeaderSection";
+import CommonModal from "../../utils/CommonModal";
 
 ChartJS.register(BarElement, CategoryScale, LinearScale, Tooltip, Legend);
 
 const FeelingChart = () => {
-  const navigate = useNavigate();
   const [activeFilter, setActiveFilter] = useState("W"); // semana como default
+  const [showModal, setShowModal] = useState(false);
+  const [mood, setMood] = useState(50); // automatico mete en 50%
+  const [selectedEmotion, setSelectedEmotion] = useState(null);
 
   // puro mock
   const moodData = {
@@ -115,15 +117,33 @@ const FeelingChart = () => {
     },
   };
 
+  const getMoodLabel = () => {
+    if (mood < 20) return "Muy mal";
+    if (mood < 40) return "Mal";
+    if (mood < 60) return "Regular";
+    if (mood < 80) return "Bien";
+    return "Muy bien";
+  };
+
+  const handleSubmit = () => {
+    // aca se podria guardar el estado de ánimo en la base de datos
+    console.log({
+      moodValue: mood,
+      moodLabel: getMoodLabel(),
+      selectedEmotion,
+      date: new Date().toISOString().split('T')[0]
+    });
+    setShowModal(false);
+  };
+
   return (
-    <Container style={{ maxWidth: "800px" }}>
+    <Container style={{ maxWidth: "800px", position: "relative" }}>
       <HeaderSection
         title="Estado de ánimo"
         buttonTitle="Agregar"
-        hrefButton="/addFeeling"
+        onClickButton={() => setShowModal(true)}
       />
 
-      {/* Filtros temporales */}
       <div
         style={{
           display: "flex",
@@ -153,7 +173,6 @@ const FeelingChart = () => {
         ))}
       </div>
 
-      {/* Mensaje de promedio */}
       <div style={{ textAlign: "center", margin: "20px 0" }}>
         <p style={{ fontSize: "16px", color: "#555" }}>
           En promedio te has sentido{" "}
@@ -173,12 +192,10 @@ const FeelingChart = () => {
         </p>
       </div>
 
-      {/* Gráfico */}
       <div style={{ height: "300px", marginBottom: "30px" }}>
         <Bar data={data} options={options} />
       </div>
 
-      {/* Sección informativa */}
       <div
         style={{
           backgroundColor: "#F5F5F5",
@@ -194,6 +211,68 @@ const FeelingChart = () => {
           en cómo te sientes.
         </p>
       </div>
+
+      {/* Modal para agregar sentimiento */}
+      <CommonModal 
+        isOpen={showModal} 
+        onClose={() => setShowModal(false)} 
+        onConfirm={handleSubmit}
+        title="Estado de ánimo"
+        confirmText="Agregar"
+        cancelText="Cancelar"
+      >
+        <div style={{ width: "100%", marginBottom: "2rem" }}>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              marginBottom: "0.5rem",
+            }}
+          >
+            <span style={{ color: "#666" }}>¿Cómo te has sentido hoy?</span>
+          </div>
+
+          <div style={{ width: "100%", margin: "1.5rem 0" }}>
+            <input
+              type="range"
+              min="0"
+              max="100"
+              value={mood}
+              onChange={(e) => setMood(parseInt(e.target.value))}
+              style={{
+                width: "100%",
+                height: "8px",
+                borderRadius: "4px",
+                background: `linear-gradient(to right, #d1e8bf ${mood}%, #aecda3 ${mood}%)`,
+                outline: "none",
+                WebkitAppearance: "none",
+              }}
+            />
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                marginTop: "0.5rem",
+              }}
+            >
+              <span style={{ fontSize: "0.8rem", color: "#666" }}>Muy mal</span>
+              <span style={{ fontSize: "0.8rem", color: "#666" }}>Muy bien</span>
+            </div>
+          </div>
+
+          <div
+            style={{
+              textAlign: "center",
+              margin: "1.5rem 0",
+              fontSize: "1.2rem",
+              fontWeight: "bold",
+              color: "#a5b48e",
+            }}
+          >
+            {getMoodLabel()}
+          </div>
+        </div>
+      </CommonModal>
     </Container>
   );
 };
