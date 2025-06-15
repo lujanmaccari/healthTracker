@@ -131,6 +131,7 @@ function Home() {
       <GenericCard
         title="Horas de estudio"
         icon="study"
+        href={"/study"}
         body={
           <div
             className="d-flex justify-content-around align-items-center px-2"

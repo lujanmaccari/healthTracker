@@ -11,6 +11,7 @@ import WeeklyActivity from "./screens/activity/ActivityRegister";
 import ActivityChart from "./screens/activity/ActivityChart";
 import AddFeeling from "./screens/feeling/FeelingRegister";
 import FeelingChart from "./screens/feeling/FeelingChart";
+import StudyChart from "./screens/study/StudyChart";
 
 
 function App() {
@@ -27,6 +28,7 @@ function App() {
           <Route path="/addActivity" element={<WeeklyActivity />} />
           <Route path="/activity" element={<ActivityChart />} />
           <Route path="/feeling" element={<FeelingChart/>} /> 
+          <Route path="/study" element={<StudyChart/>} />
         </Route>
       </Routes>
     </ToastProvider>
