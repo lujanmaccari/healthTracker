@@ -62,6 +62,7 @@ function Home() {
       <GenericCard
         title="Estado de ánimo"
         icon="mood"
+        href="/feeling"
         body={
           <div className="px-2">
             <div className="medium">Un momento ligeramente agradable</div>
