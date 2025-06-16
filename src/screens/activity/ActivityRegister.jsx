@@ -56,7 +56,7 @@ const AddActivity = () => {
           >
             <option value="">Seleccioná</option>
             <option value="ejercicio">Ejercicio</option>
-            <option value="nutrición">Nutrición</option>
+            <option value="horasestudio">Estudio</option>
             <option value="sueño">Sueño</option>
           </Form.Select>
         </Form.Group>
