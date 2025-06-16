@@ -12,12 +12,32 @@ const AboutYou = () => {
   const { showToast } = useToast();
 
   const validationSchema = Yup.object({
-    gender: Yup.string().required("Requerido"),
-    age: Yup.number().positive("Debe ser positivo").required("Requerido"),
-    height: Yup.number().positive("Debe ser positivo").required("Requerido"),
-    weight: Yup.number().positive("Debe ser positivo").required("Requerido"),
-    email: Yup.string().email("Correo inválido").required("Requerido"),
-    password: Yup.string().min(6, "Mínimo 6 caracteres").required("Requerido"),
+    gender: Yup
+      .string()
+      .required("Requerido"),
+    age: Yup
+      .number()
+      .positive("Debe ser positivo")
+      .integer("El valor ingresado debe ser de tipo entero")
+      .moreThan(17, "Debe ser mayor de ${more} para usar esta aplicación")
+      .lessThan(100, "Debe ser menor de ${less} para usar esta aplicación")
+      .required("Requerido"),
+    height: Yup
+      .number()
+      .positive("Debe ser positivo")
+      .required("Requerido"),
+    weight: Yup
+      .number()
+      .positive("Debe ser positivo")
+      .required("Requerido"),
+    email: Yup
+      .string()
+      .email("Correo inválido")
+      .required("Requerido"),
+    password: Yup
+      .string()
+      .min(6, "Mínimo 6 caracteres")
+      .required("Requerido"),
   });
 
   const handleSubmit = async (values) => {
