@@ -9,6 +9,7 @@ import ProtectedRoutes from "./auth/ProtecterRoutes";
 import { ToastProvider } from "./contexts/ToastContext";
 import WeeklyActivity from "./screens/activity/ActivityRegister";
 import ActivityChart from "./screens/activity/ActivityChart";
+import SleepView from "./screens/sleep/SleepView"
 
 
 function App() {
@@ -24,6 +25,7 @@ function App() {
           <Route path="/aboutYou" element={<AboutYou />} />
           <Route path="/addActivity" element={<WeeklyActivity />} />
           <Route path="/activity" element={<ActivityChart />} />
+          <Route path="/sleep" element={<SleepView />} />
         </Route>
       </Routes>
     </ToastProvider>

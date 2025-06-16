@@ -73,6 +73,7 @@ function Home() {
       <GenericCard
         title="Sueño"
         icon="sleep"
+        href="/sleep"
         body={
           <div
             className="d-flex justify-content-around align-items-center px-2"
