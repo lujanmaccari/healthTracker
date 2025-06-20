@@ -11,12 +11,12 @@ import { Container } from "react-bootstrap";
 import CommonModal from "../../utils/CommonModal";
 import GenericBarChart from "../../utils/GenericBarChart";
 import { AboutStudy } from "./AboutStudy";
+import AddStudy from "./AddStudy";
 
 ChartJS.register(BarElement, CategoryScale, LinearScale, Tooltip, Legend);
 
 const StudyChart = () => {
   const [showModal, setShowModal] = useState(false);
-  const [studyHours, setStudyHours] = useState(1.15); // horas por defecto según tu imagen
 
   // Datos mock de horas de estudio basados en tu imagen
   const studyData = {
@@ -56,11 +56,11 @@ const StudyChart = () => {
     },
   };
 
-  const handleSubmit = () => {
-    console.log({
-      hours: studyHours,
-      date: new Date().toISOString().split("T")[0],
-    });
+  const handleOpenModal = () => {
+    setShowModal(true);
+  };
+
+  const handleCloseModal = () => {
     setShowModal(false);
   };
 
@@ -68,34 +68,18 @@ const StudyChart = () => {
     <Container>
       <GenericBarChart
         title="Horas de estudio"
-        handleOpenModal={() => setShowModal(true)}
+        handleOpenModal={handleOpenModal}
         chartData={studyData}
       />
       <AboutStudy />
       <CommonModal
         isOpen={showModal}
-        onClose={() => setShowModal(false)}
-        onConfirm={handleSubmit}
-        title="Registrar horas"
+        onClose={handleCloseModal}
+        title="Registrar tiempo de estudio"
         confirmText="Guardar"
         cancelText="Cancelar"
       >
-        <div style={{ width: "100%", marginBottom: "1rem" }}>
-          <div className="mb-3">
-            <label className="form-label">Horas de estudio:</label>
-            <input
-              type="number"
-              min="0"
-              max="24"
-              step="0.50"
-              value={studyHours}
-              onChange={(e) => setStudyHours(parseFloat(e.target.value))}
-              className="form-control"
-              style={{ fontSize: "1rem" }}
-            />
-          </div>
-          <small className="text-muted">Ingresa las horas estudiadas hoy</small>
-        </div>
+        <AddStudy onClose={handleCloseModal}/>
       </CommonModal>
     </Container>
   );

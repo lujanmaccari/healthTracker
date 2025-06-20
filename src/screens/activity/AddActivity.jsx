@@ -1,7 +1,5 @@
 import { Formik } from "formik";
-import { useState } from "react";
 import { Button, Container, Form } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 const AddActivity = ({ onClose }) => {
   const fechaActual = new Date().toISOString();
@@ -37,7 +35,7 @@ const AddActivity = ({ onClose }) => {
           errors,
         }) => (
           <Form noValidate onSubmit={handleSubmit}>
-            <Form.Group className="mb-3 text-start" controlId="email">
+            <Form.Group className="mb-3 text-start" controlId="activity">
               <Form.Label>Tipo de actividad</Form.Label>
               <Form.Select
                 value={values.activity}
@@ -54,7 +52,7 @@ const AddActivity = ({ onClose }) => {
               </Form.Control.Feedback>
             </Form.Group>
 
-            <Form.Group className="mb-3 text-start" controlId="password">
+            <Form.Group className="mb-3 text-start" controlId="duration">
               <Form.Label>Duración (minutos)</Form.Label>
               <Form.Control
                 type="number"

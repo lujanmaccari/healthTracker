@@ -11,7 +11,7 @@ import GenericBarChart from "../../utils/GenericBarChart";
 import { AboutActivity } from "./AboutActivity";
 import { useState } from "react";
 import CommonModal from "../../utils/CommonModal";
-import AddActivity from "./ActivityRegister";
+import AddActivity from "./AddActivity";
 ChartJS.register(BarElement, CategoryScale, LinearScale, Tooltip, Legend);
 
 const ActivityChart = () => {
