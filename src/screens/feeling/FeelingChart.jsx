@@ -1,105 +1,170 @@
 import { useState } from "react";
-import {
-  BarElement,
-  CategoryScale,
-  Chart as ChartJS,
-  Legend,
-  LinearScale,
-  Tooltip,
-} from "chart.js";
 import { Container } from "react-bootstrap";
-import { Bar } from "react-chartjs-2";
-import HeaderSection from "../../utils/HeaderSection";
+import {
+  Chart as ChartJS,
+  LinearScale,
+  PointElement,
+  Tooltip,
+  Legend,
+} from "chart.js";
+import { Scatter } from "react-chartjs-2";
 import CommonModal from "../../utils/CommonModal";
+import HeaderSection from "../../utils/HeaderSection";
+import AboutFeeling from "./AboutFeeling";
+import AddFeeling from "./AddFeeling";
 
-ChartJS.register(BarElement, CategoryScale, LinearScale, Tooltip, Legend);
+ChartJS.register(LinearScale, PointElement, Tooltip, Legend);
+
+const sentimientoToValor = {
+  mal: 1,
+  regular: 2,
+  bien: 3,
+  "muy bien": 4,
+};
+
+const valorToSentimiento = {
+  1: "mal",
+  2: "regular",
+  3: "bien",
+  4: "muy bien",
+};
+const sentimientoColor = {
+  mal: "#e57373",
+  regular: "#ffb74d",
+  bien: "#81c784",
+  "muy bien": "#64b5f6",
+};
+
+const feelingData = {
+  D: {
+    labels: ["6-9am", "9-12am", "12-15pm", "15-18pm", "18-21pm", "21-24pm"],
+    data: ["bien", "mal", "bien", "mal", "bien", "muy bien"],
+  },
+  W: {
+    labels: ["Lun", "Mar", "Mie", "Jue", "Vie", "Sab", "Dom"],
+    data: ["regular", "bien", "muy bien", "mal", "mal", "bien", "regular"],
+  },
+  M: {
+    labels: ["Sem 1", "Sem 2", "Sem 3", "Sem 4"],
+    data: ["mal", "regular", "muy bien", "muy bien"],
+  },
+  BM: {
+    labels: ["Mes 1", "Mes 2", "Mes 3", "Mes 4", "Mes 5", "Mes 6"],
+    data: ["mal", "regular", "muy bien", "mal", "regular", "muy bien"],
+  },
+  Y: {
+    labels: [
+      "Ene",
+      "Feb",
+      "Mar",
+      "Abr",
+      "May",
+      "Jun",
+      "Jul",
+      "Ago",
+      "Sep",
+      "Oct",
+      "Nov",
+      "Dic",
+    ],
+    data: [
+      "regular",
+      "mal",
+      "bien",
+      "muy bien",
+      "regular",
+      "bien",
+      "mal",
+      "bien",
+      "muy bien",
+      "regular",
+      "mal",
+      "bien",
+    ],
+  },
+};
+
+const filterLabels = {
+  D: "hoy",
+  W: "esta semana",
+  M: "este mes",
+  BM: "estos 6 meses",
+  Y: "este año",
+};
+
+const filterButtons = [
+  { id: "D", label: "D" },
+  { id: "W", label: "W" },
+  { id: "M", label: "M" },
+  { id: "BM", label: "6M" },
+  { id: "Y", label: "Y" },
+];
 
 const FeelingChart = () => {
-  const [activeFilter, setActiveFilter] = useState("W"); // semana como default
+  const [activeFilter, setActiveFilter] = useState("W");
   const [showModal, setShowModal] = useState(false);
-  const [mood, setMood] = useState(50); // automatico mete en 50%
-  const [selectedEmotion, setSelectedEmotion] = useState(null);
 
-  // puro mock
-  const moodData = {
-    D: {
-      labels: ["6am", "9am", "12pm", "3pm", "6pm", "9pm", "12am"],
-      data: [3, 5, 4, 6, 7, 5, 4],
-      mood: ["Triste", "Feliz", "Feliz", "Feliz", "Muy feliz", "Feliz", "Feliz"],
-    },
-    W: {
-      labels: ["Lun", "Mar", "Mié", "Jue", "Vie", "Sáb", "Dom"],
-      data: [20, 25, 30, 35, 40, 45, 50],
-      mood: ["Triste", "Feliz", "Feliz", "Feliz", "Muy feliz", "Feliz", "Feliz"],
-    },
-    M: {
-      labels: ["Sem 1", "Sem 2", "Sem 3", "Sem 4"],
-      data: [15, 20, 25, 30],
-      mood: ["Triste", "Feliz", "Feliz", "Muy feliz"],
-    },
-    GM: {
-      labels: ["Mes 1", "Mes 2", "Mes 3", "Mes 4", "Mes 5", "Mes 6"],
-      data: [20, 25, 30, 35, 40, 45],
-      mood: ["Triste", "Feliz", "Feliz", "Muy feliz", "Feliz", "Feliz"],
-    },
-    Y: {
-      labels: [
-        "Ene", "Feb", "Mar", "Abr", "May", "Jun", 
-        "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"
-      ],
-      data: [15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70],
-      mood: Array(12).fill("Feliz"),
-    },
-  };
+  const currentData = feelingData[activeFilter];
 
-  const filterButtons = [
-    { id: "D", label: "Día" },
-    { id: "W", label: "Semana" },
-    { id: "M", label: "Mes" },
-    { id: "GM", label: "6 Meses" },
-    { id: "Y", label: "Año" },
-  ];
+  const sentimientoNumerico = currentData.data
+    .map((s) => sentimientoToValor[s])
+    .filter((v) => v !== undefined);
 
-  const currentData = moodData[activeFilter];
-  const averageMood = currentData.data.reduce((a, b) => a + b, 0) / currentData.data.length;
+  const promedio = sentimientoNumerico.length
+    ? sentimientoNumerico.reduce((a, b) => a + b, 0) /
+      sentimientoNumerico.length
+    : null;
 
-  const data = {
-    labels: currentData.labels,
+  const sentimientoPromedio = promedio
+    ? valorToSentimiento[Math.round(promedio)]
+    : "sin datos";
+
+  const chartData = {
     datasets: [
       {
         label: "Estado de ánimo",
-        data: currentData.data,
-        backgroundColor: "#A5B48E",
-        borderColor: "transparent",
-        borderRadius: 10,
-        barThickness: activeFilter === "D" ? 30 : activeFilter === "Y" ? 20 : 50,
+        data: currentData.data.map((sentimiento, index) => ({
+          x: currentData.labels[index],
+          y: sentimientoToValor[sentimiento],
+        })),
+        backgroundColor: currentData.data.map(
+          (s) => sentimientoColor[s] || "#aaa"
+        ),
       },
     ],
   };
 
-  const options = {
-    responsive: true,
+  const chartOptions = {
     scales: {
+      x: {
+        type: "category",
+        labels: currentData.labels,
+        title: {
+          display: true,
+          text: "Periodo",
+          font: { size: 14 },
+        },
+        ticks: {
+          font: { size: 12 },
+        },
+      },
       y: {
         beginAtZero: true,
-        title: {
-          display: true,
-          text: "Intensidad",
+        suggestedMin: 0,
+        suggestedMax: 5,
+        ticks: {
+          stepSize: 1,
+          callback: (value) => {
+            const label = Object.entries(sentimientoToValor).find(
+              ([, val]) => val === value
+            );
+            return label?.[0] || value;
+          },
         },
-        max: activeFilter === "D" ? 10 : activeFilter === "W" ? 60 : 80,
-      },
-      x: {
         title: {
           display: true,
-          text: activeFilter === "D" 
-            ? "Hora del día" 
-            : activeFilter === "W" 
-            ? "Día de la semana" 
-            : activeFilter === "M" 
-            ? "Semana del mes" 
-            : activeFilter === "GM" 
-            ? "Mes (últimos 6)" 
-            : "Mes del año",
+          text: "Estado de ánimo",
+          font: { size: 14 },
         },
       },
     },
@@ -109,31 +174,15 @@ const FeelingChart = () => {
       },
       tooltip: {
         callbacks: {
-          label: (context) => {
-            return `Estado: ${currentData.mood[context.dataIndex]}`;
+          label: (ctx) => {
+            const label = Object.entries(sentimientoToValor).find(
+              ([, val]) => val === ctx.raw.y
+            );
+            return `Estado: ${label?.[0] || ctx.raw.y}`;
           },
         },
       },
     },
-  };
-
-  const getMoodLabel = () => {
-    if (mood < 20) return "Muy mal";
-    if (mood < 40) return "Mal";
-    if (mood < 60) return "Regular";
-    if (mood < 80) return "Bien";
-    return "Muy bien";
-  };
-
-  const handleSubmit = () => {
-    // aca se podria guardar el estado de ánimo en la base de datos
-    console.log({
-      moodValue: mood,
-      moodLabel: getMoodLabel(),
-      selectedEmotion,
-      date: new Date().toISOString().split('T')[0]
-    });
-    setShowModal(false);
   };
 
   return (
@@ -144,14 +193,7 @@ const FeelingChart = () => {
         onClickButton={() => setShowModal(true)}
       />
 
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          gap: "8px",
-          marginBottom: "20px",
-        }}
-      >
+      <div style={{ display: "flex", gap: "6px", marginBottom: "20px" }}>
         {filterButtons.map((button) => (
           <button
             key={button.id}
@@ -160,10 +202,11 @@ const FeelingChart = () => {
               flex: 1,
               padding: "8px",
               border: "none",
-              borderRadius: "5px",
-              backgroundColor: activeFilter === button.id ? "#A5B48E" : "#E8E8E8",
-              color: activeFilter === button.id ? "white" : "black",
-              fontWeight: "500",
+              borderRadius: "8px",
+              backgroundColor:
+                activeFilter === button.id ? "#4a6fa5" : "#f0f0f0",
+              color: activeFilter === button.id ? "white" : "#333",
+              fontWeight: "bold",
               fontSize: "14px",
               cursor: "pointer",
             }}
@@ -173,105 +216,26 @@ const FeelingChart = () => {
         ))}
       </div>
 
-      <div style={{ textAlign: "center", margin: "20px 0" }}>
-        <p style={{ fontSize: "16px", color: "#555" }}>
-          En promedio te has sentido{" "}
-          <span style={{ fontWeight: "bold", color: "#333" }}>
-            {averageMood > 50 ? "muy bien" : averageMood > 30 ? "bien" : "regular"}
-          </span>{" "}
-          {activeFilter === "D"
-            ? "hoy"
-            : activeFilter === "W"
-            ? "esta semana"
-            : activeFilter === "M"
-            ? "este mes"
-            : activeFilter === "GM"
-            ? "estos 6 meses"
-            : "este año"}
-          .
-        </p>
-      </div>
+      <p style={{ fontSize: "16px", color: "#555" }}>
+        En promedio te has sentido{" "}
+        <span style={{ fontWeight: "bold", color: "#333" }}>
+          {sentimientoPromedio}
+        </span>{" "}
+        {filterLabels[activeFilter]}.
+      </p>
 
-      <div style={{ height: "300px", marginBottom: "30px" }}>
-        <Bar data={data} options={options} />
-      </div>
+      <Scatter data={chartData} options={chartOptions} />
 
-      <div
-        style={{
-          backgroundColor: "#F5F5F5",
-          padding: "20px",
-          borderRadius: "10px",
-          marginTop: "30px",
-        }}
-      >
-        <h5 style={{ color: "#333", marginBottom: "15px" }}>Acerca de Estado de ánimo</h5>
-        <p style={{ color: "#666", lineHeight: "1.5" }}>
-          Registra tu estado de ánimo diario para identificar patrones y mejorar tu 
-          bienestar emocional. Los datos te ayudarán a entender qué factores influyen 
-          en cómo te sientes.
-        </p>
-      </div>
+      <AboutFeeling />
 
-      {/* Modal para agregar sentimiento */}
-      <CommonModal 
-        isOpen={showModal} 
-        onClose={() => setShowModal(false)} 
-        onConfirm={handleSubmit}
+      <CommonModal
+        isOpen={showModal}
+        onClose={() => setShowModal(false)}
         title="Estado de ánimo"
         confirmText="Agregar"
         cancelText="Cancelar"
       >
-        <div style={{ width: "100%", marginBottom: "2rem" }}>
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-              marginBottom: "0.5rem",
-            }}
-          >
-            <span style={{ color: "#666" }}>¿Cómo te has sentido hoy?</span>
-          </div>
-
-          <div style={{ width: "100%", margin: "1.5rem 0" }}>
-            <input
-              type="range"
-              min="0"
-              max="100"
-              value={mood}
-              onChange={(e) => setMood(parseInt(e.target.value))}
-              style={{
-                width: "100%",
-                height: "8px",
-                borderRadius: "4px",
-                background: `linear-gradient(to right, #d1e8bf ${mood}%, #aecda3 ${mood}%)`,
-                outline: "none",
-                WebkitAppearance: "none",
-              }}
-            />
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "space-between",
-                marginTop: "0.5rem",
-              }}
-            >
-              <span style={{ fontSize: "0.8rem", color: "#666" }}>Muy mal</span>
-              <span style={{ fontSize: "0.8rem", color: "#666" }}>Muy bien</span>
-            </div>
-          </div>
-
-          <div
-            style={{
-              textAlign: "center",
-              margin: "1.5rem 0",
-              fontSize: "1.2rem",
-              fontWeight: "bold",
-              color: "#a5b48e",
-            }}
-          >
-            {getMoodLabel()}
-          </div>
-        </div>
+        <AddFeeling />
       </CommonModal>
     </Container>
   );
