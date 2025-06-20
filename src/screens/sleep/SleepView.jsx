@@ -1,93 +1,78 @@
-import {
-    Container,
-    Row,
-    Col,
-    Button
-} from "react-bootstrap";
+import { Container, Row, Col, Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import HeaderSection from "../../utils/HeaderSection";
 import GenericCard from "../../utils/GenericCard";
-import {
-    faBed,
-    faClock,
-    faStopwatch
-} from '@fortawesome/free-solid-svg-icons';
+import { faBed, faClock, faStopwatch } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import * as Yup from "yup";
 import { Formik, Form, ErrorMessage, Field } from "formik";
+import GenericBarChart from "../../utils/GenericBarChart";
+import AboutSleep from "./AboutSleep";
+import CommonModal from "./../../utils/CommonModal";
+import { useState } from "react";
 
 const SleepView = () => {
-  const navigate = useNavigate();
+  const [showModal, setShowModal] = useState(false);
 
-  const validationSchema = Yup.object({
-    sleep: Yup
-        .number()
-        .required("Requerido")
-        .min(0, "Debe ser mayor o igual a 0")
-        .max(24, "Debe ser menor o igual a 24")
-        .positive("Debe ser positivo"),
-    wake: Yup
-        .number()
-        .required("Requerido")
-        .min(0, "Debe ser mayor o igual a 0")
-        .max(24, "Debe ser menor o igual a 24")
-        .positive("Debe ser positivo")
-  })
+  const sleepData = {
+    D: {
+      labels: ["6-9am", "9-12am", "12-15pm", "15-18pm", "18-21pm", "21-24pm"],
+      data: [0.5, 1.2, 0, 0.8, 1.5, 0],
+    },
+    W: {
+      labels: ["Lun", "Mar", "Mie", "Jue", "Vie", "Sab", "Dom"],
+      data: [1.5, 2.0, 1.0, 1.8, 0.5, 0, 1.0],
+    },
+    M: {
+      labels: ["Sem 1", "Sem 2", "Sem 3", "Sem 4"],
+      data: [6.5, 7.0, 5.5, 8.0],
+    },
+    BM: {
+      // BM = 6 meses
+      labels: ["Mes 1", "Mes 2", "Mes 3", "Mes 4", "Mes 5", "Mes 6"],
+      data: [35, 40, 30, 45, 38, 42],
+    },
+    Y: {
+      labels: [
+        "Ene",
+        "Feb",
+        "Mar",
+        "Abr",
+        "May",
+        "Jun",
+        "Jul",
+        "Ago",
+        "Sep",
+        "Oct",
+        "Nov",
+        "Dic",
+      ],
+      data: [38, 35, 40, 42, 45, 38, 35, 40, 45, 42, 38, 40],
+    },
+  };
+
+  const handleOpenModal = () => {
+    setShowModal(true);
+  };
 
   return (
     <Container>
-        <HeaderSection
-        title="Sueño"
-        buttonTitle="Agregar horas"
-        hrefButton="#"
-        />
-        
-        <Container>
-            <Formik>
-            <Form>
-                <Row style={{height: "10vh"}}>
-                    <Col xs style={{display: "flex", justifyContent: "space-between", flexDirection: "column", alignItems: "center"}}>
-                        <FontAwesomeIcon style={{fontSize: "2.5em", color: "#a5b48e"}} icon={faBed}/>
-                        <Field
-                            name="sleep"
-                            type="number"
-                            placeholder=""
-                            style={{width: "15vw"}}
-                        />
-                        <ErrorMessage name="sleep" component="div" className="text-danger small"/>
-                    </Col>
-                    <Col xs style={{display: "flex", justifyContent: "space-between", flexDirection: "column", alignItems: "center"}}>
-                        <FontAwesomeIcon style={{fontSize: "2.5em", color: "#a5b48e"}} icon={faStopwatch}/>
-                        <Field
-                            name="sleep"
-                            type="number"
-                            placeholder=""
-                            style={{width: "15vw"}}
-                        />
-                        <ErrorMessage name="sleep" component="div" className="text-danger small"/>
-                    </Col>
-                </Row>
-            
-            
-            <Row style={{height: "30vh", marginTop: "3rem", display: "flex", justifyContent: "space-evenly"}}>
-                <FontAwesomeIcon style={{fontSize: "8em", padding: 0, color: "#a5b48e"}} icon={faClock}/>
-                <div>8hs</div>
-                <div>Este horario cumple con tu objetivo de sueño</div>
-            </Row>
-
-            <Button
-              type="submit"
-              style={{
-                backgroundColor: "#a5b48e",
-                fontSize: "1.5rem",
-                border: "none",
-                width: "30vw"
-              }}
-            >Calcular
-            </Button>
-            </Form>
-            </Formik>
-        </Container>
+      <GenericBarChart
+        title="Horas de sueño"
+        handleOpenModal={handleOpenModal}
+        chartData={sleepData}
+      />
+      <AboutSleep />
+      <CommonModal
+        isOpen={showModal}
+        onClose={() => setShowModal(false)}
+        onConfirm={() => console.log("Confirm clicked")}
+        title="Registrar horas"
+        confirmText="Guardar"
+        cancelText="Cancelar"
+      >
+        <div style={{ width: "100%", marginBottom: "1rem" }}>Hola</div>
+      </CommonModal>
     </Container>
   );
 };

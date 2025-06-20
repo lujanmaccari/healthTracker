@@ -61,7 +61,6 @@ const ActivityChart = () => {
     <Container>
       <GenericBarChart
         title="Actividad"
-        buttonTitle="Agregar"
         handleOpenModal={handleOpenModal}
         chartData={activityData}
       />
