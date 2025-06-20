@@ -11,6 +11,7 @@ import GenericBarChart from "../../utils/GenericBarChart";
 import { AboutActivity } from "./AboutActivity";
 import { useState } from "react";
 import CommonModal from "../../utils/CommonModal";
+import AddActivity from "./ActivityRegister";
 ChartJS.register(BarElement, CategoryScale, LinearScale, Tooltip, Legend);
 
 const ActivityChart = () => {
@@ -56,6 +57,9 @@ const ActivityChart = () => {
   const handleOpenModal = () => {
     setShowModal(true);
   };
+  const handleCloseModal = () => {
+    setShowModal(false);
+  };
 
   return (
     <Container>
@@ -67,13 +71,12 @@ const ActivityChart = () => {
       <AboutActivity />
       <CommonModal
         isOpen={showModal}
-        onClose={() => setShowModal(false)}
-        onConfirm={() => console.log("Confirm clicked")}
-        title="Registrar horas"
+        onClose={handleCloseModal}
+        title="Registrar actividad"
         confirmText="Guardar"
         cancelText="Cancelar"
       >
-        <div style={{ width: "100%", marginBottom: "1rem" }}>Hola</div>
+        <AddActivity onClose={handleCloseModal} />
       </CommonModal>
     </Container>
   );

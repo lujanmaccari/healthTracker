@@ -1,81 +1,86 @@
+import { Formik } from "formik";
 import { useState } from "react";
 import { Button, Container, Form } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
+import * as Yup from "yup";
+const AddActivity = ({ onClose }) => {
+  const fechaActual = new Date().toISOString();
 
-const AddActivity = () => {
-  const navigate = useNavigate();
+  const initialValues = {
+    activity: "",
+    duration: "",
+  };
 
-  const [form, setForm] = useState({
-    fecha: "",
-    categoria: "",
-    duracion: "",
+  const validationSchema = Yup.object({
+    activity: Yup.string().required("La actividad es obligatoria"),
+    duration: Yup.string().required("La duracion es obligatoria"),
   });
 
+  const handleSubmit = async () => {
+    // enviar junto con activity y duration fecha actual
+    console.log("Formulario enviado");
+  };
+
   return (
-    <Container
-      className="d-flex flex-column align-items-center mt-3 gap-3"
-      style={{
-        maxWidth: "400px",
-        minHeight: "100vh",
-        backgroundColor: "#f5f5f5",
-        padding: "2rem",
-      }}
-    >
-      {/* Flecha de volver */}
-      <div
-        onClick={() => navigate("/activity")}
-        style={{
-          alignSelf: "flex-start",
-          cursor: "pointer",
-          color: "#a5b48e",
-          fontSize: "1.5rem",
-        }}
+    <Container className="w-100">
+      <Formik
+        initialValues={initialValues}
+        validationSchema={validationSchema}
+        onSubmit={handleSubmit}
       >
-        ←
-      </div>
+        {({
+          handleSubmit,
+          handleChange,
+          handleBlur,
+          values,
+          touched,
+          errors,
+        }) => (
+          <Form noValidate onSubmit={handleSubmit}>
+            <Form.Group className="mb-3 text-start" controlId="email">
+              <Form.Label>Tipo de actividad</Form.Label>
+              <Form.Select
+                value={values.activity}
+                onChange={handleChange}
+                onBlur={handleBlur}
+              >
+                <option value="ejercicio">Caminar</option>
+                <option value="horasestudio">Correr</option>
+                <option value="sueño">Bicicleta</option>
+              </Form.Select>
 
-      <h4 className="mb-3">Registrar Actividad</h4>
+              <Form.Control.Feedback type="invalid">
+                {errors.activity}
+              </Form.Control.Feedback>
+            </Form.Group>
 
-      <Form className="w-100">
-        {/* Fecha */}
-        <Form.Group className="mb-3">
-          <Form.Label>Fecha</Form.Label>
-          <Form.Control
-            type="date"
-            value={form.fecha}
-            onChange={(e) => setForm({ ...form, fecha: e.target.value })}
-          />
-        </Form.Group>
-
-        {/* Categoría */}
-        <Form.Group className="mb-3">
-          <Form.Label>Categoría</Form.Label>
-          <Form.Select
-            value={form.categoria}
-            onChange={(e) => setForm({ ...form, categoria: e.target.value })}
-          >
-            <option value="">Seleccioná</option>
-            <option value="ejercicio">Ejercicio</option>
-            <option value="horasestudio">Estudio</option>
-            <option value="sueño">Sueño</option>
-          </Form.Select>
-        </Form.Group>
-
-        {/* Duración */}
-        <Form.Group className="mb-3">
-          <Form.Label>Duración (horas)</Form.Label>
-          <Form.Control
-            type="number"
-            placeholder="Ej: 1.5"
-            value={form.duracion}
-            onChange={(e) => setForm({ ...form, duracion: e.target.value })}
-          />
-        </Form.Group>
-
-        <div className="d-flex justify-content-center mt-4">
-          <Button className="btnApp">Guardar</Button>
-        </div>
-      </Form>
+            <Form.Group className="mb-3 text-start" controlId="password">
+              <Form.Label>Duración (minutos)</Form.Label>
+              <Form.Control
+                type="number"
+                name="duration"
+                value={values.duration}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                placeholder="120 mins"
+                isInvalid={touched.duration && !!errors.duration}
+                onWheel={(e) => e.currentTarget.blur()}
+              />
+              <Form.Control.Feedback type="invalid">
+                {errors.duration}
+              </Form.Control.Feedback>
+            </Form.Group>
+            <div className="d-flex justify-content-center gap-3 pb-3">
+              <Button className="btnApp" type="submit">
+                Agregar
+              </Button>
+              <Button className="btnCancel" onClick={onClose}>
+                Cancelar
+              </Button>
+            </div>
+          </Form>
+        )}
+      </Formik>
     </Container>
   );
 };

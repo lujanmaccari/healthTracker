@@ -4,10 +4,11 @@ import "bootstrap/dist/css/bootstrap.min.css";
 const CommonModal = ({
   isOpen,
   onClose,
-  onConfirm,
+  onConfirm = null,
   confirmText = "Agregar",
   cancelText = "Cancelar",
   children,
+  title,
 }) => {
   return (
     <Modal
@@ -31,24 +32,30 @@ const CommonModal = ({
       >
         ×
       </div>
+      <Modal.Header className="border-0 pb-0">
+        <Modal.Title className="text-center">{title}</Modal.Title>
+      </Modal.Header>
 
       <Modal.Body className="pt-4">{children}</Modal.Body>
 
-      <div className="d-flex justify-content-center gap-3 pb-3">
-        <button
-          className="btn btn-success px-4 rounded-pill"
-          style={{ backgroundColor: "#b8cc9c", border: "none", color: "#333" }}
-          onClick={onConfirm}
-        >
-          {confirmText}
-        </button>
-        <button
-          className="btn btn-outline-secondary px-4 rounded-pill bg-white text-dark"
-          onClick={onClose}
-        >
-          {cancelText}
-        </button>
-      </div>
+      {onConfirm && (
+        <div className="d-flex justify-content-center gap-3 pb-3">
+          <button
+            className="btnApp"
+            style={{
+              backgroundColor: "#b8cc9c",
+              border: "none",
+              color: "#333",
+            }}
+            onClick={onConfirm}
+          >
+            {confirmText}
+          </button>
+          <button className="btnCancel" onClick={onClose}>
+            {cancelText}
+          </button>
+        </div>
+      )}
     </Modal>
   );
 };
