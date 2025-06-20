@@ -93,6 +93,10 @@ const AboutYou = () => {
     password: "",
   };
 
+  const goBack = () => {
+    navigate("/");
+  };
+
   return (
     <Container
       className="d-flex flex-column align-items-center justify-content-center min-vh-100"
@@ -273,19 +277,12 @@ const AboutYou = () => {
             </div>
           </div>
 
-          <div className="d-flex justify-content-center mt-4">
-            <Button
-              type="submit"
-              style={{
-                backgroundColor: "#a5b48e",
-                border: "none",
-                borderRadius: "25px",
-                fontWeight: "600",
-                transition: "all 0.3s ease",
-              }}
-              onMouseOver={(e) => (e.target.style.backgroundColor = "#94a37d")}
-            >
+          <div className="d-flex justify-content-center mt-4 gap-3">
+            <Button type="submit" className="btnApp">
               Crear Cuenta
+            </Button>
+            <Button type="button" className="btnCancel" onClick={goBack}>
+              Cancelar
             </Button>
           </div>
         </Form>
