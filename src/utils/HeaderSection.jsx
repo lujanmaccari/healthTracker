@@ -3,22 +3,19 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Button, Container } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 
-const HeaderSection = ({ title, buttonTitle, hrefButton, onClickButton }) => {
+const HeaderSection = ({ title, onClickButton }) => {
   const navigate = useNavigate();
 
   const goBack = () => {
     navigate("/home");
   };
 
-  const redirectButton = () => {
-    if (hrefButton) {
-      navigate(hrefButton);
-    }
+  const handleModal = () => {
     if (onClickButton) {
       onClickButton();
     }
   };
-  
+
   return (
     <Container
       style={{
@@ -45,14 +42,14 @@ const HeaderSection = ({ title, buttonTitle, hrefButton, onClickButton }) => {
       <h3>{title}</h3>
 
       <Button
-        onClick={redirectButton}
+        onClick={handleModal}
         style={{
           color: "#a5b48e",
           background: "transparent",
           border: "none",
         }}
       >
-        {buttonTitle}
+        Agregar datos
       </Button>
     </Container>
   );

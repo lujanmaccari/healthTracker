@@ -9,7 +9,6 @@ const CommonModal = ({
   cancelText = "Cancelar",
   children,
 }) => {
-  console.log(isOpen, onClose, children);
   return (
     <Modal
       show={isOpen}
@@ -19,7 +18,10 @@ const CommonModal = ({
       keyboard={false}
       dialogClassName="border-0"
       contentClassName="rounded-4 shadow-sm p-4 bg-light"
-      style={{ backdropFilter: 'blur(1.5px)', backgroundColor: 'rgba(0, 0, 0, 0.2)' }} // BLURRR
+      style={{
+        backdropFilter: "blur(1.5px)",
+        backgroundColor: "rgba(0, 0, 0, 0.2)",
+      }} // BLURRR
     >
       <div
         className="position-absolute top-0 end-0 mt-3 me-3 fs-4 fw-bold text-dark"
