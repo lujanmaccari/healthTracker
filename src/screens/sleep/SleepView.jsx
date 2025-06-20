@@ -10,6 +10,7 @@ import GenericBarChart from "../../utils/GenericBarChart";
 import AboutSleep from "./AboutSleep";
 import CommonModal from "./../../utils/CommonModal";
 import { useState } from "react";
+import AddSleepHours from "./AddSleepHours";
 
 const SleepView = () => {
   const [showModal, setShowModal] = useState(false);
@@ -54,6 +55,9 @@ const SleepView = () => {
   const handleOpenModal = () => {
     setShowModal(true);
   };
+  const handleCloseModal = () => {
+    setShowModal(false);
+  };
 
   return (
     <Container>
@@ -65,13 +69,12 @@ const SleepView = () => {
       <AboutSleep />
       <CommonModal
         isOpen={showModal}
-        onClose={() => setShowModal(false)}
-        onConfirm={() => console.log("Confirm clicked")}
-        title="Registrar horas"
+        onClose={handleCloseModal}
+        title="Registrar horas de sueño"
         confirmText="Guardar"
         cancelText="Cancelar"
       >
-        <div style={{ width: "100%", marginBottom: "1rem" }}>Hola</div>
+        <AddSleepHours onClose={handleCloseModal} />
       </CommonModal>
     </Container>
   );
