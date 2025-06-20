@@ -32,6 +32,16 @@ html {
   border: none !important;
 
 }
+.btnNoBg{
+  background-color: transparent !important;
+  border: none !important;
+  color: #6d775d !important;
+  font-weight: 500 !important;
+}
+
+.text-custom-green {
+  color: #94a37d;
+}
 
 @keyframes logo-spin {
   from {

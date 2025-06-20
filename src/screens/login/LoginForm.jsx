@@ -134,7 +134,7 @@ const LoginForm = () => {
           </Formik>
           <hr />
 
-          <Button type="button" onClick={redirect} className="btnApp">
+          <Button type="button" onClick={redirect} className="btnNoBg">
             Registrarse
           </Button>
         </Card.Body>
