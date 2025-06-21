@@ -7,9 +7,7 @@ import Home from "./screens/Home";
 import AboutYou from "./screens/AboutYou";
 import ProtectedRoutes from "./auth/ProtecterRoutes";
 import { ToastProvider } from "./contexts/ToastContext";
-import WeeklyActivity from "./screens/activity/ActivityRegister";
 import ActivityChart from "./screens/activity/ActivityChart";
-import AddFeeling from "./screens/feeling/FeelingRegister";
 import FeelingChart from "./screens/feeling/FeelingChart";
 import StudyChart from "./screens/study/StudyChart";
 import SleepView from "./screens/sleep/SleepView"
@@ -27,7 +25,6 @@ function App() {
           <Route path="/categories/:category" element={<CategoryView />} />
           <Route path="/user" element={<UserView />} />
           <Route path="/aboutYou" element={<AboutYou />} />
-          <Route path="/addActivity" element={<WeeklyActivity />} />
           <Route path="/activity" element={<ActivityChart />} />
           <Route path="/feeling" element={<FeelingChart/>} /> 
           <Route path="/study" element={<StudyChart/>} />

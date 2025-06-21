@@ -1,4 +1,3 @@
-import { useState } from "react";
 import {
   BarElement,
   CategoryScale,
@@ -7,17 +6,21 @@ import {
   LinearScale,
   Tooltip,
 } from "chart.js";
+import { useState } from "react";
 import { Container } from "react-bootstrap";
-import { Bar } from "react-chartjs-2";
-import HeaderSection from "../../utils/HeaderSection";
 import CommonModal from "../../utils/CommonModal";
+import GenericBarChart from "../../utils/GenericBarChart";
+import { AboutStudy } from "./AboutStudy";
+import AddStudy from "./AddStudy";
 
 ChartJS.register(BarElement, CategoryScale, LinearScale, Tooltip, Legend);
 
 const StudyChart = () => {
-  const [activeFilter, setActiveFilter] = useState("W"); // semana como default
   const [showModal, setShowModal] = useState(false);
+<<<<<<< HEAD
   const [studyHours, setStudyHours] = useState(1.15); // horas por defecto 
+=======
+>>>>>>> 7d90f1edd1d5910f9239a961dc32a30db7254dff
 
   // purooo mock x2
   const studyData = {
@@ -33,16 +36,31 @@ const StudyChart = () => {
       labels: ["Sem 1", "Sem 2", "Sem 3", "Sem 4"],
       data: [6.5, 7.0, 5.5, 8.0],
     },
-    BM: { // BM = 6 meses
+    BM: {
+      // BM = 6 meses
       labels: ["Mes 1", "Mes 2", "Mes 3", "Mes 4", "Mes 5", "Mes 6"],
       data: [35, 40, 30, 45, 38, 42],
     },
     Y: {
-      labels: ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"],
+      labels: [
+        "Ene",
+        "Feb",
+        "Mar",
+        "Abr",
+        "May",
+        "Jun",
+        "Jul",
+        "Ago",
+        "Sep",
+        "Oct",
+        "Nov",
+        "Dic",
+      ],
       data: [38, 35, 40, 42, 45, 38, 35, 40, 45, 42, 38, 40],
     },
   };
 
+<<<<<<< HEAD
   const filterButtons = [
     { id: "D", label: "Día" },
     { id: "W", label: "Semana" },
@@ -71,83 +89,24 @@ const StudyChart = () => {
         barThickness: 24,
       },
     ],
+=======
+  const handleOpenModal = () => {
+    setShowModal(true);
+>>>>>>> 7d90f1edd1d5910f9239a961dc32a30db7254dff
   };
 
-  const options = {
-    responsive: true,
-    maintainAspectRatio: false,
-    scales: {
-      y: {
-        beginAtZero: true,
-        title: {
-          display: true,
-          text: "Horas",
-          font: {
-            weight: 'bold',
-            size: 12
-          }
-        },
-        max: activeFilter === "D" ? 3 : 
-             activeFilter === "W" ? 3 : 
-             activeFilter === "M" ? 10 : 
-             activeFilter === "BM" ? 50 : 50,
-        grid: {
-          display: true,
-          color: "#e0e0e0"
-        },
-        ticks: {
-          stepSize: activeFilter === "D" ? 0.5 : 
-                   activeFilter === "W" ? 0.5 : 
-                   activeFilter === "M" ? 2 : 
-                   activeFilter === "BM" ? 10 : 10
-        }
-      },
-      x: {
-        grid: {
-          display: false
-        },
-        ticks: {
-          font: {
-            size: 12
-          }
-        }
-      },
-    },
-    plugins: {
-      legend: {
-        display: false,
-      },
-      tooltip: {
-        callbacks: {
-          label: (context) => {
-            return `${context.parsed.y} horas`;
-          },
-        },
-      },
-    },
-  };
-
-  const handleSubmit = () => {
-    console.log({
-      hours: studyHours,
-      date: new Date().toISOString().split('T')[0]
-    });
+  const handleCloseModal = () => {
     setShowModal(false);
   };
 
   return (
-    <Container style={{ maxWidth: "800px", position: "relative" }}>
-      <HeaderSection
+    <Container>
+      <GenericBarChart
         title="Horas de estudio"
-        buttonTitle="Agregar"
-        onClickButton={() => setShowModal(true)}
-        buttonStyle={{
-          borderRadius: "50%",
-          width: "40px",
-          height: "40px",
-          padding: "0"
-        }}
+        handleOpenModal={handleOpenModal}
+        chartData={studyData}
       />
+<<<<<<< HEAD
 
       <div
         style={{
@@ -255,6 +214,17 @@ const StudyChart = () => {
           </div>
           <small className="text-muted">Ingresá las horas estudiadas hoy</small>
         </div>
+=======
+      <AboutStudy />
+      <CommonModal
+        isOpen={showModal}
+        onClose={handleCloseModal}
+        title="Registrar tiempo de estudio"
+        confirmText="Guardar"
+        cancelText="Cancelar"
+      >
+        <AddStudy onClose={handleCloseModal}/>
+>>>>>>> 7d90f1edd1d5910f9239a961dc32a30db7254dff
       </CommonModal>
     </Container>
   );

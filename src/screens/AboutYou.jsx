@@ -1,43 +1,32 @@
-import { Container, Button } from "react-bootstrap";
-import { Formik, Form, Field, ErrorMessage } from "formik";
-import * as Yup from "yup";
-
-import meditationImg from "../assets/meditationSmall.jpeg";
-import { supabase } from "../../supabaseClient";
+import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { ErrorMessage, Field, Form, Formik } from "formik";
+import { useState } from "react";
+import { Button, Container } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
+import * as Yup from "yup";
+import { supabase } from "../../supabaseClient";
+import meditationImg from "../assets/meditationSmall.jpeg";
 import { useToast } from "../contexts/ToastContext";
 
 const AboutYou = () => {
   const navigate = useNavigate();
   const { showToast } = useToast();
+  const [showPassword, setShowPassword] = useState(false);
 
   const validationSchema = Yup.object({
-    gender: Yup
-      .string()
-      .required("Requerido"),
-    age: Yup
-      .number()
+    name: Yup.string().required("Requerido"),
+    gender: Yup.string().required("Requerido"),
+    age: Yup.number()
       .positive("Debe ser positivo")
       .integer("El valor ingresado debe ser de tipo entero")
       .moreThan(17, "Debe ser mayor de ${more} para usar esta aplicación")
       .lessThan(100, "Debe ser menor de ${less} para usar esta aplicación")
       .required("Requerido"),
-    height: Yup
-      .number()
-      .positive("Debe ser positivo")
-      .required("Requerido"),
-    weight: Yup
-      .number()
-      .positive("Debe ser positivo")
-      .required("Requerido"),
-    email: Yup
-      .string()
-      .email("Correo inválido")
-      .required("Requerido"),
-    password: Yup
-      .string()
-      .min(6, "Mínimo 6 caracteres")
-      .required("Requerido"),
+    height: Yup.number().positive("Debe ser positivo").required("Requerido"),
+    weight: Yup.number().positive("Debe ser positivo").required("Requerido"),
+    email: Yup.string().email("Correo inválido").required("Requerido"),
+    password: Yup.string().min(6, "Mínimo 6 caracteres").required("Requerido"),
   });
 
   const handleSubmit = async (values) => {
@@ -94,175 +83,206 @@ const AboutYou = () => {
     }
   };
 
+  const initialValues = {
+    name: "",
+    gender: "",
+    age: "",
+    height: "",
+    weight: "",
+    email: "",
+    password: "",
+  };
+
+  const goBack = () => {
+    navigate("/");
+  };
+
   return (
     <Container
-      className="d-flex flex-column align-items-center mt-3 gap-3"
+      className="d-flex flex-column align-items-center justify-content-center min-vh-100"
       style={{
-        maxWidth: "400px",
-        minHeight: "100vh",
-        backgroundColor: "#f5f5f5",
+        maxWidth: "500px",
         padding: "2rem",
+        borderRadius: "15px",
       }}
     >
-      <div className="mb-2 text-center">
+      <div className="text-center mb-4">
         <img
           src={meditationImg}
-          alt="Userexample"
+          alt="Meditation"
           style={{
-            width: "100px",
-            height: "100px",
+            width: "120px",
+            height: "120px",
             borderRadius: "50%",
             objectFit: "cover",
+            marginBottom: "1rem",
           }}
         />
-        <h3 className="mb-3">Acerca de Ti</h3>
+        <h2 className="mb-3 fw-bold text-custom-green">Acerca de Ti</h2>
+        <p
+          className="text-muted small"
+          style={{ textAlign: "justify", lineHeight: "1.5" }}
+        >
+          Con esta información, Health Tracker calcula las calorías, la
+          distancia y la intensidad de tu actividad, y puede ofrecerte
+          sugerencias de entrenamiento personalizadas.
+        </p>
       </div>
 
-      <p className="text-center text-muted small mb-4">
-        Con esta información, Health Tracker calcula las calorías, la distancia
-        y la intensidad de tu actividad, y puede ofrecerte sugerencias de
-        entrenamiento personalizadas.
-      </p>
-
       <Formik
-        initialValues={{
-          gender: "",
-          age: "",
-          height: "",
-          weight: "",
-          email: "",
-          password: "",
-        }}
+        initialValues={initialValues}
         validationSchema={validationSchema}
         onSubmit={handleSubmit}
       >
         <Form className="w-100">
-          <div className="row">
-            {/* Columna izquierda */}
-            <div className="col-6 mb-3">
-              <label className="form-label">Género</label>
-              <Field as="select" name="gender" className="form-control">
-                <option value="">Seleccioná</option>
-                <option value="Femenino">Femenino</option>
-                <option value="Masculino">Masculino</option>
-                <option value="Otro">Otro</option>
-              </Field>
-              <ErrorMessage
-                name="gender"
-                component="div"
-                className="text-danger small"
-              />
-            </div>
+          <div className="mb-4">
+            <h5 className="text-secondary mb-3">Información Personal</h5>
 
-            <div className="col-6 mb-3">
-              <label className="form-label">Edad</label>
-              <Field
-                name="age"
-                type="number"
-                placeholder="Ej: 25"
-                className="form-control"
-              />
-              <ErrorMessage
-                name="age"
-                component="div"
-                className="text-danger small"
-              />
-            </div>
-
-            <div className="col-6 mb-3">
-              <label className="form-label">Altura (cm)</label>
-              <Field
-                name="height"
-                type="number"
-                placeholder="Ej: 165"
-                className="form-control"
-              />
-              <ErrorMessage
-                name="height"
-                component="div"
-                className="text-danger small"
-              />
-            </div>
-
-            <div className="col-6 mb-3">
-              <label className="form-label">Peso (kg)</label>
-              <Field
-                name="weight"
-                type="number"
-                placeholder="Ej: 60"
-                className="form-control"
-              />
-              <ErrorMessage
-                name="weight"
-                component="div"
-                className="text-danger small"
-              />
-            </div>
-
-            <div className="col-12 mb-3">
-              <label className="form-label">Nombre</label>
+            <div className="mb-3">
+              <label className="form-label ">Nombre completo</label>
               <Field
                 name="name"
                 type="text"
-                placeholder="Ej: Natalia Natalia"
+                placeholder="Ej: Natalia García"
                 className="form-control"
+                style={{ borderRadius: "8px" }}
               />
               <ErrorMessage
                 name="name"
                 component="div"
-                className="text-danger small"
+                className="text-danger small mt-1"
               />
             </div>
 
-            <div className="col-12 mb-3">
-              <label className="form-label">Correo electrónico</label>
+            <div className="mb-3">
+              <label className="form-label ">Correo electrónico</label>
               <Field
                 name="email"
                 type="email"
-                placeholder="Ej: ejemplo@mail.com"
+                placeholder="ejemplo@mail.com"
                 className="form-control"
+                style={{ borderRadius: "8px" }}
               />
               <ErrorMessage
                 name="email"
                 component="div"
-                className="text-danger small"
+                className="text-danger small mt-1"
               />
             </div>
 
-            <div className="col-12 mb-3">
-              <label className="form-label">Contraseña</label>
-              <Field
-                name="password"
-                type="password"
-                placeholder="********"
-                className="form-control"
-              />
+            <div className="mb-3">
+              <label className="form-label ">Contraseña</label>
+              <div className="input-group">
+                <Field
+                  name="password"
+                  type={showPassword ? "text" : "password"}
+                  placeholder="********"
+                  className="form-control"
+                  style={{ borderRadius: "8px 0 0 8px" }}
+                />
+                <button
+                  type="button"
+                  className="btn btn-outline-secondary"
+                  onClick={() => setShowPassword(!showPassword)}
+                  style={{ borderRadius: "0 8px 8px 0" }}
+                >
+                  <FontAwesomeIcon
+                    icon={showPassword ? faEyeSlash : faEye}
+                    style={{ color: "#6c757d" }}
+                  />
+                </button>
+              </div>
               <ErrorMessage
                 name="password"
                 component="div"
-                className="text-danger small"
+                className="text-danger small mt-1"
               />
             </div>
           </div>
 
-          <div className="d-flex justify-content-center mt-4">
-            <Button
-              type="submit"
-              style={{
-                backgroundColor: "#a5b48e",
-                borderRadius: "50%",
-                width: "48px",
-                height: "48px",
-                padding: 0,
-                fontSize: "1.5rem",
-                lineHeight: "1.5rem",
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                border: "none",
-              }}
-            >
-              ➜
+          <div className="mb-4">
+            <h5 className="text-secondary mb-3">Información Física</h5>
+
+            <div className="row">
+              <div className="col-12 mb-3">
+                <label className="form-label ">Género</label>
+                <Field
+                  as="select"
+                  name="gender"
+                  className="form-select"
+                  style={{ borderRadius: "8px" }}
+                >
+                  <option value="">Selecciona tu género</option>
+                  <option value="Femenino">Femenino</option>
+                  <option value="Masculino">Masculino</option>
+                  <option value="Otro">Otro</option>
+                </Field>
+                <ErrorMessage
+                  name="gender"
+                  component="div"
+                  className="text-danger small mt-1"
+                />
+              </div>
+
+              <div className="col-4 mb-3">
+                <label className="form-label">Edad</label>
+                <Field
+                  name="age"
+                  type="number"
+                  placeholder="25"
+                  className="form-control"
+                  style={{ borderRadius: "8px" }}
+                  onWheel={(e) => e.currentTarget.blur()}
+                />
+                <ErrorMessage
+                  name="age"
+                  component="div"
+                  className="text-danger small mt-1"
+                />
+              </div>
+
+              <div className="col-4 mb-3">
+                <label className="form-label text-nowrap">Altura (cm)</label>
+                <Field
+                  name="height"
+                  type="number"
+                  placeholder="165"
+                  className="form-control"
+                  style={{ borderRadius: "8px" }}
+                  onWheel={(e) => e.currentTarget.blur()}
+                />
+                <ErrorMessage
+                  name="height"
+                  component="div"
+                  className="text-danger small mt-1"
+                />
+              </div>
+
+              <div className="col-4 mb-3">
+                <label className="form-label text-nowrap">Peso (kg)</label>
+                <Field
+                  name="weight"
+                  type="number"
+                  placeholder="60"
+                  className="form-control"
+                  style={{ borderRadius: "8px" }}
+                  onWheel={(e) => e.currentTarget.blur()}
+                />
+                <ErrorMessage
+                  name="weight"
+                  component="div"
+                  className="text-danger small mt-1"
+                />
+              </div>
+            </div>
+          </div>
+
+          <div className="d-flex justify-content-center mt-4 gap-3">
+            <Button type="submit" className="btnApp">
+              Crear Cuenta
+            </Button>
+            <Button type="button" className="btnCancel" onClick={goBack}>
+              Cancelar
             </Button>
           </div>
         </Form>

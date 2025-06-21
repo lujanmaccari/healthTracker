@@ -96,13 +96,13 @@ const LoginForm = () => {
             }) => (
               <Form noValidate onSubmit={handleSubmit}>
                 <Form.Group className="mb-3 text-start" controlId="email">
-                  <Form.Label>email</Form.Label>
+                  <Form.Label>Email</Form.Label>
                   <Form.Control
                     name="email"
                     value={values.email}
                     onChange={handleChange}
                     onBlur={handleBlur}
-                    placeholder="Ingresá tu documento"
+                    placeholder="Ingresá tu email"
                     isInvalid={touched.email && !!errors.email}
                   />
                   <Form.Control.Feedback type="invalid">
@@ -134,7 +134,7 @@ const LoginForm = () => {
           </Formik>
           <hr />
 
-          <Button type="button" onClick={redirect} className="btnApp">
+          <Button type="button" onClick={redirect} className="btnNoBg">
             Registrarse
           </Button>
         </Card.Body>
