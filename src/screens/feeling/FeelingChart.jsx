@@ -216,26 +216,6 @@ const FeelingChart = () => {
         ))}
       </div>
 
-<<<<<<< HEAD
-      <div style={{ textAlign: "center", margin: "20px 0" }}>
-        <p style={{ fontSize: "16px", color: "#555" }}>
-          En promedio te sentiste{" "}
-          <span style={{ fontWeight: "bold", color: "#333" }}>
-            {averageMood > 50 ? "muy bien" : averageMood > 30 ? "bien" : "regular"}
-          </span>{" "}
-          {activeFilter === "D"
-            ? "hoy"
-            : activeFilter === "W"
-            ? "esta semana"
-            : activeFilter === "M"
-            ? "este mes"
-            : activeFilter === "GM"
-            ? "estos 6 meses"
-            : "este año"}
-          .
-        </p>
-      </div>
-=======
       <p style={{ fontSize: "16px", color: "#555" }}>
         En promedio te has sentido{" "}
         <span style={{ fontWeight: "bold", color: "#333" }}>
@@ -243,11 +223,9 @@ const FeelingChart = () => {
         </span>{" "}
         {filterLabels[activeFilter]}.
       </p>
->>>>>>> 7d90f1edd1d5910f9239a961dc32a30db7254dff
 
       <Scatter data={chartData} options={chartOptions} />
 
-<<<<<<< HEAD
       <div
         style={{
           backgroundColor: "#F5F5F5",
@@ -256,25 +234,20 @@ const FeelingChart = () => {
           marginTop: "30px",
         }}
       >
-        <h5 style={{ color: "#333", marginBottom: "15px" }}>Acerca de <b>Estado de Ánimo</b></h5>
+        <h5 style={{ color: "#333", marginBottom: "15px" }}>
+          Acerca de <b>Estado de Ánimo</b>
+        </h5>
         <p style={{ color: "#666", lineHeight: "1.5" }}>
-          Registrá tu estado de ánimo diario para identificar patrones y mejorar tu 
-          bienestar emocional. Los datos te ayudarán a entender qué factores influyen 
-          en cómo te sentís.
+          Registrá tu estado de ánimo diario para identificar patrones y mejorar
+          tu bienestar emocional. Los datos te ayudarán a entender qué factores
+          influyen en cómo te sentís.
         </p>
       </div>
-
-      <CommonModal 
-        isOpen={showModal} 
-        onClose={() => setShowModal(false)} 
-        onConfirm={handleSubmit}
-=======
-      <AboutFeeling />
 
       <CommonModal
         isOpen={showModal}
         onClose={() => setShowModal(false)}
->>>>>>> 7d90f1edd1d5910f9239a961dc32a30db7254dff
+        // onConfirm={handleSubmit}
         title="Estado de ánimo"
         confirmText="Agregar"
         cancelText="Cancelar"

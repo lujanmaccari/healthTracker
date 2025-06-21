@@ -17,10 +17,7 @@ ChartJS.register(BarElement, CategoryScale, LinearScale, Tooltip, Legend);
 
 const StudyChart = () => {
   const [showModal, setShowModal] = useState(false);
-<<<<<<< HEAD
-  const [studyHours, setStudyHours] = useState(1.15); // horas por defecto 
-=======
->>>>>>> 7d90f1edd1d5910f9239a961dc32a30db7254dff
+  // const [studyHours, setStudyHours] = useState(1.15); // horas por defecto
 
   // purooo mock x2
   const studyData = {
@@ -60,39 +57,8 @@ const StudyChart = () => {
     },
   };
 
-<<<<<<< HEAD
-  const filterButtons = [
-    { id: "D", label: "Día" },
-    { id: "W", label: "Semana" },
-    { id: "M", label: "Mes" },
-    { id: "BM", label: "6 Meses" },
-    { id: "Y", label: "Año" },
-  ];
-
-  const currentData = studyData[activeFilter];
-  const totalHours = currentData.data.reduce((a, b) => a + b, 0);
-  const averageHours = activeFilter === "D" ? totalHours : 
-                     activeFilter === "W" ? totalHours / 7 : 
-                     activeFilter === "M" ? totalHours / 4 : 
-                     activeFilter === "BM" ? totalHours / 6 / 30 : 
-                     totalHours / 12 / 30;
-
-  const data = {
-    labels: currentData.labels,
-    datasets: [
-      {
-        label: "Horas",
-        data: currentData.data,
-        backgroundColor: "#4a6fa5",
-        borderColor: "transparent",
-        borderRadius: 4,
-        barThickness: 24,
-      },
-    ],
-=======
   const handleOpenModal = () => {
     setShowModal(true);
->>>>>>> 7d90f1edd1d5910f9239a961dc32a30db7254dff
   };
 
   const handleCloseModal = () => {
@@ -106,115 +72,6 @@ const StudyChart = () => {
         handleOpenModal={handleOpenModal}
         chartData={studyData}
       />
-<<<<<<< HEAD
-
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          gap: "6px",
-          marginBottom: "20px",
-        }}
-      >
-        {filterButtons.map((button) => (
-          <button
-            key={button.id}
-            onClick={() => setActiveFilter(button.id)}
-            style={{
-              flex: 1,
-              padding: "8px",
-              border: "none",
-              borderRadius: "8px",
-              backgroundColor: activeFilter === button.id ? "#4a6fa5" : "#f0f0f0",
-              color: activeFilter === button.id ? "white" : "#333",
-              fontWeight: "bold",
-              fontSize: "14px",
-              cursor: "pointer",
-              minWidth: "40px"
-            }}
-          >
-            {button.label}
-          </button>
-        ))}
-      </div>
-
-      <div style={{ 
-        height: "220px", 
-        marginBottom: "20px",
-        backgroundColor: "#f9f9f9",
-        borderRadius: "12px",
-        padding: "16px"
-      }}>
-        <Bar data={data} options={options} />
-      </div>
-
-      <div style={{ 
-        textAlign: "center", 
-        margin: "20px 0",
-        fontSize: "16px",
-        color: "#555"
-      }}>
-        <p>
-          Estás promediando <strong>{averageHours.toFixed(2)}</strong> horas de estudio {
-            activeFilter === "D" ? "hoy" :
-            activeFilter === "W" ? "diarias esta semana" :
-            activeFilter === "M" ? "por semana este mes" :
-            activeFilter === "BM" ? "diarias estos 6 meses" :
-            "diarias este año"
-          }
-        </p>
-      </div>
-
-      <div
-        style={{
-          backgroundColor: "#F5F5F5",
-          padding: "16px",
-          borderRadius: "12px",
-        }}
-      >
-        <h5 style={{ 
-          color: "#333", 
-          marginBottom: "12px",
-          fontSize: "16px"
-        }}>
-          Acerca de <b>Horas de Estudio</b>
-        </h5>
-        <p style={{ 
-          color: "#666", 
-          lineHeight: "1.5",
-          fontSize: "14px"
-        }}>
-          Registrá tus horas de estudio para llevar un seguimiento de tu progreso académico. 
-          Analizá tus patrones y mejorá tu rendimiento.
-          A ver si promocionás Analisis Matemático, burrito.
-        </p>
-      </div>
-
-      <CommonModal 
-        isOpen={showModal} 
-        onClose={() => setShowModal(false)} 
-        onConfirm={handleSubmit}
-        title="Registrar horas"
-        confirmText="Guardar"
-        cancelText="Cancelar"
-      >
-        <div style={{ width: "100%", marginBottom: "1rem" }}>
-          <div className="mb-3">
-            <label className="form-label">Horas de estudio:</label>
-            <input
-              type="number"
-              min="0"
-              max="24"
-              step="0.50"
-              value={studyHours}
-              onChange={(e) => setStudyHours(parseFloat(e.target.value))}
-              className="form-control"
-              style={{ fontSize: "1rem" }}
-            />
-          </div>
-          <small className="text-muted">Ingresá las horas estudiadas hoy</small>
-        </div>
-=======
       <AboutStudy />
       <CommonModal
         isOpen={showModal}
@@ -223,8 +80,7 @@ const StudyChart = () => {
         confirmText="Guardar"
         cancelText="Cancelar"
       >
-        <AddStudy onClose={handleCloseModal}/>
->>>>>>> 7d90f1edd1d5910f9239a961dc32a30db7254dff
+        <AddStudy onClose={handleCloseModal} />
       </CommonModal>
     </Container>
   );
