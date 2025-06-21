@@ -175,7 +175,7 @@ const FeelingChart = () => {
 
       <div style={{ textAlign: "center", margin: "20px 0" }}>
         <p style={{ fontSize: "16px", color: "#555" }}>
-          En promedio te has sentido{" "}
+          En promedio te sentiste{" "}
           <span style={{ fontWeight: "bold", color: "#333" }}>
             {averageMood > 50 ? "muy bien" : averageMood > 30 ? "bien" : "regular"}
           </span>{" "}
@@ -204,15 +204,14 @@ const FeelingChart = () => {
           marginTop: "30px",
         }}
       >
-        <h5 style={{ color: "#333", marginBottom: "15px" }}>Acerca de Estado de ánimo</h5>
+        <h5 style={{ color: "#333", marginBottom: "15px" }}>Acerca de <b>Estado de Ánimo</b></h5>
         <p style={{ color: "#666", lineHeight: "1.5" }}>
-          Registra tu estado de ánimo diario para identificar patrones y mejorar tu 
+          Registrá tu estado de ánimo diario para identificar patrones y mejorar tu 
           bienestar emocional. Los datos te ayudarán a entender qué factores influyen 
-          en cómo te sientes.
+          en cómo te sentís.
         </p>
       </div>
 
-      {/* Modal para agregar sentimiento */}
       <CommonModal 
         isOpen={showModal} 
         onClose={() => setShowModal(false)} 

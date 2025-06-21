@@ -13,6 +13,7 @@ import AddFeeling from "./screens/feeling/FeelingRegister";
 import FeelingChart from "./screens/feeling/FeelingChart";
 import StudyChart from "./screens/study/StudyChart";
 import SleepView from "./screens/sleep/SleepView"
+import FoodChart from "./screens/food/FoodChart";
 
 
 function App() {
@@ -31,6 +32,9 @@ function App() {
           <Route path="/feeling" element={<FeelingChart/>} /> 
           <Route path="/study" element={<StudyChart/>} />
           <Route path="/sleep" element={<SleepView />} />
+          <Route path="/food" element={<FoodChart />} />
+        </Route>
+        <Route path="*" element={<h1>404 Not Found</h1>}>
         </Route>
       </Routes>
     </ToastProvider>

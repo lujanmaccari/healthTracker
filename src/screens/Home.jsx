@@ -11,8 +11,6 @@ function Home() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalContent, setModalContent] = useState(null);
 
-  const modalAlimentacion = () => <>Ingrese Como fue su Alimetación hoy</>;
-
   return (
     <Container
       className="d-flex flex-column align-items-center mt-3 gap-3"
@@ -106,6 +104,7 @@ function Home() {
       <GenericCard
         title="Alimentación"
         icon="food"
+        href={"/food"}
         body={
           <div
             className="d-flex justify-content-around align-items-center px-2"

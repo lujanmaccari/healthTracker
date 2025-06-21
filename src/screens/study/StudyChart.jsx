@@ -17,9 +17,9 @@ ChartJS.register(BarElement, CategoryScale, LinearScale, Tooltip, Legend);
 const StudyChart = () => {
   const [activeFilter, setActiveFilter] = useState("W"); // semana como default
   const [showModal, setShowModal] = useState(false);
-  const [studyHours, setStudyHours] = useState(1.15); // horas por defecto según tu imagen
+  const [studyHours, setStudyHours] = useState(1.15); // horas por defecto 
 
-  // Datos mock de horas de estudio basados en tu imagen
+  // purooo mock x2
   const studyData = {
     D: {
       labels: ["6-9am", "9-12am", "12-15pm", "15-18pm", "18-21pm", "21-24pm"],
@@ -44,11 +44,11 @@ const StudyChart = () => {
   };
 
   const filterButtons = [
-    { id: "D", label: "D" },
-    { id: "W", label: "W" },
-    { id: "M", label: "M" },
-    { id: "BM", label: "6M" },
-    { id: "Y", label: "Y" },
+    { id: "D", label: "Día" },
+    { id: "W", label: "Semana" },
+    { id: "M", label: "Mes" },
+    { id: "BM", label: "6 Meses" },
+    { id: "Y", label: "Año" },
   ];
 
   const currentData = studyData[activeFilter];
@@ -218,15 +218,15 @@ const StudyChart = () => {
           marginBottom: "12px",
           fontSize: "16px"
         }}>
-          Acerca de Horas de estudio
+          Acerca de <b>Horas de Estudio</b>
         </h5>
         <p style={{ 
           color: "#666", 
           lineHeight: "1.5",
           fontSize: "14px"
         }}>
-          Registra tus horas de estudio para llevar un seguimiento de tu progreso académico. 
-          Analiza tus patrones y mejora tu rendimiento.
+          Registrá tus horas de estudio para llevar un seguimiento de tu progreso académico. 
+          Analizá tus patrones y mejorá tu rendimiento.
           A ver si promocionás Analisis Matemático, burrito.
         </p>
       </div>
@@ -253,7 +253,7 @@ const StudyChart = () => {
               style={{ fontSize: "1rem" }}
             />
           </div>
-          <small className="text-muted">Ingresa las horas estudiadas hoy</small>
+          <small className="text-muted">Ingresá las horas estudiadas hoy</small>
         </div>
       </CommonModal>
     </Container>
