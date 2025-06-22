@@ -22,6 +22,22 @@ a:hover {
   color: #535bf2;
 }
 
+html,
+body,
+#root {
+  min-height: 100vh;
+  height: fit-content;
+  width: 100%;
+}
+
+.fullscreen-center {
+  max-height: 100vh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 body {
   margin: 0;
   display: flex;

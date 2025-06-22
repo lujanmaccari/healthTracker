@@ -1,8 +1,16 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
+body,
+html {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+}
+
+#screen-content {
+  width: 100%;
+  min-height: 100vh;
+  padding: 1rem 2rem;
   text-align: center;
+  background-color: #FBFBFB;
 }
 
 .logo {
@@ -16,6 +24,38 @@
 }
 .logo.react:hover {
   filter: drop-shadow(0 0 2em #61dafbaa);
+}
+
+.btnApp{
+  background-color: #94a37d !important;
+  border-radius: 20px !important;
+  border: none !important;
+}
+
+.btnApp:hover{
+  background-color: #768264 !important;
+}
+
+.btnCancel{
+  background-color: rgba(145, 152, 142, 0.114) !important;
+  border-radius: 20px !important;
+  border: none !important;
+  color: #6d775d !important;
+}
+
+.btnCancel:hover{
+  background-color: rgba(145, 152, 142, 0.249) !important;
+}
+
+.btnNoBg{
+  background-color: transparent !important;
+  border: none !important;
+  color: #6d775d !important;
+  font-weight: 500 !important;
+}
+
+.text-custom-green {
+  color: #94a37d;
 }
 
 @keyframes logo-spin {
