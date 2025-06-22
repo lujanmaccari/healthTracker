@@ -40,7 +40,7 @@ const LoginForm = () => {
   };
 
   const redirect = () => {
-    navigate("/aboutYou");
+    navigate("/signin");
   };
 
   return (

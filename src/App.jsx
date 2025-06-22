@@ -1,9 +1,9 @@
 import { Route, Routes } from "react-router-dom";
 import GoalsView from "./screens/GoalsView";
-import SignIn from "./screens/login/SignIn";
+import Login from "./screens/login";
 import UserView from "./screens/User";
 import Home from "./screens/Home";
-import AboutYou from "./screens/AboutYou";
+import SignIn from "./screens/login/SignIn";
 import ProtectedRoutes from "./auth/ProtecterRoutes";
 import RedirectRoutes from "./auth/RedirectRoutes";
 import { ToastProvider } from "./contexts/ToastContext";
@@ -18,8 +18,8 @@ function App() {
     <ToastProvider>
       <Routes>
         <Route element={<RedirectRoutes />}>
-          <Route path="/" element={<SignIn />} />
-          <Route path="/aboutYou" element={<AboutYou />} />
+          <Route path="/" element={<Login />} />
+          <Route path="/signin" element={<SignIn />} />
         </Route>
         <Route element={<ProtectedRoutes />}>
           <Route path="/home" element={<Home />} />
