@@ -1,7 +1,6 @@
 import { Route, Routes } from "react-router-dom";
 import GoalsView from "./screens/GoalsView";
 import Login from "./screens/login";
-import UserView from "./screens/User";
 import Home from "./screens/Home";
 import SignIn from "./screens/login/SignIn";
 import ProtectedRoutes from "./auth/ProtecterRoutes";
@@ -24,7 +23,6 @@ function App() {
         <Route element={<ProtectedRoutes />}>
           <Route path="/home" element={<Home />} />
           <Route path="/goals" element={<GoalsView />} />
-          <Route path="/user" element={<UserView />} />
           <Route path="/activity" element={<ActivityChart />} />
           <Route path="/feeling" element={<FeelingChart />} />
           <Route path="/study" element={<StudyChart />} />

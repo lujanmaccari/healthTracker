@@ -126,7 +126,7 @@ const MainHeader = ({ title }) => {
     },
     {
       label: "Configuración de Objetivos",
-      onClick: () => {},
+      onClick: () => navigate("/goals"),
     },
     {
       label: "Configuración de Usuario",
