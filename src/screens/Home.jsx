@@ -1,6 +1,5 @@
 import { Container } from "react-bootstrap";
 import "../App.css";
-// import { useUser } from "../contexts/UserContext";
 import GenericCard from "../utils/GenericCard";
 import CommonModal from "../utils/CommonModal";
 import { useState } from "react";

@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Button, Container } from "react-bootstrap";
+import { Container } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { useUser } from "../contexts/UserContext";
 import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
@@ -54,6 +54,8 @@ const UserItemContainer = styled.div`
 
   span {
     color: ${COLORS.DARK_TEXT};
+    font-size: 1.2rem;
+    font-weight: 600;
   }
 `;
 
