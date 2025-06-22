@@ -2,6 +2,7 @@ import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Button, Container } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
+import { COLORS } from "../constants/colors";
 
 const HeaderSection = ({ title, onClickButton }) => {
   const navigate = useNavigate();
@@ -35,7 +36,7 @@ const HeaderSection = ({ title, onClickButton }) => {
       >
         <FontAwesomeIcon
           icon={faArrowLeft}
-          style={{ color: "#a5b48e", height: "5vh", cursor: "pointer" }}
+          style={{ color: COLORS.MAIN, height: "5vh", cursor: "pointer" }}
         />
       </Button>
 
@@ -44,7 +45,7 @@ const HeaderSection = ({ title, onClickButton }) => {
       <Button
         onClick={handleModal}
         style={{
-          color: "#a5b48e",
+          color: COLORS.MAIN,
           background: "transparent",
           border: "none",
         }}

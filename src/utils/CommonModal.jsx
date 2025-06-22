@@ -1,5 +1,6 @@
 import { Modal } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { COLORS } from "../constants/colors";
 
 const CommonModal = ({
   isOpen,
@@ -43,7 +44,7 @@ const CommonModal = ({
           <button
             className="btnApp"
             style={{
-              backgroundColor: "#b8cc9c",
+              backgroundColor: COLORS.MAIN,
               border: "none",
               color: "#333",
             }}

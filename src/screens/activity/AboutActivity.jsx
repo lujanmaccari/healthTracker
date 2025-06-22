@@ -3,7 +3,6 @@ import React from "react";
 export const AboutActivity = () => {
   return (
     <div>
-      {" "}
       <div
         style={{
           backgroundColor: "#F5F5F5",

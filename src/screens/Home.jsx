@@ -1,36 +1,27 @@
 import { Container } from "react-bootstrap";
 import "../App.css";
-import meditationImg from "../assets/meditation.png";
-import { useUser } from "../contexts/UserContext";
+// import { useUser } from "../contexts/UserContext";
 import GenericCard from "../utils/GenericCard";
 import CommonModal from "../utils/CommonModal";
 import { useState } from "react";
+import { COLORS } from "../constants/colors";
 
 function Home() {
-  const user = useUser();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalContent, setModalContent] = useState(null);
 
   return (
-    <Container
-      className="d-flex flex-column align-items-center mt-3 gap-3"
-      style={{ maxWidth: "400px" }}
-    >
-      <div className="mb-2">
-        <img
-          src={meditationImg}
-          alt="meditationImg"
-          style={{
-            width: "100px",
-            height: "100px",
-            borderRadius: "50%",
-            objectFit: "cover",
-          }}
-        />
-      </div>
-
-      <h3 className="mb-3">{user?.name || "-"}</h3>
-      <h5 className="text-muted mb-3">Resumen</h5>
+    <Container className="d-flex flex-column align-items-center mt-3 gap-3">
+      <h3
+        style={{
+          alignSelf: "flex-start",
+          color: COLORS.DARK_TEXT,
+          fontWeight: "bold",
+        }}
+        className="mb-3"
+      >
+        Datos Anclados
+      </h3>
 
       <CommonModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
         {modalContent}
@@ -40,10 +31,7 @@ function Home() {
         icon="fire"
         href="/activity"
         body={
-          <div
-            className="d-flex justify-content-between text-center"
-            style={{ fontSize: "0.9rem" }}
-          >
+          <div className="d-flex justify-content-between text-center">
             <div className="px-2">
               <div className="text-muted">Moverse</div>
               <div className="fw-bold">1'kcal</div>

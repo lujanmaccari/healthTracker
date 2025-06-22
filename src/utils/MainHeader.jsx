@@ -6,12 +6,20 @@ import { useNavigate } from "react-router-dom";
 import { useUser } from "../contexts/UserContext";
 import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
 import styled from "styled-components";
+import { COLORS } from "../constants/colors";
 
 const HeaderContainer = styled(Container)`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 1rem;
+  padding: 1rem 10vw;
+  width: 1900px;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  max-width: 100%;
+  background-color: ${COLORS.MAIN_BG};
+  box-shadow: 0 4px 10px -4px #eee;
 `;
 
 const DropdownMenuContainer = styled.ul`
@@ -30,8 +38,8 @@ const DropdownMenuContainer = styled.ul`
 
     &:hover,
     &:focus {
-      background-color: #a5b48e;
-      color: #f0f0f0;
+      background-color: ${COLORS.MAIN};
+      color: ${COLORS.SECONDARY_BG};
       outline: none;
     }
   }
@@ -41,8 +49,12 @@ const UserItemContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 1rem;
+  padding-bottom: 0.5rem;
   gap: 0.5rem;
+
+  span {
+    color: ${COLORS.DARK_TEXT};
+  }
 `;
 
 const StyledIcon = styled(FontAwesomeIcon)`
@@ -51,14 +63,15 @@ const StyledIcon = styled(FontAwesomeIcon)`
   ${({ isSelectable }) => isSelectable && `cursor: pointer;`}
 `;
 
-export const DropdownMenu = ({ isOpen, setOpen, options }) => {
+export const DropdownMenu = ({ isOpen, setOpen, options, parentRef }) => {
   const containerRef = useRef(null);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
+      const applicableRef = parentRef || containerRef;
       if (
-        containerRef.current &&
-        !containerRef.current.contains(event.target)
+        applicableRef.current &&
+        !applicableRef.current.contains(event.target)
       ) {
         setOpen(false);
       }
@@ -71,9 +84,8 @@ export const DropdownMenu = ({ isOpen, setOpen, options }) => {
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [setOpen]);
+  }, [setOpen, parentRef]);
 
-  console.log("isOpen", isOpen);
   const closeMenu = () => setOpen(false);
 
   if (isOpen)
@@ -99,6 +111,7 @@ export const DropdownMenu = ({ isOpen, setOpen, options }) => {
 
 const MainHeader = ({ title }) => {
   const [isDropdownMenuOpen, setDropdownMenuOpen] = useState(false);
+  const menuRef = useRef(null);
   const navigate = useNavigate();
   const { signOut, name } = useUser();
 
@@ -123,27 +136,27 @@ const MainHeader = ({ title }) => {
   ];
 
   const openDropdownMenu = () => {
-    console.log("opening", isDropdownMenuOpen);
-    setDropdownMenuOpen(true);
+    setDropdownMenuOpen((prev) => !prev);
   };
 
   return (
     <HeaderContainer>
-      <div className="position-relative d-inline-block">
+      <div ref={menuRef} className="position-relative d-inline-block">
         <div onClick={openDropdownMenu}>
-          <StyledIcon icon={faBars} color="#a5b48e" isSelectable />
+          <StyledIcon icon={faBars} color={COLORS.MAIN} isSelectable />
         </div>
         <DropdownMenu
           isOpen={isDropdownMenuOpen}
           setOpen={setDropdownMenuOpen}
           options={menuItems}
+          parentRef={menuRef}
         />
       </div>
       <h3>{title}</h3>
 
       <UserItemContainer>
         <span>{name}</span>
-        <StyledIcon icon={faUserCircle} color="#60655E" />
+        <StyledIcon icon={faUserCircle} color={COLORS.SECONDARY} />
       </UserItemContainer>
     </HeaderContainer>
   );

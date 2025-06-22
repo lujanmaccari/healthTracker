@@ -4,10 +4,12 @@ import {
   faBookOpen,
   faFire,
   faSpa,
+  faCircleChevronRight,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Card, Container } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
+import { COLORS } from "../constants/colors";
 
 const GenericCard = ({ title, body, icon, href, onClickIcon }) => {
   const navigate = useNavigate();
@@ -38,57 +40,60 @@ const GenericCard = ({ title, body, icon, href, onClickIcon }) => {
   return (
     <Card
       style={{
-        background: "#dfdfdf",
+        background: COLORS.SECONDARY_BG,
         border: "none",
         width: "80vw",
-        boxShadow: "-10px 10px 10px -2px rgba(0, 0, 0, 0.2)",
+        padding: "15px 0px",
+        borderRadius: 20,
       }}
     >
       <Container
         style={{
           display: "flex",
-          alignItems: "center",
+          justifyContent: "flex-start",
+          alignItems: "start",
           gap: "1rem",
+          position: "relative",
         }}
       >
         <FontAwesomeIcon
           icon={icon}
-          style={{ color: "#a5b48e", height: "8vh" }}
+          style={{ color: COLORS.MAIN, height: "4rem", width: "4rem" }}
         />
 
-        <Card.Title
-          style={{
-            color: "#737d63",
-            fontWeight: "bold",
-          }}
-        >
-          {title}
-        </Card.Title>
+        <div style={{ display: "flex", flexDirection: "column" }}>
+          <Card.Title
+            style={{
+              color: COLORS.DARK_TEXT,
+              fontSize: "5vh",
+              textAlign: "left",
+              paddingLeft: 5,
+              marginTop: 10,
+            }}
+          >
+            {title}
+          </Card.Title>
+          <Card.Body style={{ width: "60vw", fontSize: "3vh" }}>
+            <Card.Text>
+              {Array.isArray(body) ? body.join(" | ") : body}
+            </Card.Text>
+          </Card.Body>
+        </div>
 
-        <svg
+        <FontAwesomeIcon
           onClick={href ? redirect : onClickIcon}
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 24 24"
-          fill="currentColor"
+          icon={faCircleChevronRight}
           style={{
-            width: "2rem",
-            height: "2rem",
-            color: "#a5b48e",
-            marginLeft: "auto",
+            width: "2.5rem",
+            height: "2.5rem",
+            color: COLORS.SECONDARY,
             cursor: "pointer",
+            position: "absolute",
+            top: 5,
+            right: 20,
           }}
-        >
-          <path
-            fillRule="evenodd"
-            d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25Zm4.28 10.28a.75.75 0 0 0 0-1.06l-3-3a.75.75 0 1 0-1.06 1.06l1.72 1.72H8.25a.75.75 0 0 0 0 1.5h5.69l-1.72 1.72a.75.75 0 1 0 1.06 1.06l3-3Z"
-            clipRule="evenodd"
-          />
-        </svg>
+        />
       </Container>
-
-      <Card.Body>
-        <Card.Text>{Array.isArray(body) ? body.join(" | ") : body}</Card.Text>
-      </Card.Body>
     </Card>
   );
 };

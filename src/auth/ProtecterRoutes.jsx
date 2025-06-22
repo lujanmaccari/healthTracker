@@ -6,7 +6,9 @@ function ProtectedRoutes() {
   return (
     <ProtectedRoute>
       <MainHeader />
-      <Outlet />
+      <div id="screen-content">
+        <Outlet />
+      </div>
     </ProtectedRoute>
   );
 }
