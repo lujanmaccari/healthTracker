@@ -1,24 +1,18 @@
-import { Navigate, useLocation } from "react-router-dom";
+import { Navigate, useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { supabase } from "../../supabaseClient";
 import { UserContext } from "../contexts/UserContext";
+import { signOut } from "../helpers/signOutFunction";
 
 function ProtectedRoute({ children }) {
   const [authUser, setAuthUser] = useState(null);
   const [userData, setUserData] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [isSigningIn, setIsSigningIn] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchUser = async () => {
-      const isSigningIn = location.pathname === "/aboutYou";
-      setIsSigningIn(isSigningIn);
-      if (isSigningIn) {
-        setLoading(false);
-        return;
-      }
-
       const { data: sessionData } = await supabase.auth.getSession();
       const user = sessionData?.session?.user ?? null;
       setAuthUser(user);
@@ -55,10 +49,17 @@ function ProtectedRoute({ children }) {
 
   if (loading) return <div>Cargando...</div>;
 
-  if (!authUser && !isSigningIn) return <Navigate to="/" replace />;
+  if (!authUser) return <Navigate to="/" replace />;
+
+  const userDataObject = {
+    ...userData,
+    signOut: () => signOut(supabase, navigate),
+  };
 
   return (
-    <UserContext.Provider value={userData}>{children}</UserContext.Provider>
+    <UserContext.Provider value={userDataObject}>
+      {children}
+    </UserContext.Provider>
   );
 }
 

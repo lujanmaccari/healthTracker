@@ -37,19 +37,6 @@ const LoginForm = () => {
     } else {
       navigate("/home");
     }
-
-    // REGISTRAR USUARIO
-    // const { data, error } = await supabase.auth.signUp({
-    //   email: values.email,
-    //   password: values.password,
-    // });
-
-    // if (error) {
-    //   console.error("Error al registrarse:", error.message);
-    // } else {
-    //   console.log("Usuario registrado:", data);
-    //   navigate("/aboutYou");
-    // }
   };
 
   const redirect = () => {
