@@ -2,7 +2,8 @@ import { Navigate, useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { supabase } from "../../supabaseClient";
 import { UserContext } from "../contexts/UserContext";
-import { signOut } from "../helpers/signOutFunction";
+import { useToast } from "../contexts/ToastContext";
+import { signOut, updateUser } from "../helpers";
 
 function ProtectedRoute({ children }) {
   const [authUser, setAuthUser] = useState(null);
@@ -10,6 +11,7 @@ function ProtectedRoute({ children }) {
   const [loading, setLoading] = useState(true);
   const location = useLocation();
   const navigate = useNavigate();
+  const { showToast } = useToast();
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -53,6 +55,9 @@ function ProtectedRoute({ children }) {
 
   const userDataObject = {
     ...userData,
+    setUserData,
+    updateUser: (data) =>
+      updateUser(supabase, setUserData, showToast, userData, data),
     signOut: () => signOut(supabase, navigate),
   };
 

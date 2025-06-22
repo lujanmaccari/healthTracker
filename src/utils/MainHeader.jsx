@@ -7,6 +7,7 @@ import { useUser } from "../contexts/UserContext";
 import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
 import styled from "styled-components";
 import { COLORS } from "../constants/colors";
+import UpdateUserModal from "../screens/updateUserModal";
 
 const HeaderContainer = styled(Container)`
   display: flex;
@@ -115,6 +116,7 @@ const MainHeader = ({ title }) => {
   const [isDropdownMenuOpen, setDropdownMenuOpen] = useState(false);
   const menuRef = useRef(null);
   const navigate = useNavigate();
+  const [isModalOpen, setModalOpen] = useState(false);
   const { signOut, name } = useUser();
 
   const menuItems = [
@@ -128,7 +130,9 @@ const MainHeader = ({ title }) => {
     },
     {
       label: "Configuración de Usuario",
-      onClick: () => {},
+      onClick: () => {
+        setModalOpen(true);
+      },
     },
 
     {
@@ -160,6 +164,10 @@ const MainHeader = ({ title }) => {
         <span>{name}</span>
         <StyledIcon icon={faUserCircle} color={COLORS.SECONDARY} />
       </UserItemContainer>
+      <UpdateUserModal
+        isOpen={isModalOpen}
+        onClose={() => setModalOpen(false)}
+      />
     </HeaderContainer>
   );
 };
