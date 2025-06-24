@@ -1,8 +1,11 @@
 import { Formik } from "formik";
 import { Button, Container, Form } from "react-bootstrap";
 import * as Yup from "yup";
+import { supabase } from "../../../supabaseClient";
+import { useToast } from "../../contexts/ToastContext";
+
 const AddActivity = ({ onClose }) => {
-  const fechaActual = new Date().toISOString();
+  const { showToast } = useToast();
 
   const initialValues = {
     activity: "",
@@ -14,9 +17,25 @@ const AddActivity = ({ onClose }) => {
     duration: Yup.string().required("La duracion es obligatoria"),
   });
 
-  const handleSubmit = async () => {
-    // enviar junto con activity y duration fecha actual
-    console.log("Formulario enviado");
+  const handleSubmit = async (values, { resetForm }) => {
+    const { activity, duration } = values;
+    const date = new Date().toISOString();
+    const { error } = await supabase.from("activities").insert([
+      {
+        type: activity,
+        duration: parseInt(duration),
+        date,
+      },
+    ]);
+
+    if (error) {
+      showToast("Error al guardar la actividad");
+      return;
+    }
+
+    showToast("Actividad guardada con éxito", "success");
+    resetForm();
+    onClose();
   };
 
   return (
@@ -38,13 +57,14 @@ const AddActivity = ({ onClose }) => {
             <Form.Group className="mb-3 text-start" controlId="activity">
               <Form.Label>Tipo de actividad</Form.Label>
               <Form.Select
+                name="activity"
                 value={values.activity}
                 onChange={handleChange}
                 onBlur={handleBlur}
               >
-                <option value="ejercicio">Caminar</option>
-                <option value="horasestudio">Correr</option>
-                <option value="sueño">Bicicleta</option>
+                <option value="Caminar">Caminar</option>
+                <option value="Correr">Correr</option>
+                <option value="Bicicleta">Bicicleta</option>
               </Form.Select>
 
               <Form.Control.Feedback type="invalid">

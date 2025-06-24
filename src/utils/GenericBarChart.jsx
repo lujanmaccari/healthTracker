@@ -46,8 +46,6 @@ const GenericBarChart = ({ title, handleOpenModal, chartData }) => {
     { id: "D", label: "D" },
     { id: "W", label: "W" },
     { id: "M", label: "M" },
-    { id: "BM", label: "6M" },
-    { id: "Y", label: "Y" },
   ];
   const data = {
     labels: currentData.labels,
