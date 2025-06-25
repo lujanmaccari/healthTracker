@@ -4,8 +4,9 @@ import * as Yup from "yup";
 import { supabase } from "../../../supabaseClient";
 import { useToast } from "../../contexts/ToastContext";
 
-const AddActivity = ({ onClose }) => {
+const AddActivity = ({ onClose, states }) => {
   const { showToast } = useToast();
+  const { reloadData, setReloadData } = states;
 
   const initialValues = {
     activity: "",
@@ -19,12 +20,14 @@ const AddActivity = ({ onClose }) => {
 
   const handleSubmit = async (values, { resetForm }) => {
     const { activity, duration } = values;
-    const date = new Date().toISOString();
+    const date = new Date();
+    date.setHours(date.getHours() - 3);
+    const isoDate = date.toISOString();
     const { error } = await supabase.from("activities").insert([
       {
         type: activity,
         duration: parseInt(duration),
-        date,
+        date: isoDate,
       },
     ]);
 
@@ -34,6 +37,7 @@ const AddActivity = ({ onClose }) => {
     }
 
     showToast("Actividad guardada con éxito", "success");
+    setReloadData(!reloadData);
     resetForm();
     onClose();
   };
@@ -53,7 +57,7 @@ const AddActivity = ({ onClose }) => {
           touched,
           errors,
         }) => (
-          <Form noValidate onSubmit={handleSubmit}>
+          <Form onSubmit={handleSubmit}>
             <Form.Group className="mb-3 text-start" controlId="activity">
               <Form.Label>Tipo de actividad</Form.Label>
               <Form.Select
@@ -62,6 +66,7 @@ const AddActivity = ({ onClose }) => {
                 onChange={handleChange}
                 onBlur={handleBlur}
               >
+                <option value="">Selecciona una actividad</option>
                 <option value="Caminar">Caminar</option>
                 <option value="Correr">Correr</option>
                 <option value="Bicicleta">Bicicleta</option>

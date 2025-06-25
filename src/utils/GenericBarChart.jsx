@@ -38,10 +38,23 @@ ChartJS.register(BarElement, CategoryScale, LinearScale, Tooltip, Legend);
  * @returns {JSX.Element} Componente que renderiza un grafico
  */
 const GenericBarChart = ({ title, handleOpenModal, chartData }) => {
-  const [activeFilter, setActiveFilter] = useState("W"); // semana como default
-  const currentData = chartData[activeFilter];
+  const [activeFilter, setActiveFilter] = useState("D");
+  const currentData = chartData
+    ? chartData[activeFilter]
+    : { labels: [], data: [] };
   const totalHours = currentData.data.reduce((a, b) => a + b, 0);
   const averageHours = totalHours / currentData.labels.length;
+  const maxValue = Math.max(...currentData.data);
+  const dynamicMax = maxValue > 0 ? Math.ceil(maxValue * 1.2) : 1;
+
+  const calculateStepSize = (max) => {
+    if (max <= 2) return 0.5;
+    if (max <= 5) return 1;
+    if (max <= 10) return 2;
+    if (max <= 20) return 5;
+    return Math.ceil(max / 10);
+  };
+
   const filterButtons = [
     { id: "D", label: "D" },
     { id: "W", label: "W" },
@@ -74,31 +87,13 @@ const GenericBarChart = ({ title, handleOpenModal, chartData }) => {
             size: 12,
           },
         },
-        max:
-          activeFilter === "D"
-            ? 3
-            : activeFilter === "W"
-            ? 3
-            : activeFilter === "M"
-            ? 10
-            : activeFilter === "BM"
-            ? 50
-            : 50,
+        max: dynamicMax,
         grid: {
           display: true,
           color: "#e0e0e0",
         },
         ticks: {
-          stepSize:
-            activeFilter === "D"
-              ? 0.5
-              : activeFilter === "W"
-              ? 0.5
-              : activeFilter === "M"
-              ? 2
-              : activeFilter === "BM"
-              ? 10
-              : 10,
+          stepSize: calculateStepSize(dynamicMax),
         },
       },
       x: {
@@ -125,12 +120,15 @@ const GenericBarChart = ({ title, handleOpenModal, chartData }) => {
       },
     },
   };
+
+  if (!chartData || !chartData[activeFilter]) {
+    return (
+      <p style={{ textAlign: "center", padding: "20px" }}>Cargando datos...</p>
+    );
+  }
   return (
     <Container>
-      <HeaderSection
-        title={title}
-        onClickButton={handleOpenModal}
-      />
+      <HeaderSection title={title} onClickButton={handleOpenModal} />
       <div
         style={{
           display: "flex",
@@ -178,9 +176,7 @@ const GenericBarChart = ({ title, handleOpenModal, chartData }) => {
             ? "diarias esta semana"
             : activeFilter === "M"
             ? "por semana este mes"
-            : activeFilter === "BM"
-            ? "diarias estos 6 meses"
-            : "diarias este año"}
+            : ""}
         </p>
       </div>
       <div
