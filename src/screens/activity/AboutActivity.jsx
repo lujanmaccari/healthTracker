@@ -14,10 +14,11 @@ export const AboutActivity = () => {
           style={{
             color: "#333",
             marginBottom: "12px",
+            fontWeight: "bold",
             fontSize: "16px",
           }}
         >
-          Acerca de Actividad
+          ¿Sabías que tu salud mental mejora con el ejercicio?
         </h5>
         <p
           style={{

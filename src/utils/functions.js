@@ -8,10 +8,17 @@ export const prepareChartData = (activities) => {
   };
 
   // === DAY (D): Rangos horarios ===
+  const isSameLocalDay = (dateA, dateB) => {
+    return (
+      dateA.getFullYear() === dateB.getFullYear() &&
+      dateA.getMonth() === dateB.getMonth() &&
+      dateA.getDate() === dateB.getDate()
+    );
+  };
+
   const todayActivities = activities.filter((a) => {
     const activityDate = getLocalDate(a.date);
-    const activityDateStr = activityDate.toISOString().split("T")[0];
-    return activityDateStr === todayStr;
+    return isSameLocalDay(activityDate, today);
   });
 
   const D_ranges = [
@@ -31,7 +38,6 @@ export const prepareChartData = (activities) => {
       .reduce((sum, a) => sum + Number(a.duration), 0);
     return total / 60;
   });
-
   // === WEEK (W) ===
   const startOfWeek = new Date(today);
   startOfWeek.setDate(today.getDate() - today.getDay()); // domingo
@@ -48,12 +54,14 @@ export const prepareChartData = (activities) => {
   );
 
   const W_data = weekDays.map((date) => {
-    const dayStr = date.toISOString().split("T")[0];
     const totalMinutes = activities
       .filter((a) => {
         const activityDate = getLocalDate(a.date);
-        const activityDateStr = activityDate.toISOString().split("T")[0];
-        return activityDateStr === dayStr;
+        return (
+          activityDate.getFullYear() === date.getFullYear() &&
+          activityDate.getMonth() === date.getMonth() &&
+          activityDate.getDate() === date.getDate()
+        );
       })
       .reduce((sum, a) => sum + Number(a.duration), 0);
     return totalMinutes / 60;
@@ -65,11 +73,17 @@ export const prepareChartData = (activities) => {
   const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
 
   const numberOfWeeks = Math.ceil(daysInMonth / 7);
-  const M_labels = Array.from({ length: numberOfWeeks }, (_, i) => `Semana ${i + 1}`);
+  const M_labels = Array.from(
+    { length: numberOfWeeks },
+    (_, i) => `Semana ${i + 1}`
+  );
   const M_data = Array.from({ length: numberOfWeeks }, () => 0);
 
   for (let day = 1; day <= daysInMonth; day++) {
-    const dateStr = `${currentYear}-${String(currentMonth + 1).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
+    const dateStr = `${currentYear}-${String(currentMonth + 1).padStart(
+      2,
+      "0"
+    )}-${String(day).padStart(2, "0")}`;
     const weekIndex = Math.floor((day - 1) / 7);
     const dayTotal = activities
       .filter((a) => {
