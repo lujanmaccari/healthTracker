@@ -23,7 +23,7 @@ const AddActivity = ({ onClose, states }) => {
     const date = new Date();
     date.setHours(date.getHours() - 3);
     const isoDate = date.toISOString();
-    const { error } = await supabase.from("activities").insert([
+    const { error } = await supabase.from("user_activities").insert([
       {
         type: activity,
         duration: parseInt(duration),

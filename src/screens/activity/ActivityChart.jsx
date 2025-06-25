@@ -67,7 +67,7 @@ const ActivityChart = () => {
 
   const fetchActivities = async () => {
     const { data, error } = await supabase
-      .from("activities")
+      .from("user_activities")
       .select("*")
       .order("date", { ascending: true });
 
