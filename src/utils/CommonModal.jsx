@@ -46,7 +46,7 @@ const CommonModal = ({
             style={{
               backgroundColor: COLORS.MAIN,
               border: "none",
-              color: "#333",
+              color: COLORS.MAIN_BG,
             }}
             onClick={onConfirm}
           >

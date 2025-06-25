@@ -1,8 +1,12 @@
 import { Formik } from "formik";
 import { Button, Container, Form } from "react-bootstrap";
 import * as Yup from "yup";
-const AddActivity = ({ onClose }) => {
-  const fechaActual = new Date().toISOString();
+import { supabase } from "../../../supabaseClient";
+import { useToast } from "../../contexts/ToastContext";
+
+const AddActivity = ({ onClose, states }) => {
+  const { showToast } = useToast();
+  const { reloadData, setReloadData } = states;
 
   const initialValues = {
     activity: "",
@@ -14,9 +18,28 @@ const AddActivity = ({ onClose }) => {
     duration: Yup.string().required("La duracion es obligatoria"),
   });
 
-  const handleSubmit = async () => {
-    // enviar junto con activity y duration fecha actual
-    console.log("Formulario enviado");
+  const handleSubmit = async (values, { resetForm }) => {
+    const { activity, duration } = values;
+    const date = new Date();
+    date.setHours(date.getHours() - 3);
+    const isoDate = date.toISOString();
+    const { error } = await supabase.from("user_activities").insert([
+      {
+        type: activity,
+        duration: parseInt(duration),
+        date: isoDate,
+      },
+    ]);
+
+    if (error) {
+      showToast("Error al guardar la actividad");
+      return;
+    }
+
+    showToast("Actividad guardada con éxito", "success");
+    setReloadData(!reloadData);
+    resetForm();
+    onClose();
   };
 
   return (
@@ -34,17 +57,19 @@ const AddActivity = ({ onClose }) => {
           touched,
           errors,
         }) => (
-          <Form noValidate onSubmit={handleSubmit}>
+          <Form onSubmit={handleSubmit}>
             <Form.Group className="mb-3 text-start" controlId="activity">
               <Form.Label>Tipo de actividad</Form.Label>
               <Form.Select
+                name="activity"
                 value={values.activity}
                 onChange={handleChange}
                 onBlur={handleBlur}
               >
-                <option value="ejercicio">Caminar</option>
-                <option value="horasestudio">Correr</option>
-                <option value="sueño">Bicicleta</option>
+                <option value="">Selecciona una actividad</option>
+                <option value="Caminar">Caminar</option>
+                <option value="Correr">Correr</option>
+                <option value="Bicicleta">Bicicleta</option>
               </Form.Select>
 
               <Form.Control.Feedback type="invalid">

@@ -1,4 +1,4 @@
-export const signOut = async (supabase, navigate) => {
+const signOut = async (supabase, navigate) => {
   const { error } = await supabase.auth.signOut();
   if (error) {
     console.error("Error al cerrar sesión:", error.message);
@@ -7,3 +7,5 @@ export const signOut = async (supabase, navigate) => {
     navigate("/");
   }
 };
+
+export default signOut;

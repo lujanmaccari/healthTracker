@@ -6,16 +6,7 @@ const SignIn = () => {
   const [activeLogin, setActiveLogin] = useState(false);
 
   return (
-    <div
-      className="fullscreen-center"
-      style={{
-        height: "100%",
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
+    <div className="fullscreen-center">
       {!activeLogin ? (
         <Landing setActiveLogin={setActiveLogin} />
       ) : (

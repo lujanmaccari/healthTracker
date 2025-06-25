@@ -2,7 +2,15 @@ import meditationImg from "../../assets/meditation.png";
 
 function Landing({ setActiveLogin }) {
   return (
-    <div style={{}}>
+    <div
+      style={{
+        height: "100%",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
       <h1 className="mt-3">Health Tracker</h1>
 
       <div style={{ position: "relative", display: "inline-block" }}>

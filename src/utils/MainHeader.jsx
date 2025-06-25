@@ -1,12 +1,13 @@
 import { useState, useRef, useEffect } from "react";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Button, Container } from "react-bootstrap";
+import { Container } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { useUser } from "../contexts/UserContext";
 import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
 import styled from "styled-components";
 import { COLORS } from "../constants/colors";
+import UpdateUserModal from "../screens/updateUserModal";
 
 const HeaderContainer = styled(Container)`
   display: flex;
@@ -54,6 +55,8 @@ const UserItemContainer = styled.div`
 
   span {
     color: ${COLORS.DARK_TEXT};
+    font-size: 1.2rem;
+    font-weight: 600;
   }
 `;
 
@@ -113,6 +116,7 @@ const MainHeader = ({ title }) => {
   const [isDropdownMenuOpen, setDropdownMenuOpen] = useState(false);
   const menuRef = useRef(null);
   const navigate = useNavigate();
+  const [isModalOpen, setModalOpen] = useState(false);
   const { signOut, name } = useUser();
 
   const menuItems = [
@@ -122,11 +126,13 @@ const MainHeader = ({ title }) => {
     },
     {
       label: "Configuración de Objetivos",
-      onClick: () => {},
+      onClick: () => navigate("/goals"),
     },
     {
       label: "Configuración de Usuario",
-      onClick: () => {},
+      onClick: () => {
+        setModalOpen(true);
+      },
     },
 
     {
@@ -158,6 +164,10 @@ const MainHeader = ({ title }) => {
         <span>{name}</span>
         <StyledIcon icon={faUserCircle} color={COLORS.SECONDARY} />
       </UserItemContainer>
+      <UpdateUserModal
+        isOpen={isModalOpen}
+        onClose={() => setModalOpen(false)}
+      />
     </HeaderContainer>
   );
 };
