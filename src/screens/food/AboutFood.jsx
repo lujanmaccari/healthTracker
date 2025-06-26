@@ -5,6 +5,7 @@ const AboutFood = () => (
         backgroundColor: "#F5F5F5",
         padding: "16px",
         borderRadius: "12px",
+        marginTop: 50,
       }}
     >
       <h5
@@ -15,7 +16,8 @@ const AboutFood = () => (
           fontSize: "16px",
         }}
       >
-      ¿Sabías que una buena alimentación te ayuda a tener más energía y fortalecer tus defensas?
+        ¿Sabías que una buena alimentación te ayuda a tener más energía y
+        fortalecer tus defensas?
       </h5>
       <p
         style={{

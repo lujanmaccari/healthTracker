@@ -133,7 +133,11 @@ const StatFoodies = () => {
     plugins: {
       title: {
         display: true,
-        text: "¡Las personas que mantienen una dieta sana reportan el mayor bienestar emocional!",
+        text: [
+          "¡Las personas que mantienen",
+          "una dieta sana reportan",
+          "el mayor bienestar emocional!",
+        ],
       },
       legend: {
         display: false,
