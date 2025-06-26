@@ -1,6 +1,5 @@
 const StatFoodie = ({ dominantQuality, qualityEvaluation, activeFilter }) => (
   <>
-    {/* leyenda con checkbox “solo lectura” */}
     <div style={{
       display: 'flex', justifyContent: 'center',
       gap: '20px', margin: '20px 0'
@@ -18,7 +17,6 @@ const StatFoodie = ({ dominantQuality, qualityEvaluation, activeFilter }) => (
       ))}
     </div>
 
-    {/* frase final */}
     <p style={{ textAlign: "center", fontSize: 16, color: "#555" }}>
       Tu alimentación es{" "}
       <strong style={{ color: qualityEvaluation.color, textTransform: "capitalize" }}>
