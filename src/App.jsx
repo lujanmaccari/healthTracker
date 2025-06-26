@@ -1,5 +1,5 @@
 import { Route, Routes } from "react-router-dom";
-import GoalsView from "./screens/GoalsView";
+import GoalSettings from "./screens/GoalSettings";
 import Login from "./screens/login";
 import Home from "./screens/Home";
 import SignIn from "./screens/login/SignIn";
@@ -22,7 +22,7 @@ function App() {
         </Route>
         <Route element={<ProtectedRoutes />}>
           <Route path="/home" element={<Home />} />
-          <Route path="/goals" element={<GoalsView />} />
+          <Route path="/goals" element={<GoalSettings />} />
           <Route path="/activity" element={<ActivityChart />} />
           <Route path="/feeling" element={<FeelingChart />} />
           <Route path="/study" element={<StudyChart />} />
