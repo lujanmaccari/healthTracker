@@ -70,7 +70,6 @@ const ExamScoreBarChart = () => {
       });
 
       const max = Math.max(...averageExamScore);
-      // const min = Math.min(...averageExamScore);
 
       const defaultColor = "#89a8d6";
       const highestColor = "#b7cb9a";
@@ -91,8 +90,8 @@ const ExamScoreBarChart = () => {
             backgroundColor: backgroundColors,
             borderColor: "transparent",
             borderWidth: 1,
-            borderRadius: 4,
-            barThickness: 24,
+            borderRadius: 6,
+            barThickness: 28,
           },
         ],
         maxY,
@@ -102,21 +101,35 @@ const ExamScoreBarChart = () => {
     fetchAndAggregate();
   }, []);
 
-  if (!chartData) return <p>Cargando datos...</p>;
+  if (!chartData)
+    return <p style={{ textAlign: "center" }}>Cargando datos...</p>;
 
   const options = {
     responsive: true,
     maintainAspectRatio: false,
+    layout: {
+      padding: {
+        top: 30,
+        bottom: 10,
+        left: 10,
+        right: 10,
+      },
+    },
     scales: {
       y: {
         beginAtZero: true,
         max: chartData.maxY,
         title: {
           display: true,
-          text: "Resultados Academicos (0–100)",
+          text: "Resultados Académicos (0–100)",
           font: {
             weight: "bold",
-            size: 12,
+            size: 13,
+          },
+        },
+        ticks: {
+          font: {
+            size: 11,
           },
         },
       },
@@ -131,10 +144,10 @@ const ExamScoreBarChart = () => {
         },
         title: {
           display: true,
-          text: "Estado de Animo",
+          text: "Estado de Ánimo",
           font: {
             weight: "bold",
-            size: 12,
+            size: 13,
           },
         },
       },
@@ -142,7 +155,19 @@ const ExamScoreBarChart = () => {
     plugins: {
       title: {
         display: true,
-        text: "¡Las personas con mejor estado de ánimo alcanzan las calificaciones más altas en sus exámenes!",
+        text: [
+          "¡Las personas con mejor estado de ánimo",
+          "alcanzan las calificaciones más altas",
+          "en sus exámenes!",
+        ],
+        font: {
+          size: 14,
+          weight: "bold",
+        },
+        padding: {
+          top: 0,
+          bottom: 50,
+        },
       },
       legend: {
         display: false,
@@ -153,10 +178,14 @@ const ExamScoreBarChart = () => {
   return (
     <div
       style={{
-        height: "50vh",
-        marginBottom: "10vh",
+        height: "360px",
+        width: "100%",
+        marginBottom: "6vh",
+        marginTop: "2vh",
         borderRadius: "12px",
         padding: "16px",
+        backgroundColor: "#fff",
+        boxShadow: "0 2px 8px rgba(0,0,0,0.05)",
       }}
     >
       <Bar data={chartData} options={options} />

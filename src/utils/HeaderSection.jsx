@@ -1,6 +1,6 @@
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Button, Container } from "react-bootstrap";
+import { Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { COLORS } from "../constants/colors";
 
@@ -22,41 +22,52 @@ const HeaderSection = ({
   };
 
   return (
-    <Container
+    <div
       style={{
         display: "flex",
+        flexDirection: "column",
         alignItems: "center",
-        justifyContent: "space-between",
-        padding: "1rem",
+        gap: "0.5rem",
+        marginBottom: "1rem",
       }}
     >
-      <Button
+      <div
         style={{
-          color: "transparent",
-          background: "transparent",
-          border: "none",
-        }}
-        onClick={goBack}
-      >
-        <FontAwesomeIcon
-          icon={faArrowLeft}
-          style={{ color: COLORS.MAIN, height: "5vh", cursor: "pointer" }}
-        />
-      </Button>
-
-      <h3>{title}</h3>
-
-      <Button
-        onClick={handleModal}
-        style={{
-          color: COLORS.MAIN,
-          background: "transparent",
-          border: "none",
+          display: "flex",
+          width: "100%",
+          justifyContent: "space-between",
+          alignItems: "center",
         }}
       >
-        {btnTitle}
-      </Button>
-    </Container>
+        <Button
+          style={{
+            background: "transparent",
+            border: "none",
+            padding: 0,
+          }}
+          onClick={goBack}
+        >
+          <FontAwesomeIcon
+            icon={faArrowLeft}
+            style={{ color: COLORS.MAIN, height: "5vh", cursor: "pointer" }}
+          />
+        </Button>
+
+        <Button
+          onClick={handleModal}
+          style={{
+            color: COLORS.MAIN,
+            background: "transparent",
+            border: "none",
+            fontWeight: "bold",
+          }}
+        >
+          {btnTitle}
+        </Button>
+      </div>
+
+      <h3 style={{ textAlign: "center", margin: 0 }}>{title}</h3>
+    </div>
   );
 };
 

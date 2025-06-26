@@ -164,6 +164,7 @@ const MoodChart = () => {
 
   const options = {
     responsive: true,
+    maintainAspectRatio: false,
     plugins: {
       title: {
         display: true,
@@ -201,7 +202,7 @@ const MoodChart = () => {
           text: "Valor del ánimo",
         },
         min: 0,
-        max: 4.2,
+        max: 4.5,
         grid: {
           padding: 10,
         },
@@ -220,14 +221,23 @@ const MoodChart = () => {
   }
 
   return (
-    <Container style={{ maxWidth: "800px", position: "relative" }}>
+    <Container
+      style={{ maxWidth: "800px", position: "relative", padding: "0 1rem" }}
+    >
       <HeaderSection
         title="Estado de ánimo"
         buttonTitle="Agregar"
         onClickButton={() => setShowModal(true)}
       />
 
-      <div style={{ display: "flex", gap: "6px", marginBottom: "20px" }}>
+      <div
+        style={{
+          display: "flex",
+          gap: "8px",
+          marginBottom: "20px",
+          flexWrap: "wrap",
+        }}
+      >
         {filterButtons.map((button) => (
           <button
             key={button.id}
@@ -250,7 +260,7 @@ const MoodChart = () => {
         ))}
       </div>
 
-      <p style={{ fontSize: "16px", color: "#555" }}>
+      <p style={{ fontSize: "clamp(14px, 4vw, 16px)", color: "#555" }}>
         En promedio te has sentido{" "}
         <span style={{ fontWeight: "bold", color: "#333" }}>
           {sentimientoPromedio}
@@ -258,7 +268,9 @@ const MoodChart = () => {
         {filterLabels[activeFilter]}.
       </p>
 
-      <Scatter data={scatterData} options={options} />
+      <div style={{ width: "100%", height: "250px" }}>
+        <Scatter data={scatterData} options={options} />
+      </div>
 
       <div
         style={{
@@ -271,7 +283,14 @@ const MoodChart = () => {
         <h5 style={{ color: "#333", marginBottom: "15px" }}>
           Acerca de <b>Estado de Ánimo</b>
         </h5>
-        <p style={{ color: "#666", lineHeight: "1.5" }}>
+        <p
+          style={{
+            color: "#666",
+            lineHeight: "1.5",
+            fontSize: "clamp(13px, 3vw, 15px)",
+            textAlign: "justify",
+          }}
+        >
           Registrá tu estado de ánimo diario para identificar patrones y mejorar
           tu bienestar emocional. Los datos te ayudarán a entender qué factores
           influyen en cómo te sentís.
