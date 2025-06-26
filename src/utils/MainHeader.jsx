@@ -8,6 +8,7 @@ import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
 import styled from "styled-components";
 import { COLORS } from "../constants/colors";
 import UpdateUserModal from "../screens/updateUserModal";
+import GoalSettingsModal from "../screens/GoalSettingsModal";
 
 const HeaderContainer = styled(Container)`
   display: flex;
@@ -116,7 +117,8 @@ const MainHeader = ({ title }) => {
   const [isDropdownMenuOpen, setDropdownMenuOpen] = useState(false);
   const menuRef = useRef(null);
   const navigate = useNavigate();
-  const [isModalOpen, setModalOpen] = useState(false);
+  const [isModalOpenUser, setModalOpenUser] = useState(false);
+  const [isModalOpenGoal, setModalOpenGoal] = useState(false);
   const { signOut, name } = useUser();
 
   const menuItems = [
@@ -126,12 +128,14 @@ const MainHeader = ({ title }) => {
     },
     {
       label: "Configuración de Objetivos",
-      onClick: () => navigate("/goals"),
+      onClick: () => {
+        setModalOpenGoal(true);
+      },
     },
     {
       label: "Configuración de Usuario",
       onClick: () => {
-        setModalOpen(true);
+        setModalOpenUser(true);
       },
     },
 
@@ -165,8 +169,12 @@ const MainHeader = ({ title }) => {
         <StyledIcon icon={faUserCircle} color={COLORS.SECONDARY} />
       </UserItemContainer>
       <UpdateUserModal
-        isOpen={isModalOpen}
-        onClose={() => setModalOpen(false)}
+        isOpen={isModalOpenUser}
+        onClose={() => setModalOpenUser(false)}
+      />
+      <GoalSettingsModal
+        isOpen={isModalOpenGoal}
+        onClose={() => setModalOpenGoal(false)}
       />
     </HeaderContainer>
   );
