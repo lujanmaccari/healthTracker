@@ -12,11 +12,11 @@ const AddFood = ({ isOpen, onClose, onSaved }) => {
 
   const handleSubmit = async () => {
     const date = new Date();
-    date.setHours(date.getHours() - 3);          // 🇦🇷-3 UTC
+    date.setHours(date.getHours() - 3);         
     const isoDate = date.toISOString();
 
     const { error } = await supabase
-      .from("user_diet_quality")                 // tabla destino
+      .from("user_diet_quality")                 
       .insert([{ unit: nutritionQuality, date: isoDate, user_id: user.id }]);
 
     if (error) {
@@ -26,7 +26,7 @@ const AddFood = ({ isOpen, onClose, onSaved }) => {
 
     }
     showToast("Calidad guardada con éxito", "success");
-    onSaved();                                  // notifica al padre para recargar
+    onSaved();                                  
     onClose();
   };
 
