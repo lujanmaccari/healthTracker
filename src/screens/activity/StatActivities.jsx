@@ -62,10 +62,9 @@ const MentalHealthBarChart = () => {
       });
 
       const max = Math.max(...averageSaludMental);
-      const min = Math.min(...averageSaludMental);
 
-      const defaultColor = "#89a8d6"; 
-      const highestColor = "#b7cb9a"; 
+      const defaultColor = "#89a8d6";
+      const highestColor = "#b7cb9a";
 
       const backgroundColors = averageSaludMental.map((value) => {
         if (value === max) return highestColor;
@@ -134,7 +133,11 @@ const MentalHealthBarChart = () => {
     plugins: {
       title: {
         display: true,
-        text: "¡Las personas que hacen ejercicio 3 veces por semana reportan el mayor bienestar emocional!",
+        text: [
+          "¡Las personas que hacen",
+          "ejercicio 3 veces por semana",
+          "reportan el mayor bienestar emocional!",
+        ],
       },
       legend: {
         display: false,
@@ -152,7 +155,6 @@ const MentalHealthBarChart = () => {
       }}
     >
       <Bar data={chartData} options={options} />{" "}
-      
     </div>
   );
 };
