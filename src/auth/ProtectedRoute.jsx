@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { supabase } from "../../supabaseClient";
 import { UserContext } from "../contexts/UserContext";
 import { useToast } from "../contexts/ToastContext";
-import { signOut, updateUser } from "../helpers";
+import { signOut, updateUser, addUserMoodEntry } from "../supabase";
 
 function ProtectedRoute({ children }) {
   const [authUser, setAuthUser] = useState(null);
@@ -59,6 +59,8 @@ function ProtectedRoute({ children }) {
     updateUser: (data) =>
       updateUser(supabase, setUserData, showToast, userData, data),
     signOut: () => signOut(supabase, navigate),
+    addUserMoodEntry: (data) =>
+      addUserMoodEntry(supabase, showToast, userData, data),
   };
 
   return (
