@@ -1,147 +1,193 @@
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Container } from "react-bootstrap";
-import {
-  Chart as ChartJS,
-  LinearScale,
-  PointElement,
-  Tooltip,
-  Legend,
-} from "chart.js";
+
 import { Scatter } from "react-chartjs-2";
 import CommonModal from "../../utils/CommonModal";
 import HeaderSection from "../../utils/HeaderSection";
-import AboutFeeling from "./AboutFeeling";
 import AddFeeling from "./AddFeeling";
+import { useUser } from "../../contexts/UserContext";
+import { supabase } from "../../../supabaseClient";
+import {
+  Chart as ChartJS,
+  PointElement,
+  LineElement,
+  LinearScale,
+  Title,
+  Tooltip,
+  Legend,
+  CategoryScale,
+} from "chart.js";
 
-ChartJS.register(LinearScale, PointElement, Tooltip, Legend);
-
-const sentimientoToValor = {
-  mal: 1,
-  regular: 2,
-  bien: 3,
-  "muy bien": 4,
-};
+ChartJS.register(
+  PointElement,
+  LineElement,
+  LinearScale,
+  Title,
+  Tooltip,
+  Legend,
+  CategoryScale
+);
 
 const valorToSentimiento = {
+  0: "muy mal",
   1: "mal",
   2: "regular",
   3: "bien",
   4: "muy bien",
 };
+
 const sentimientoColor = {
+  "muy mal": "#c62828",
   mal: "#e57373",
   regular: "#ffb74d",
   bien: "#81c784",
   "muy bien": "#64b5f6",
 };
 
-const feelingData = {
-  D: {
-    labels: ["6-9am", "9-12am", "12-15pm", "15-18pm", "18-21pm", "21-24pm"],
-    data: ["bien", "mal", "bien", "mal", "bien", "muy bien"],
-  },
-  W: {
-    labels: ["Lun", "Mar", "Mie", "Jue", "Vie", "Sab", "Dom"],
-    data: ["regular", "bien", "muy bien", "mal", "mal", "bien", "regular"],
-  },
-  M: {
-    labels: ["Sem 1", "Sem 2", "Sem 3", "Sem 4"],
-    data: ["mal", "regular", "muy bien", "muy bien"],
-  },
-  BM: {
-    labels: ["Mes 1", "Mes 2", "Mes 3", "Mes 4", "Mes 5", "Mes 6"],
-    data: ["mal", "regular", "muy bien", "mal", "regular", "muy bien"],
-  },
-  Y: {
-    labels: [
-      "Ene",
-      "Feb",
-      "Mar",
-      "Abr",
-      "May",
-      "Jun",
-      "Jul",
-      "Ago",
-      "Sep",
-      "Oct",
-      "Nov",
-      "Dic",
-    ],
-    data: [
-      "regular",
-      "mal",
-      "bien",
-      "muy bien",
-      "regular",
-      "bien",
-      "mal",
-      "bien",
-      "muy bien",
-      "regular",
-      "mal",
-      "bien",
-    ],
-  },
-};
-
 const filterLabels = {
   D: "hoy",
   W: "esta semana",
   M: "este mes",
-  BM: "estos 6 meses",
-  Y: "este año",
 };
 
 const filterButtons = [
   { id: "D", label: "D" },
   { id: "W", label: "W" },
   { id: "M", label: "M" },
-  { id: "BM", label: "6M" },
-  { id: "Y", label: "Y" },
 ];
 
-const FeelingChart = () => {
+const MoodChart = () => {
   const [activeFilter, setActiveFilter] = useState("W");
   const [showModal, setShowModal] = useState(false);
+  const [mood, setMood] = useState(2);
+  const [chartData, setChartData] = useState(null);
+  const user = useUser();
 
-  const currentData = feelingData[activeFilter];
+  const fetchActivities = async () => {
+    const { data, error } = await supabase
+      .from("user_mood")
+      .select("id, user_id, value, date")
+      .eq("user_id", user.id)
+      .order("date", { ascending: true });
 
-  const sentimientoNumerico = currentData.data
-    .map((s) => sentimientoToValor[s])
-    .filter((v) => v !== undefined);
-
-  const promedio = sentimientoNumerico.length
-    ? sentimientoNumerico.reduce((a, b) => a + b, 0) /
-      sentimientoNumerico.length
-    : null;
-
-  const sentimientoPromedio = promedio
-    ? valorToSentimiento[Math.round(promedio)]
-    : "sin datos";
-
-  const chartData = {
-    datasets: [
-      {
-        label: "Estado de ánimo",
-        data: currentData.data.map((sentimiento, index) => ({
-          x: currentData.labels[index],
-          y: sentimientoToValor[sentimiento],
-        })),
-        backgroundColor: currentData.data.map(
-          (s) => sentimientoColor[s] || "#aaa"
-        ),
-      },
-    ],
+    if (error) {
+      console.error("Error al obtener actividades:", error);
+      return [];
+    }
+    return data;
   };
 
-  const chartOptions = {
+  useEffect(() => {
+    fetchActivities().then((data) => {
+      setChartData(data);
+    });
+  }, []);
+
+  const allLabels = useMemo(() => {
+    if (activeFilter === "D") {
+      return ["0", "4", "8", "12", "16", "20"];
+    } else if (activeFilter === "W") {
+      return ["Lun", "Mar", "Mié", "Jue", "Vie", "Sáb", "Dom"];
+    } else if (activeFilter === "M") {
+      return ["Semana 1", "Semana 2", "Semana 3", "Semana 4"];
+    }
+    return [];
+  }, [activeFilter]);
+
+  const scatterData = useMemo(() => {
+    if (!chartData) return null;
+
+    const grouped = {};
+
+    for (const entry of chartData) {
+      const date = new Date(entry.date);
+      let key;
+
+      if (activeFilter === "D") {
+        const hours = date.getHours();
+        const rangeStart = Math.floor(hours / 4) * 4;
+        key = String(rangeStart);
+      } else if (activeFilter === "W") {
+        const dayNames = ["Dom", "Lun", "Mar", "Mié", "Jue", "Vie", "Sáb"];
+        key = dayNames[date.getDay()];
+      } else if (activeFilter === "M") {
+        const weekNumber = Math.ceil(date.getDate() / 7);
+        key = `Semana ${weekNumber}`;
+      }
+
+      if (!grouped[key]) grouped[key] = [];
+      grouped[key].push(entry.value);
+    }
+
+    const points = allLabels.map((label) => {
+      const values = grouped[label];
+      const avg = values
+        ? values.reduce((a, b) => a + b, 0) / values.length
+        : null;
+      return {
+        x: label,
+        y: avg,
+        moodColor:
+          avg !== null
+            ? sentimientoColor[valorToSentimiento[Math.round(avg)]]
+            : "transparent",
+      };
+    });
+
+    return {
+      datasets: [
+        {
+          type: "line",
+          label: "Estado de ánimo",
+          data: points,
+          backgroundColor: points.map((p) => p.moodColor),
+          borderWidth: 2,
+          pointRadius: points.map((p) => (p.y === null ? 0 : 6)),
+          spanGaps: true,
+          tension: 0.1,
+          fill: false,
+        },
+      ],
+    };
+  }, [chartData, activeFilter, allLabels]);
+
+  const promedio = useMemo(() => {
+    if (!chartData) return null;
+    const allValues = chartData.map((entry) => entry.value);
+    if (allValues.length === 0) return null;
+    return allValues.reduce((a, b) => a + b, 0) / allValues.length;
+  }, [chartData]);
+
+  const sentimientoPromedio =
+    promedio !== null ? valorToSentimiento[Math.round(promedio)] : "sin datos";
+
+  const options = {
+    responsive: true,
+    plugins: {
+      title: {
+        display: true,
+        text: "Estado de ánimo del usuario",
+      },
+      tooltip: {
+        callbacks: {
+          label: (ctx) => {
+            const val = ctx.raw.y;
+            if (val === null) return "No hay datos";
+            return `Estado: ${valorToSentimiento[Math.round(val)] || val}`;
+          },
+        },
+      },
+      legend: {
+        display: false,
+      },
+    },
     scales: {
       x: {
         type: "category",
-        labels: currentData.labels,
+        labels: allLabels,
         title: {
           display: true,
-          text: "Periodo",
+          text: "Período",
           font: { size: 14 },
         },
         ticks: {
@@ -149,41 +195,37 @@ const FeelingChart = () => {
         },
       },
       y: {
-        beginAtZero: true,
-        suggestedMin: 0,
-        suggestedMax: 5,
+        title: {
+          display: true,
+          text: "Valor del ánimo",
+        },
+        min: 0,
+        max: 4.2,
+        grid: {
+          padding: 10,
+        },
         ticks: {
           stepSize: 1,
           callback: (value) => {
-            const label = Object.entries(sentimientoToValor).find(
-              ([, val]) => val === value
-            );
-            return label?.[0] || value;
-          },
-        },
-        title: {
-          display: true,
-          text: "Estado de ánimo",
-          font: { size: 14 },
-        },
-      },
-    },
-    plugins: {
-      legend: {
-        display: false,
-      },
-      tooltip: {
-        callbacks: {
-          label: (ctx) => {
-            const label = Object.entries(sentimientoToValor).find(
-              ([, val]) => val === ctx.raw.y
-            );
-            return `Estado: ${label?.[0] || ctx.raw.y}`;
+            const labels = {
+              0: "Muy mal",
+              1: "Mal",
+              2: "Regular",
+              3: "Bien",
+              4: "Muy bien",
+            };
+            return labels[value] || "";
           },
         },
       },
     },
   };
+
+  if (!scatterData) {
+    return (
+      <p style={{ textAlign: "center", padding: "20px" }}>Cargando datos...</p>
+    );
+  }
 
   return (
     <Container style={{ maxWidth: "800px", position: "relative" }}>
@@ -224,7 +266,7 @@ const FeelingChart = () => {
         {filterLabels[activeFilter]}.
       </p>
 
-      <Scatter data={chartData} options={chartOptions} />
+      <Scatter data={scatterData} options={options} />
 
       <div
         style={{
@@ -247,15 +289,21 @@ const FeelingChart = () => {
       <CommonModal
         isOpen={showModal}
         onClose={() => setShowModal(false)}
-        // onConfirm={handleSubmit}
+        onConfirm={() => {
+          user.addUserMoodEntry(mood);
+          fetchActivities().then((data) => {
+            setChartData(data);
+          });
+          setShowModal(false);
+        }}
         title="Estado de ánimo"
         confirmText="Agregar"
         cancelText="Cancelar"
       >
-        <AddFeeling />
+        <AddFeeling {...{ mood, setMood }} />
       </CommonModal>
     </Container>
   );
 };
 
-export default FeelingChart;
+export default MoodChart;

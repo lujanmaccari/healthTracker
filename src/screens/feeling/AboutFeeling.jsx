@@ -3,7 +3,6 @@ import React from "react";
 const AboutFeeling = () => {
   return (
     <div>
-      {" "}
       <div
         style={{
           backgroundColor: "#F5F5F5",

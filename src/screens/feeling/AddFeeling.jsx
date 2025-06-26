@@ -1,35 +1,29 @@
-{
-  /* ESTE ARCHIVO NO SE USA :) */
-}
+import styled from "styled-components";
 
-import { useState } from "react";
-import { Container } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
-import CommonModal from "../../utils/CommonModal";
+const StyledLabel = styled.span`
+  font-size: 0.8rem;
+  color: #666;
+`;
 
-const AddFeeling = () => {
-  const navigate = useNavigate();
-  const [mood, setMood] = useState(50); // automatico mete en 50%
-  const [selectedEmotion, setSelectedEmotion] = useState(null);
+const SelectedLabel = styled.div`
+  text-align: center;
+  margin: 1.5rem 0;
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #a5b48e;
+`;
 
-  const getMoodLabel = () => {
-    if (mood < 20) return "Muy mal";
-    if (mood < 40) return "Mal";
-    if (mood < 60) return "Regular";
-    if (mood < 80) return "Bien";
-    return "Muy bien";
-  };
+const RangeInput = styled.input`
+  width: 100%;
+  height: 8px;
+  border-radius: 4px;
+  background: linear-gradient(to right, #d1e8bf, #aecda3);
+  outline: none;
+  -webkit-appearance: none;
+`;
 
-  const handleSubmit = () => {
-    // aca se podria guardar el estado de ánimo en la base de datos
-    console.log({
-      moodValue: mood,
-      moodLabel: getMoodLabel(),
-      selectedEmotion,
-      date: new Date().toISOString().split("T")[0],
-    });
-    navigate("/feeling");
-  };
+const AddFeeling = ({ mood, setMood }) => {
+  const moodToLabel = ["Muy Mal", "Mal", "Regular", "Bien", "Muy Bien"];
 
   return (
     <div style={{ width: "100%", marginBottom: "2rem" }}>
@@ -44,20 +38,12 @@ const AddFeeling = () => {
       </div>
 
       <div style={{ width: "100%", margin: "1.5rem 0" }}>
-        <input
+        <RangeInput
           type="range"
           min="0"
-          max="100"
+          max="4"
           value={mood}
           onChange={(e) => setMood(parseInt(e.target.value))}
-          style={{
-            width: "100%",
-            height: "8px",
-            borderRadius: "4px",
-            background: `linear-gradient(to right, #d1e8bf ${mood}%, #aecda3 ${mood}%)`,
-            outline: "none",
-            WebkitAppearance: "none",
-          }}
         />
         <div
           style={{
@@ -66,22 +52,12 @@ const AddFeeling = () => {
             marginTop: "0.5rem",
           }}
         >
-          <span style={{ fontSize: "0.8rem", color: "#666" }}>Muy mal</span>
-          <span style={{ fontSize: "0.8rem", color: "#666" }}>Muy bien</span>
+          <StyledLabel>{moodToLabel[0]}</StyledLabel>
+          <StyledLabel>{moodToLabel[4]}</StyledLabel>
         </div>
       </div>
 
-      <div
-        style={{
-          textAlign: "center",
-          margin: "1.5rem 0",
-          fontSize: "1.2rem",
-          fontWeight: "bold",
-          color: "#a5b48e",
-        }}
-      >
-        {getMoodLabel()}
-      </div>
+      <SelectedLabel>{moodToLabel[mood]}</SelectedLabel>
     </div>
   );
 };
