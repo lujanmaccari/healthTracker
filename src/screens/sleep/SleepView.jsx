@@ -1,16 +1,10 @@
-import { Container, Row, Col, Button } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
-import HeaderSection from "../../utils/HeaderSection";
-import GenericCard from "../../utils/GenericCard";
-import { faBed, faClock, faStopwatch } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import * as Yup from "yup";
-import { Formik, Form, ErrorMessage, Field } from "formik";
+import { Container } from "react-bootstrap";
 import GenericBarChart from "../../utils/GenericBarChart";
 import AboutSleep from "./AboutSleep";
 import CommonModal from "./../../utils/CommonModal";
 import { useState } from "react";
 import AddSleepHours from "./AddSleepHours";
+import StatSleep from "./StatSleep";
 
 const SleepView = () => {
   const [showModal, setShowModal] = useState(false);
@@ -76,6 +70,7 @@ const SleepView = () => {
       >
         <AddSleepHours onClose={handleCloseModal} />
       </CommonModal>
+      <StatSleep />
     </Container>
   );
 };
