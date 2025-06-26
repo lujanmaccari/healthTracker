@@ -1,6 +1,6 @@
 import React from "react";
 
-const AboutFeeling = () => {
+const AboutMood = () => {
   return (
     <div>
       <div
@@ -14,6 +14,7 @@ const AboutFeeling = () => {
           style={{
             color: "#333",
             marginBottom: "12px",
+            fontWeight: "bold",
             fontSize: "16px",
           }}
         >
@@ -39,4 +40,4 @@ const AboutFeeling = () => {
   );
 };
 
-export default AboutFeeling;
+export default AboutMood;

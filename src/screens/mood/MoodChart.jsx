@@ -4,7 +4,7 @@ import { Container } from "react-bootstrap";
 import { Scatter } from "react-chartjs-2";
 import CommonModal from "../../utils/CommonModal";
 import HeaderSection from "../../utils/HeaderSection";
-import AddFeeling from "./AddFeeling";
+import AddMood from "./AddMood";
 import { useUser } from "../../contexts/UserContext";
 import { supabase } from "../../../supabaseClient";
 import {
@@ -17,6 +17,7 @@ import {
   Legend,
   CategoryScale,
 } from "chart.js";
+import ExamScoreBarChart from "./StatMood";
 
 ChartJS.register(
   PointElement,
@@ -28,20 +29,20 @@ ChartJS.register(
   CategoryScale
 );
 
-const valorToSentimiento = {
-  0: "muy mal",
-  1: "mal",
-  2: "regular",
-  3: "bien",
-  4: "muy bien",
+const valorToMood = {
+  0: "Muy Mal",
+  1: "Mal",
+  2: "Regular",
+  3: "Bien",
+  4: "Muy Bien",
 };
 
 const sentimientoColor = {
-  "muy mal": "#c62828",
-  mal: "#e57373",
-  regular: "#ffb74d",
-  bien: "#81c784",
-  "muy bien": "#64b5f6",
+  "Muy Mal": "#c62828",
+  Mal: "#e57373",
+  Regular: "#ffb74d",
+  Bien: "#81c784",
+  "Muy Bien": "#64b5f6",
 };
 
 const filterLabels = {
@@ -129,7 +130,7 @@ const MoodChart = () => {
         y: avg,
         moodColor:
           avg !== null
-            ? sentimientoColor[valorToSentimiento[Math.round(avg)]]
+            ? sentimientoColor[valorToMood[Math.round(avg)]]
             : "transparent",
       };
     });
@@ -159,7 +160,7 @@ const MoodChart = () => {
   }, [chartData]);
 
   const sentimientoPromedio =
-    promedio !== null ? valorToSentimiento[Math.round(promedio)] : "sin datos";
+    promedio !== null ? valorToMood[Math.round(promedio)] : "sin datos";
 
   const options = {
     responsive: true,
@@ -173,7 +174,7 @@ const MoodChart = () => {
           label: (ctx) => {
             const val = ctx.raw.y;
             if (val === null) return "No hay datos";
-            return `Estado: ${valorToSentimiento[Math.round(val)] || val}`;
+            return `Estado: ${valorToMood[Math.round(val)] || val}`;
           },
         },
       },
@@ -206,16 +207,7 @@ const MoodChart = () => {
         },
         ticks: {
           stepSize: 1,
-          callback: (value) => {
-            const labels = {
-              0: "Muy mal",
-              1: "Mal",
-              2: "Regular",
-              3: "Bien",
-              4: "Muy bien",
-            };
-            return labels[value] || "";
-          },
+          callback: (value) => valorToMood[value] || "",
         },
       },
     },
@@ -300,8 +292,9 @@ const MoodChart = () => {
         confirmText="Agregar"
         cancelText="Cancelar"
       >
-        <AddFeeling {...{ mood, setMood }} />
+        <AddMood {...{ mood, setMood }} />
       </CommonModal>
+      <ExamScoreBarChart />
     </Container>
   );
 };

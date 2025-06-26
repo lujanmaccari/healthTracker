@@ -22,7 +22,7 @@ const RangeInput = styled.input`
   -webkit-appearance: none;
 `;
 
-const AddFeeling = ({ mood, setMood }) => {
+const AddMood = ({ mood, setMood }) => {
   const moodToLabel = ["Muy Mal", "Mal", "Regular", "Bien", "Muy Bien"];
 
   return (
@@ -62,4 +62,4 @@ const AddFeeling = ({ mood, setMood }) => {
   );
 };
 
-export default AddFeeling;
+export default AddMood;
