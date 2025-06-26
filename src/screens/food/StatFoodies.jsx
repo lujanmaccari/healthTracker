@@ -20,15 +20,15 @@ ChartJS.register(
   Legend
 );
 
-const MentalHealthBarChart = () => {
+const StatFoodies = () => {
   const [chartData, setChartData] = useState(null);
 
   useEffect(() => {
     const fetchAndAggregate = async () => {
       const { data, error } = await supabase
-        .from("activities")
-        .select("frecuencia_ejercicio, salud_mental")
-        .limit(1000);
+        .from("diet_quality_v2")
+        .select("diet_quality, mental_health")
+        .limit(200);
 
       if (error) {
         console.error("Error fetching data:", error);
@@ -37,26 +37,20 @@ const MentalHealthBarChart = () => {
 
       const groups = {};
 
-      data.forEach(({ frecuencia_ejercicio, salud_mental }) => {
-        if (
-          frecuencia_ejercicio != null &&
-          salud_mental != null &&
-          !isNaN(frecuencia_ejercicio) &&
-          !isNaN(salud_mental)
-        ) {
-          if (!groups[frecuencia_ejercicio]) {
-            groups[frecuencia_ejercicio] = [];
+      data.forEach(({ diet_quality, mental_health }) => {
+        if (diet_quality != null && mental_health != null) {
+          if (!groups[diet_quality]) {
+            groups[diet_quality] = [];
           }
-          groups[frecuencia_ejercicio].push(salud_mental);
+          groups[diet_quality].push(mental_health);
         }
       });
 
-      const frequencies = Object.keys(groups)
-        .map(Number)
-        .sort((a, b) => a - b);
+      const desiredOrder = ["Poor", "Fair", "Good"];
+      const diet_quality = desiredOrder.filter((label) => groups[label]);
 
-      const averageSaludMental = frequencies.map((freq) => {
-        const values = groups[freq];
+      const averageSaludMental = diet_quality.map((item) => {
+        const values = groups[item];
         const sum = values.reduce((acc, val) => acc + val, 0);
         return sum / values.length;
       });
@@ -73,8 +67,19 @@ const MentalHealthBarChart = () => {
 
       const maxY = Math.ceil(max + 1);
 
+      const labelTranslations = {
+        Poor: "Mala",
+        Fair: "Regular",
+        Good: "Buena",
+      };
+
+      const translatedLabels = diet_quality.map(
+        (key) => labelTranslations[key] || key
+      );
+
       setChartData({
-        labels: frequencies.map((f) => `${f} días`),
+        labels: translatedLabels,
+
         datasets: [
           {
             label: "Promedio salud mental",
@@ -121,12 +126,7 @@ const MentalHealthBarChart = () => {
           },
         },
         title: {
-          display: true,
-          text: "Frecuencia de ejercicio (días por semana)",
-          font: {
-            weight: "bold",
-            size: 12,
-          },
+          display: false,
         },
       },
     },
@@ -134,9 +134,9 @@ const MentalHealthBarChart = () => {
       title: {
         display: true,
         text: [
-          "¡Las personas que hacen",
-          "ejercicio 3 veces por semana",
-          "reportan el mayor bienestar emocional!",
+          "¡Las personas que mantienen",
+          "una dieta sana reportan",
+          "el mayor bienestar emocional!",
         ],
       },
       legend: {
@@ -159,4 +159,4 @@ const MentalHealthBarChart = () => {
   );
 };
 
-export default MentalHealthBarChart;
+export default StatFoodies;

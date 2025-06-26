@@ -71,7 +71,7 @@ const SleepStatsChart = () => {
           const range = sleepRanges.find(
             (r) => sleep_hours >= r.min && sleep_hours < r.max
           );
-          
+
           if (range) {
             if (!groups[range.label]) {
               groups[range.label] = [];
@@ -163,7 +163,11 @@ const SleepStatsChart = () => {
     plugins: {
       title: {
         display: true,
-        text: "¡Los estudiantes que duermen entre 7-8 horas tienen el mejor rendimiento académico!",
+        text: [
+          "¡Los estudiantes que duermen",
+          "entre 7 y 8 horas tienen",
+          "el mejor rendimiento académico!",
+        ],
       },
       legend: {
         display: false,
@@ -185,4 +189,4 @@ const SleepStatsChart = () => {
   );
 };
 
-export default SleepStatsChart; 
+export default SleepStatsChart;

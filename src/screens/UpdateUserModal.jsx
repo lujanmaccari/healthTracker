@@ -46,6 +46,7 @@ const UpdateUserModal = ({ isOpen, onClose }) => {
           }
         }}
         confirmText="Actualizar"
+        title="Actualizar datos"
       >
         <Formik
           innerRef={formikRef}

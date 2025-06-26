@@ -48,7 +48,8 @@ useEffect(() => {
     const chartData = prepareChartData(data);
     setChartData(chartData);
     console.log(chartData);
-  });
+  })
+  ;
 }, [reloadData]);
   
   return (

@@ -20,14 +20,22 @@ ChartJS.register(
   Legend
 );
 
-const MentalHealthBarChart = () => {
+const valorToMood = {
+  0: "Muy Mal",
+  1: "Mal",
+  2: "Regular",
+  3: "Bien",
+  4: "Muy Bien",
+};
+
+const ExamScoreBarChart = () => {
   const [chartData, setChartData] = useState(null);
 
   useEffect(() => {
     const fetchAndAggregate = async () => {
       const { data, error } = await supabase
-        .from("activities")
-        .select("frecuencia_ejercicio, salud_mental")
+        .from("mood")
+        .select("value, exam_score")
         .limit(1000);
 
       if (error) {
@@ -37,17 +45,17 @@ const MentalHealthBarChart = () => {
 
       const groups = {};
 
-      data.forEach(({ frecuencia_ejercicio, salud_mental }) => {
+      data.forEach(({ value, exam_score }) => {
         if (
-          frecuencia_ejercicio != null &&
-          salud_mental != null &&
-          !isNaN(frecuencia_ejercicio) &&
-          !isNaN(salud_mental)
+          value != null &&
+          exam_score != null &&
+          !isNaN(value) &&
+          !isNaN(exam_score)
         ) {
-          if (!groups[frecuencia_ejercicio]) {
-            groups[frecuencia_ejercicio] = [];
+          if (!groups[value]) {
+            groups[value] = [];
           }
-          groups[frecuencia_ejercicio].push(salud_mental);
+          groups[value].push(exam_score);
         }
       });
 
@@ -55,18 +63,18 @@ const MentalHealthBarChart = () => {
         .map(Number)
         .sort((a, b) => a - b);
 
-      const averageSaludMental = frequencies.map((freq) => {
+      const averageExamScore = frequencies.map((freq) => {
         const values = groups[freq];
         const sum = values.reduce((acc, val) => acc + val, 0);
         return sum / values.length;
       });
 
-      const max = Math.max(...averageSaludMental);
+      const max = Math.max(...averageExamScore);
 
       const defaultColor = "#89a8d6";
       const highestColor = "#b7cb9a";
 
-      const backgroundColors = averageSaludMental.map((value) => {
+      const backgroundColors = averageExamScore.map((value) => {
         if (value === max) return highestColor;
         return defaultColor;
       });
@@ -74,16 +82,16 @@ const MentalHealthBarChart = () => {
       const maxY = Math.ceil(max + 1);
 
       setChartData({
-        labels: frequencies.map((f) => `${f} días`),
+        labels: frequencies.map((f) => valorToMood[f]),
         datasets: [
           {
-            label: "Promedio salud mental",
-            data: averageSaludMental,
+            label: "Promedio Académico",
+            data: averageExamScore,
             backgroundColor: backgroundColors,
             borderColor: "transparent",
             borderWidth: 1,
-            borderRadius: 4,
-            barThickness: 24,
+            borderRadius: 6,
+            barThickness: 28,
           },
         ],
         maxY,
@@ -93,21 +101,35 @@ const MentalHealthBarChart = () => {
     fetchAndAggregate();
   }, []);
 
-  if (!chartData) return <p>Cargando datos...</p>;
+  if (!chartData)
+    return <p style={{ textAlign: "center" }}>Cargando datos...</p>;
 
   const options = {
     responsive: true,
     maintainAspectRatio: false,
+    layout: {
+      padding: {
+        top: 30,
+        bottom: 10,
+        left: 10,
+        right: 10,
+      },
+    },
     scales: {
       y: {
         beginAtZero: true,
         max: chartData.maxY,
         title: {
           display: true,
-          text: "Promedio de salud mental (0–10)",
+          text: "Resultados Académicos (0–100)",
           font: {
             weight: "bold",
-            size: 12,
+            size: 13,
+          },
+        },
+        ticks: {
+          font: {
+            size: 11,
           },
         },
       },
@@ -122,10 +144,10 @@ const MentalHealthBarChart = () => {
         },
         title: {
           display: true,
-          text: "Frecuencia de ejercicio (días por semana)",
+          text: "Estado de Ánimo",
           font: {
             weight: "bold",
-            size: 12,
+            size: 13,
           },
         },
       },
@@ -134,10 +156,18 @@ const MentalHealthBarChart = () => {
       title: {
         display: true,
         text: [
-          "¡Las personas que hacen",
-          "ejercicio 3 veces por semana",
-          "reportan el mayor bienestar emocional!",
+          "¡Las personas con mejor estado de ánimo",
+          "alcanzan las calificaciones más altas",
+          "en sus exámenes!",
         ],
+        font: {
+          size: 14,
+          weight: "bold",
+        },
+        padding: {
+          top: 0,
+          bottom: 50,
+        },
       },
       legend: {
         display: false,
@@ -148,15 +178,19 @@ const MentalHealthBarChart = () => {
   return (
     <div
       style={{
-        height: "50vh",
-        marginBottom: "10vh",
+        height: "360px",
+        width: "100%",
+        marginBottom: "6vh",
+        marginTop: "2vh",
         borderRadius: "12px",
         padding: "16px",
+        backgroundColor: "#fff",
+        boxShadow: "0 2px 8px rgba(0,0,0,0.05)",
       }}
     >
-      <Bar data={chartData} options={options} />{" "}
+      <Bar data={chartData} options={options} />
     </div>
   );
 };
 
-export default MentalHealthBarChart;
+export default ExamScoreBarChart;

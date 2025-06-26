@@ -11,7 +11,7 @@ import { Scatter } from "react-chartjs-2";
 import CommonModal from "../../utils/CommonModal";
 import HeaderSection from "../../utils/HeaderSection";
 import AboutFeeling from "./AboutFeeling";
-import AddFeeling from "./AddFeeling";
+
 
 ChartJS.register(LinearScale, PointElement, Tooltip, Legend);
 
@@ -252,7 +252,7 @@ const FeelingChart = () => {
         confirmText="Agregar"
         cancelText="Cancelar"
       >
-        <AddFeeling />
+        
       </CommonModal>
     </Container>
   );

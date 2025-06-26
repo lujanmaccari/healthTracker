@@ -184,7 +184,8 @@ const GenericBarChart = ({ title, handleOpenModal, chartData }) => {
           height: "50vh",
           marginBottom: "20px",
           borderRadius: "12px",
-          padding: "16px",
+          padding: 16,
+          paddingLeft: 0,
         }}
       >
         <Bar data={data} options={options} />

@@ -13,6 +13,7 @@ import { COLORS } from "../constants/colors";
 
 const GenericCard = ({ title, body, icon, href, onClickIcon }) => {
   const navigate = useNavigate();
+
   switch (icon) {
     case "fire":
       icon = faFire;
@@ -32,11 +33,13 @@ const GenericCard = ({ title, body, icon, href, onClickIcon }) => {
     default:
       break;
   }
+
   const redirect = () => {
     if (href) {
       navigate(href);
     }
   };
+
   return (
     <Card
       style={{
@@ -54,6 +57,7 @@ const GenericCard = ({ title, body, icon, href, onClickIcon }) => {
           alignItems: "start",
           gap: "1rem",
           position: "relative",
+          paddingRight: "2rem",
         }}
       >
         <FontAwesomeIcon
@@ -61,11 +65,11 @@ const GenericCard = ({ title, body, icon, href, onClickIcon }) => {
           style={{ color: COLORS.MAIN, height: "4rem", width: "4rem" }}
         />
 
-        <div style={{ display: "flex", flexDirection: "column" }}>
+        <div style={{ display: "flex", flexDirection: "column", flex: 1 }}>
           <Card.Title
             style={{
               color: COLORS.DARK_TEXT,
-              fontSize: "5vh",
+              fontSize: "clamp(1rem, 2.5vw, 1.5rem)",
               textAlign: "left",
               paddingLeft: 5,
               marginTop: 10,
@@ -73,10 +77,32 @@ const GenericCard = ({ title, body, icon, href, onClickIcon }) => {
           >
             {title}
           </Card.Title>
-          <Card.Body style={{ width: "60vw", fontSize: "3vh" }}>
-            <Card.Text>
-              {Array.isArray(body) ? body.join(" | ") : body}
-            </Card.Text>
+
+          <Card.Body style={{ paddingRight: "2rem", paddingLeft: "0" }}>
+            {Array.isArray(body) && body.length % 2 === 0 ? (
+              <div style={{ display: "flex", flexWrap: "wrap", gap: "1rem" }}>
+                {body.map((item, idx) =>
+                  idx % 2 === 0 ? (
+                    <div
+                      key={idx}
+                      style={{ display: "flex", flexDirection: "column" }}
+                    >
+                      <small style={{ fontWeight: "normal" }}>{item}</small>
+                      <strong>{body[idx + 1]}</strong>
+                    </div>
+                  ) : null
+                )}
+              </div>
+            ) : (
+              <Card.Text
+                style={{
+                  wordWrap: "break-word",
+                  fontSize: "1rem",
+                }}
+              >
+                {Array.isArray(body) ? body.join(" | ") : body}
+              </Card.Text>
+            )}
           </Card.Body>
         </div>
 
