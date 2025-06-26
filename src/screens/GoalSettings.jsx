@@ -1,16 +1,16 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Button, Card, Container } from "react-bootstrap";
-import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
-import { useNavigate } from "react-router-dom";
+import { Card, Container } from "react-bootstrap";
 import { COLORS } from "../constants/colors";
 import {
   faAppleWhole,
   faBed,
   faBookOpen,
   faFire,
-  faSpa,
-  faCircleChevronRight,
 } from "@fortawesome/free-solid-svg-icons";
+import CommonModal from "../utils/CommonModal";
+import { useState } from "react";
+import GoalSettingsModal from "./GoalSettingsModal";
+import HeaderSection from "../utils/HeaderSection";
 
 const goals = [
   {
@@ -32,56 +32,29 @@ const goals = [
 ];
 
 const GoalSettings = () => {
-  const navigate = useNavigate();
-  const goBack = () => {
-    navigate("/home");
+  const [showModal, setShowModal] = useState(false);
+  const [reloadData, setReloadData] = useState(false);
+
+  const handleOpenModal = () => {
+    setShowModal(true);
+  };
+  const handleCloseModal = () => {
+    setShowModal(false);
   };
 
   return (
     <div
       style={{
         padding: "16px",
-        maxWidth: "70vw",
         margin: "0 auto",
       }}
     >
       {/* Header */}
-      <div
-        style={{
-          position: "relative",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          height: "5vh",
-          marginBottom: "12px",
-        }}
-      >
-        <Button
-          style={{
-            background: "transparent",
-            border: "none",
-            padding: 0,
-          }}
-          onClick={goBack}
-        >
-          <FontAwesomeIcon
-            icon={faArrowLeft}
-            style={{ color: COLORS.MAIN, height: "3vh", cursor: "pointer" }}
-          />
-        </Button>
-
-        <h3
-          style={{
-            position: "absolute",
-            left: "50%",
-            transform: "translateX(-50%)",
-            margin: 0,
-            fontSize: "clamp(1.2rem, 2vw, 1.6rem)",
-          }}
-        >
-          Objetivos
-        </h3>
-      </div>
+      <HeaderSection
+        title="Objetivos"
+        onClickButton={handleOpenModal}
+        btnTitle="Editar"
+      />
 
       {/* Descripción */}
       <p
@@ -133,7 +106,7 @@ const GoalSettings = () => {
                 alignItems: "flex-start",
                 justifyContent: "space-between",
                 flexWrap: "wrap",
-                gap: "1rem",
+                gap: "3rem",
               }}
             >
               <FontAwesomeIcon
@@ -150,28 +123,33 @@ const GoalSettings = () => {
                   style={{
                     color: COLORS.DARK_TEXT,
                     fontSize: "clamp(1.1rem, 2vw, 1.5rem)",
-                    textAlign: "left",
+                    textAlign: "center",
                     marginTop: "0.3rem",
                     marginBottom: "0.3rem",
                   }}
                 >
-                  {goal.label}
-                </Card.Title>
-
-                <Card.Text
-                  style={{ fontSize: "clamp(0.95rem, 1.5vw, 1.2rem)" }}
-                >
                   Ahora tu objetivo es: <br />
                   <strong>{goal.value}</strong>
-                </Card.Text>
+                  {goal.label.toLocaleLowerCase() !== "alimentación"
+                    ? ` de ${goal.label}`
+                    : null}
+                </Card.Title>
               </div>
-
-              <Button className="btnApp" style={{ fontSize: "0.9rem" }}>
-                Editar
-              </Button>
             </Container>
           </Card>
         ))}
+        <CommonModal
+          isOpen={showModal}
+          onClose={handleCloseModal}
+          title={`Actualizar objetivos`}
+          confirmText="Guardar"
+          cancelText="Cancelar"
+        >
+          <GoalSettingsModal
+            onClose={handleCloseModal}
+            states={{ reloadData, setReloadData }}
+          />
+        </CommonModal>
       </div>
     </div>
   );

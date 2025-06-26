@@ -4,7 +4,11 @@ import { Button, Container } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { COLORS } from "../constants/colors";
 
-const HeaderSection = ({ title, onClickButton }) => {
+const HeaderSection = ({
+  title,
+  onClickButton,
+  btnTitle = "Agregar Datos",
+}) => {
   const navigate = useNavigate();
 
   const goBack = () => {
@@ -50,7 +54,7 @@ const HeaderSection = ({ title, onClickButton }) => {
           border: "none",
         }}
       >
-        Agregar datos
+        {btnTitle}
       </Button>
     </Container>
   );
