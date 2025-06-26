@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from "react";
 import { Container } from "react-bootstrap";
 import { Chart as ChartJS, ArcElement, Legend, Tooltip } from "chart.js";
@@ -15,19 +14,22 @@ const COLORS = { Buena: "#51b35c", Media: "#f4c542", Mala: "#f15b5b" };
 
 const normalize = (unit) => {
   switch (unit) {
-    case "Good": return "Buena";
-    case "Fair": return "Media";
-    case "Poor": return "Mala";
-    default: return null;
+    case "Good":
+      return "Buena";
+    case "Fair":
+      return "Media";
+    case "Poor":
+      return "Mala";
+    default:
+      return null;
   }
 };
 
 const FoodChart = () => {
-  const [activeFilter, setActiveFilter] = useState("D"); 
+  const [activeFilter, setActiveFilter] = useState("D");
   const [showModal, setShowModal] = useState(false);
-  const [dataPeriodo, setDataPeriodo] = useState(null);  // donut superior
-  const [dataHistorico, setDataHistorico] = useState(null);  // donut inferior
-
+  const [dataPeriodo, setDataPeriodo] = useState(null); // donut superior
+  const [dataHistorico, setDataHistorico] = useState(null); // donut inferior
 
   const sinceForFilter = () => {
     const d = new Date();
@@ -42,15 +44,15 @@ const FoodChart = () => {
       // 1 mes atrás
       d.setMonth(d.getMonth() - 1);
     }
-    return d.toISOString();               
+    return d.toISOString();
   };
 
   /* fetch dona superior */
   const fetchPeriodo = async () => {
     const { data, error } = await supabase
-      .from("user_diet_quality")          
-      .select("unit, date")               
-      .gte("date", sinceForFilter());    
+      .from("user_diet_quality")
+      .select("unit, date")
+      .gte("date", sinceForFilter());
 
     if (error) {
       console.error("Error al traer periodo:", error);
@@ -75,11 +77,12 @@ const FoodChart = () => {
 
   /* fetch dona inferior (Histórico) */
   const fetchHistorico = async () => {
-    const { data, error } = await supabase
-      .from("diet_quality")               
-      .select("unit");                    
+    const { data, error } = await supabase.from("diet_quality").select("unit");
 
-    if (error) { console.error(error); return; }
+    if (error) {
+      console.error(error);
+      return;
+    }
 
     const counts = { Buena: 0, Media: 0, Mala: 0 };
     data.forEach(({ unit }) => {
@@ -96,48 +99,85 @@ const FoodChart = () => {
     setDataHistorico({ counts, percentages });
   };
 
-  useEffect(() => { fetchPeriodo(); }, [activeFilter]);
-  useEffect(() => { fetchHistorico(); }, []);                
+  useEffect(() => {
+    fetchPeriodo();
+  }, [activeFilter]);
+  useEffect(() => {
+    fetchHistorico();
+  }, []);
 
-  const handleSaved = () => { fetchPeriodo(); };
-
+  const handleSaved = () => {
+    fetchPeriodo();
+  };
 
   if (!dataPeriodo || !dataHistorico)
     return <p style={{ textAlign: "center" }}>Cargando…</p>;
 
   const DonutBlock = ({ title, info }) => {
     const { Buena: g, Media: m, Mala: b } = info.percentages;
-    const dominant = Object.entries(info.percentages)
-      .sort(([, a], [, b]) => b - a)[0];
+    const dominant = Object.entries(info.percentages).sort(
+      ([, a], [, b]) => b - a
+    )[0];
 
     const chartData = {
       labels: ["Buena", "Media", "Mala"],
-      datasets: [{
-        data: [g, m, b],
-        backgroundColor: [COLORS.Buena, COLORS.Media, COLORS.Mala],
-        borderWidth: 2,
-      }],
+      datasets: [
+        {
+          data: [g, m, b],
+          backgroundColor: [COLORS.Buena, COLORS.Media, COLORS.Mala],
+          borderWidth: 2,
+        },
+      ],
     };
 
     return (
-      <div style={{
-        height: 300, marginBottom: 20, backgroundColor: "#f9f9f9",
-        borderRadius: 12, padding: 16, position: "relative"
-      }}>
-        <h6 style={{ textAlign: "center", marginBottom: 10 }}>{title}</h6>
-        <Doughnut data={chartData} options={{
-          responsive: true, maintainAspectRatio: false,
-          plugins: { legend: { display: false } }
-        }} />
-        <div style={{
-          position: "absolute", top: "50%", left: "50%",
-          transform: "translate(-50%,-50%)", textAlign: "center",
-          pointerEvents: "none"
-        }}>
-          <div style={{ fontSize: 24, fontWeight: "bold", color: COLORS[dominant[0]] }}>
+      <div
+        style={{
+          height: 300,
+          marginBottom: 20,
+          backgroundColor: "#f9f9f9",
+          borderRadius: 12,
+          padding: 16,
+          position: "relative",
+        }}
+      >
+        <p style={{ textAlign: "center", marginBottom: 10 }}>
+          Estas promediando una alimentación <strong>{dominant[0]}</strong>
+        </p>
+        <Doughnut
+          data={chartData}
+          options={{
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { display: false } },
+          }}
+        />
+        <div
+          style={{
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, 0%)",
+            textAlign: "center",
+            width: "60%", 
+            maxWidth: 200, 
+            pointerEvents: "none",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <div
+            style={{
+              fontSize: 24,
+              fontWeight: "bold",
+              color: COLORS[dominant[0]],
+            }}
+          >
             {dominant[1]}%
           </div>
-          <div style={{ fontSize: 14, color: "#666" }}>{dominant[0]}</div>
+          <div style={{ fontSize: 20, color: "#666" }}>{dominant[0]}</div>
         </div>
       </div>
     );
@@ -152,40 +192,45 @@ const FoodChart = () => {
         buttonStyle={{ borderRadius: "50%", width: 40, height: 40, padding: 0 }}
       />
 
-  
       <div style={{ display: "flex", gap: 6, marginBottom: 20 }}>
         {["Día", "Semana", "Mes"].map((lbl, i) => {
           const id = ["D", "W", "M"][i];
           return (
-            <button key={id}
+            <button
+              key={id}
               onClick={() => setActiveFilter(id)}
               style={{
-                flex: 1, padding: 8, border: "none", borderRadius: 8,
+                flex: 1,
+                padding: 8,
+                border: "none",
+                borderRadius: 8,
                 backgroundColor: activeFilter === id ? "#4a6fa5" : "#f0f0f0",
                 color: activeFilter === id ? "#fff" : "#333",
-                fontWeight: "bold", fontSize: 14, cursor: "pointer"
+                fontWeight: "bold",
+                fontSize: 14,
+                cursor: "pointer",
               }}
-            >{lbl}</button>
+            >
+              {lbl}
+            </button>
           );
         })}
       </div>
 
       <DonutBlock title="Periodo elegido" info={dataPeriodo} />
 
-  
+      <AboutFood />
+
       <StatFoodies
         dominantQuality={(() => {
           const d = dataPeriodo.percentages;
           return Object.entries(d).sort(([, a], [, b]) => b - a)[0];
         })()}
-        qualityEvaluation={{ text: "", color: "#fff" }} 
+        qualityEvaluation={{ text: "", color: "#fff" }}
         activeFilter={activeFilter}
       />
 
-      <AboutFood />
-
-      <DonutBlock title="Histórico" info={dataHistorico} />
-
+      {/* <DonutBlock title="Histórico" info={dataHistorico} /> */}
 
       <AddFood
         isOpen={showModal}
