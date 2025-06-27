@@ -12,6 +12,7 @@ import CommonModal from "../../utils/CommonModal";
 import GenericBarChart from "../../utils/GenericBarChart";
 import { AboutStudy } from "./AboutStudy";
 import AddStudy from "./AddStudy";
+import StatStudy from "./StatStudy";
 import { supabase } from "../../../supabaseClient";
 import { useUser } from "../../contexts/UserContext";
 import { prepareChartData } from "../../utils/functions";
@@ -72,6 +73,7 @@ const StudyChart = () => {
       >
         <AddStudy onClose={handleCloseModal} states={{reloadData, setReloadData}}/>
       </CommonModal>
+      <StatStudy />
     </Container>
   );
 };

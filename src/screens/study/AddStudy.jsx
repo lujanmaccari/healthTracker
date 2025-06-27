@@ -15,7 +15,11 @@ const AddStudy = ({ onClose, states }) => {
   };
 
   const validationSchema = Yup.object({
-    minutes: Yup.number().required("El tiempo es requerido")
+    minutes: Yup.number()
+      .required("El tiempo es requerido")
+      .min(1, "El tiempo mínimo es 1 minuto")
+      .max(1440, "El tiempo máximo es 24 horas (1440 minutos)")
+      .integer("Debe ser un número entero")
   });
 
   const handleSubmit = async (values, { resetForm }) => {
@@ -67,7 +71,7 @@ const AddStudy = ({ onClose, states }) => {
                 duration={values.minutes}
                 onChange={handleChange}
                 onBlur={handleBlur}
-                placeholder="120 mins"
+                placeholder="120 (máximo 1440)"
                 isInvalid={touched.minutes && !!errors.minutes}
                 onWheel={(e) => e.currentTarget.blur()}
               />
@@ -77,7 +81,7 @@ const AddStudy = ({ onClose, states }) => {
             </Form.Group>
 
             <small className="text-muted">
-              Ingresa el tiempo estimado de estudio hoy
+              Ingresa el tiempo estimado de estudio hoy (1-1440 minutos)
             </small>
 
             <div className="d-flex justify-content-center gap-3 pt-4">
