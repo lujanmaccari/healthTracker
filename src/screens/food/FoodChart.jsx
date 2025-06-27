@@ -102,6 +102,7 @@ const FoodChart = () => {
   useEffect(() => {
     fetchPeriodo();
   }, [activeFilter]);
+
   useEffect(() => {
     fetchHistorico();
   }, []);
@@ -113,7 +114,7 @@ const FoodChart = () => {
   if (!dataPeriodo || !dataHistorico)
     return <p style={{ textAlign: "center" }}>Cargando…</p>;
 
-  const DonutBlock = ({ title, info }) => {
+  const DonutBlock = ({ info }) => {
     const { Buena: g, Media: m, Mala: b } = info.percentages;
     const dominant = Object.entries(info.percentages).sort(
       ([, a], [, b]) => b - a
@@ -134,11 +135,13 @@ const FoodChart = () => {
       <div
         style={{
           height: 300,
+          width: 300,
           marginBottom: 20,
           backgroundColor: "#f9f9f9",
           borderRadius: 12,
           padding: 16,
           position: "relative",
+          margin: "auto",
         }}
       >
         <p style={{ textAlign: "center", marginBottom: 10 }}>
@@ -155,12 +158,9 @@ const FoodChart = () => {
         <div
           style={{
             position: "absolute",
-            top: "50%",
-            left: "50%",
-            transform: "translate(-50%, 0%)",
+            top: "56.5%",
+            left: "41%",
             textAlign: "center",
-            width: "60%", 
-            maxWidth: 200, 
             pointerEvents: "none",
             display: "flex",
             flexDirection: "column",
@@ -229,8 +229,6 @@ const FoodChart = () => {
         qualityEvaluation={{ text: "", color: "#fff" }}
         activeFilter={activeFilter}
       />
-
-      {/* <DonutBlock title="Histórico" info={dataHistorico} /> */}
 
       <AddFood
         isOpen={showModal}
