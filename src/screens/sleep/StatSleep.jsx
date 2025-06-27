@@ -131,6 +131,7 @@ const SleepStatsChart = () => {
     scales: {
       y: {
         beginAtZero: true,
+        min: 58,
         max: chartData.maxY,
         title: {
           display: true,

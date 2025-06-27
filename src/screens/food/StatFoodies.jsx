@@ -107,6 +107,7 @@ const StatFoodies = () => {
       y: {
         beginAtZero: true,
         max: chartData.maxY,
+        min: 4.5,
         title: {
           display: true,
           text: "Promedio de salud mental (0–10)",

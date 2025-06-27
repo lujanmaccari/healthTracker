@@ -119,6 +119,7 @@ const ExamScoreBarChart = () => {
       y: {
         beginAtZero: true,
         max: chartData.maxY,
+        min: 60,
         title: {
           display: true,
           text: "Resultados Académicos (0–100)",
