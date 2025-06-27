@@ -63,10 +63,10 @@ function Home() {
         icon="fire"
         href="/activity"
         body={
-          goals?.activity && (
+          !!goals?.activity && (
             <div className="px-2">
               <div className="fw-bold">
-                Alcanzar {goals?.activity} minutos de actividad diaria
+                Alcanzar {goals.activity} minutos de actividad diaria
               </div>
             </div>
           )
@@ -90,7 +90,7 @@ function Home() {
         icon="sleep"
         href="/sleep"
         body={
-          goals?.sleep && (
+          !!goals?.sleep && (
             <div
               className="d-flex justify-content-around align-items-center px-2"
               style={{ gap: "1rem" }}
@@ -115,7 +115,7 @@ function Home() {
         icon="food"
         href={"/food"}
         body={
-          goals?.food && (
+          !!goals?.food && (
             <div className="px-2">
               <div className="fw-bold">
                 Alcanzar una alimentación {foodToLabel[goals.food]}
@@ -129,7 +129,7 @@ function Home() {
         icon="study"
         href={"/study"}
         body={
-          goals?.study && (
+          !!goals?.study && (
             <div className="px-2">
               <div className="fw-bold">
                 Alcanzar {goals.study}hs de estudio semanales
