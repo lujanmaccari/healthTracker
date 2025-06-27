@@ -55,14 +55,14 @@ const GenericCard = ({ title, body, icon, href, onClickIcon }) => {
           display: "flex",
           justifyContent: "flex-start",
           alignItems: "start",
-          gap: "1rem",
+          gap: ".5rem",
           position: "relative",
           paddingRight: "2rem",
         }}
       >
         <FontAwesomeIcon
           icon={icon}
-          style={{ color: COLORS.MAIN, height: "4rem", width: "4rem" }}
+          style={{ color: COLORS.MAIN, height: "2.5rem", width: "2.5rem" }}
         />
 
         <div style={{ display: "flex", flexDirection: "column", flex: 1 }}>
@@ -78,7 +78,14 @@ const GenericCard = ({ title, body, icon, href, onClickIcon }) => {
             {title}
           </Card.Title>
 
-          <Card.Body style={{ paddingRight: "2rem", paddingLeft: "0" }}>
+          <Card.Body
+            style={{
+              padding: "0",
+              marginLeft: "-.7rem",
+              paddingRight: ".2rem",
+              textAlign: "left",
+            }}
+          >
             {Array.isArray(body) && body.length % 2 === 0 ? (
               <div style={{ display: "flex", flexWrap: "wrap", gap: "1rem" }}>
                 {body.map((item, idx) =>
@@ -97,7 +104,7 @@ const GenericCard = ({ title, body, icon, href, onClickIcon }) => {
               <Card.Text
                 style={{
                   wordWrap: "break-word",
-                  fontSize: "1rem",
+                  fontSize: ".62rem",
                 }}
               >
                 {Array.isArray(body) ? body.join(" | ") : body}
@@ -110,13 +117,13 @@ const GenericCard = ({ title, body, icon, href, onClickIcon }) => {
           onClick={href ? redirect : onClickIcon}
           icon={faCircleChevronRight}
           style={{
-            width: "2.5rem",
-            height: "2.5rem",
+            width: "2rem",
+            height: "2rem",
             color: COLORS.SECONDARY,
             cursor: "pointer",
             position: "absolute",
-            top: 5,
-            right: 20,
+            top: 0,
+            right: 10,
           }}
         />
       </Container>
