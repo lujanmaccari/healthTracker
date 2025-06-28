@@ -38,7 +38,7 @@ ChartJS.register(BarElement, CategoryScale, LinearScale, Tooltip, Legend);
  * @returns {JSX.Element} Componente que renderiza un grafico
  */
 const GenericBarChart = ({ title, handleOpenModal, chartData }) => {
-  const [activeFilter, setActiveFilter] = useState("D");
+  const [activeFilter, setActiveFilter] = useState("W");
   const currentData = chartData
     ? chartData[activeFilter]
     : { labels: [], data: [] };

@@ -33,7 +33,7 @@ const colors = {
 }
 
 const FoodChart = () => {
-  const [activeFilter, setActiveFilter] = useState("D");
+  const [activeFilter, setActiveFilter] = useState("W");
   const [showModal, setShowModal] = useState(false);
   const [dataPeriodo, setDataPeriodo] = useState(null); // donut superior
   const [dataHistorico, setDataHistorico] = useState(null); // donut inferior
