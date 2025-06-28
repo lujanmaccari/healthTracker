@@ -25,6 +25,13 @@ const normalize = (unit) => {
   }
 };
 
+const colors = {
+  Buena: "#51b35c",
+  Media: "#b8848c",
+  Mala: "#98444c",
+
+}
+
 const FoodChart = () => {
   const [activeFilter, setActiveFilter] = useState("D");
   const [showModal, setShowModal] = useState(false);
@@ -125,7 +132,7 @@ const FoodChart = () => {
       datasets: [
         {
           data: [g, m, b],
-          backgroundColor: [COLORS.Buena, COLORS.Media, COLORS.Mala],
+          backgroundColor: ['#6e0f13', '#b8848c', '#98444c'],
           borderWidth: 2,
         },
       ],
@@ -172,7 +179,7 @@ const FoodChart = () => {
             style={{
               fontSize: 24,
               fontWeight: "bold",
-              color: COLORS[dominant[0]],
+              color: colors[dominant[0]],
             }}
           >
             {dominant[1]}%
@@ -204,7 +211,7 @@ const FoodChart = () => {
                 padding: 8,
                 border: "none",
                 borderRadius: 8,
-                backgroundColor: activeFilter === id ? "#4a6fa5" : "#f0f0f0",
+                backgroundColor: activeFilter === id ? "#94a37d" : "#f0f0f0",
                 color: activeFilter === id ? "#fff" : "#333",
                 fontWeight: "bold",
                 fontSize: 14,

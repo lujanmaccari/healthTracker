@@ -248,7 +248,7 @@ const MoodChart = () => {
               border: "none",
               borderRadius: "8px",
               backgroundColor:
-                activeFilter === button.id ? "#4a6fa5" : "#f0f0f0",
+                activeFilter === button.id ? "#94a37d" : "#f0f0f0",
               color: activeFilter === button.id ? "white" : "#333",
               fontWeight: "bold",
               fontSize: "14px",
