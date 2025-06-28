@@ -14,7 +14,7 @@ import { AboutStudy } from "./AboutStudy";
 import AddStudy from "./AddStudy";
 import StatStudy from "./StatStudy";
 import { supabase } from "../../../supabaseClient";
-import { useUser } from "../../contexts/UserContext";
+// import { useUser } from "../../contexts/UserContext";
 import { prepareChartData } from "../../utils/functions";
 
 ChartJS.register(BarElement, CategoryScale, LinearScale, Tooltip, Legend);
@@ -23,7 +23,7 @@ const StudyChart = () => {
   const [showModal, setShowModal] = useState(false);
   const [chartData, setChartData] = useState(null);
   const [reloadData, setReloadData] = useState(false);
-  const user = useUser();
+  // const user = useUser();
 
   const handleOpenModal = () => {
     setShowModal(true);
@@ -37,7 +37,7 @@ const StudyChart = () => {
     const { data, error } = await supabase
       .from("user_time_study")
       .select("*")
-      .eq("user_id", user.id)
+      // .eq("user_id", user.id)
       .order("date", { ascending: true });
 
     if (error) {
@@ -71,7 +71,10 @@ const StudyChart = () => {
         confirmText="Guardar"
         cancelText="Cancelar"
       >
-        <AddStudy onClose={handleCloseModal} states={{reloadData, setReloadData}}/>
+        <AddStudy
+          onClose={handleCloseModal}
+          states={{ reloadData, setReloadData }}
+        />
       </CommonModal>
       <StatStudy />
     </Container>
