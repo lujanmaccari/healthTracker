@@ -38,7 +38,7 @@ ChartJS.register(BarElement, CategoryScale, LinearScale, Tooltip, Legend);
  * @returns {JSX.Element} Componente que renderiza un grafico
  */
 const GenericBarChart = ({ title, handleOpenModal, chartData }) => {
-  const [activeFilter, setActiveFilter] = useState("D");
+  const [activeFilter, setActiveFilter] = useState("W");
   const currentData = chartData
     ? chartData[activeFilter]
     : { labels: [], data: [] };
@@ -66,7 +66,7 @@ const GenericBarChart = ({ title, handleOpenModal, chartData }) => {
       {
         label: "Horas",
         data: currentData.data,
-        backgroundColor: "#4a6fa5",
+        backgroundColor: ['#6e0f13', '#b8848c', '#98444c'],
         borderColor: "transparent",
         borderRadius: 4,
         barThickness: 24,
@@ -147,7 +147,7 @@ const GenericBarChart = ({ title, handleOpenModal, chartData }) => {
               border: "none",
               borderRadius: "8px",
               backgroundColor:
-                activeFilter === button.id ? "#4a6fa5" : "#f0f0f0",
+                activeFilter === button.id ? "#94a37d" : "#f0f0f0",
               color: activeFilter === button.id ? "white" : "#333",
               fontWeight: "bold",
               fontSize: "14px",
