@@ -53,7 +53,7 @@ const filterLabels = {
 
 const filterButtons = [
   { id: "D", label: "Día" },
-  { id: "W", label: "Mes" },
+  { id: "W", label: "Semana" },
   { id: "M", label: "Mes" },
 ];
 
