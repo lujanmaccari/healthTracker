@@ -65,9 +65,13 @@ function Home() {
         body={
           !!goals?.activity && (
             <div className="px-3">
-              <div className="fw-bold">
-               Objetivo diario: realizar {goals.activity} minutos de actividad diaria
-              </div>
+              <p
+                style={{
+                  fontSize: "clamp(1rem, 2.5vw, 1.5rem)",
+                }}
+              >
+                {goals.activity} minutos de actividad diaria
+              </p>
             </div>
           )
         }
@@ -79,8 +83,8 @@ function Home() {
         href="/mood"
         body={
           <div className="px-3">
-            <div className="fw-bold">Un momento ligeramente agradable</div>
-            <div className="text-muted small">Felicidad, confianza</div>
+           
+           
           </div>
         }
       />
@@ -92,9 +96,13 @@ function Home() {
         body={
           !!goals?.sleep && (
             <div className="px-3">
-              <div className="fw-bold">
-                Objetivo diario: alcanzar {goals.sleep} horas de sueño diario 
-              </div>
+              <p
+                style={{
+                  fontSize: "clamp(1rem, 2.5vw, 1.5rem)",
+                }}
+              >
+                {goals.sleep} horas de sueño diario
+              </p>
             </div>
           )
         }
@@ -106,9 +114,13 @@ function Home() {
         body={
           !!goals?.food && (
             <div className="px-3">
-              <div className="fw-bold">
-                Objetivo diario: mantener una alimentación {foodToLabel[goals.food]}
-              </div>
+              <p
+                style={{
+                  fontSize: "clamp(1rem, 2.5vw, 1.5rem)",
+                }}
+              >
+                Tener una alimentación {foodToLabel[goals.food]}
+              </p>
             </div>
           )
         }
@@ -120,9 +132,13 @@ function Home() {
         body={
           !!goals?.study && (
             <div className="px-3">
-              <div className="fw-bold">
-                 Objetivo diario: alcanzar {goals.study} horas de estudio semanales
-              </div>
+              <p
+                style={{
+                  fontSize: "clamp(1rem, 2.5vw, 1.5rem)",
+                }}
+              >
+                {goals.study} horas de estudio semanales
+              </p>
             </div>
           )
         }
