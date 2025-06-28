@@ -56,9 +56,9 @@ const GenericBarChart = ({ title, handleOpenModal, chartData }) => {
   };
 
   const filterButtons = [
-    { id: "D", label: "D" },
-    { id: "W", label: "W" },
-    { id: "M", label: "M" },
+    { id: "D", label: "Día" },
+    { id: "W", label: "Semana" },
+    { id: "M", label: "Mes" },
   ];
   const data = {
     labels: currentData.labels,

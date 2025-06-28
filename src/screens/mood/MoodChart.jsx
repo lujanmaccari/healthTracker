@@ -52,9 +52,9 @@ const filterLabels = {
 };
 
 const filterButtons = [
-  { id: "D", label: "D" },
-  { id: "W", label: "W" },
-  { id: "M", label: "M" },
+  { id: "D", label: "Día" },
+  { id: "W", label: "Mes" },
+  { id: "M", label: "Mes" },
 ];
 
 const MoodChart = () => {

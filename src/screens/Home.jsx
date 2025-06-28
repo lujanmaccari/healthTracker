@@ -64,9 +64,9 @@ function Home() {
         href="/activity"
         body={
           !!goals?.activity && (
-            <div className="px-2">
+            <div className="px-3">
               <div className="fw-bold">
-                Alcanzar {goals.activity} minutos de actividad diaria
+               Objetivo diario: realizar {goals.activity} minutos de actividad diaria
               </div>
             </div>
           )
@@ -78,7 +78,7 @@ function Home() {
         icon="mood"
         href="/mood"
         body={
-          <div className="px-2">
+          <div className="px-3">
             <div className="fw-bold">Un momento ligeramente agradable</div>
             <div className="text-muted small">Felicidad, confianza</div>
           </div>
@@ -91,20 +91,9 @@ function Home() {
         href="/sleep"
         body={
           !!goals?.sleep && (
-            <div
-              className="d-flex justify-content-around align-items-center px-2"
-              style={{ gap: "1rem" }}
-            >
-              <div className="text-center">
-                <div className="text-muted small">Duración del sueño</div>
-                <div className="fw-bold">{goals.sleep}hs</div>
-              </div>
-
-              <div className="text-muted d-none d-md-block">|</div>
-
-              <div className="text-center">
-                <div className="text-muted small">Horario para dormir</div>
-                <div className="fw-bold">22:00hs</div>
+            <div className="px-3">
+              <div className="fw-bold">
+                Objetivo diario: alcanzar {goals.sleep} horas de sueño diario 
               </div>
             </div>
           )
@@ -116,9 +105,9 @@ function Home() {
         href={"/food"}
         body={
           !!goals?.food && (
-            <div className="px-2">
+            <div className="px-3">
               <div className="fw-bold">
-                Alcanzar una alimentación {foodToLabel[goals.food]}
+                Objetivo diario: mantener una alimentación {foodToLabel[goals.food]}
               </div>
             </div>
           )
@@ -130,9 +119,9 @@ function Home() {
         href={"/study"}
         body={
           !!goals?.study && (
-            <div className="px-2">
+            <div className="px-3">
               <div className="fw-bold">
-                Alcanzar {goals.study}hs de estudio semanales
+                 Objetivo diario: alcanzar {goals.study} horas de estudio semanales
               </div>
             </div>
           )
