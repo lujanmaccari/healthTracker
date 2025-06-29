@@ -88,7 +88,7 @@ const MoodChart = () => {
     if (activeFilter === "D") {
       return ["0", "4", "8", "12", "16", "20"];
     } else if (activeFilter === "W") {
-      return ["Lun", "Mar", "Mié", "Jue", "Vie", "Sáb", "Dom"];
+      return ["Dom", "Lun", "Mar", "Mié", "Jue", "Vie", "Sáb"];
     } else if (activeFilter === "M") {
       return ["Semana 1", "Semana 2", "Semana 3", "Semana 4"];
     }
@@ -100,7 +100,33 @@ const MoodChart = () => {
 
     const grouped = {};
 
-    for (const entry of chartData) {
+    const now = new Date();
+    const currentWeekStart = new Date(now);
+    currentWeekStart.setDate(now.getDate() - now.getDay()); // domingo
+    currentWeekStart.setHours(0, 0, 0, 0);
+
+    const currentWeekEnd = new Date(currentWeekStart);
+    currentWeekEnd.setDate(currentWeekEnd.getDate() + 6);
+    currentWeekEnd.setHours(23, 59, 59, 999);
+
+    const currentMonth = now.getMonth();
+    const currentYear = now.getFullYear();
+
+    const filteredData = chartData.filter((entry) => {
+      const date = new Date(entry.date);
+      if (activeFilter === "W") {
+        return date >= currentWeekStart && date <= currentWeekEnd;
+      } else if (activeFilter === "M") {
+        return (
+          date.getMonth() === currentMonth && date.getFullYear() === currentYear
+        );
+      }
+      return true;
+    });
+
+    if (activeFilter === "W") console.log("Data de la semana", filteredData);
+
+    for (const entry of filteredData) {
       const date = new Date(entry.date);
       let key;
 
@@ -110,7 +136,8 @@ const MoodChart = () => {
         key = String(rangeStart);
       } else if (activeFilter === "W") {
         const dayNames = ["Dom", "Lun", "Mar", "Mié", "Jue", "Vie", "Sáb"];
-        key = dayNames[date.getDay()];
+        const dayNum = date.getDay() == 6 ? 0 : date.getDay() + 1;
+        key = dayNames[dayNum];
       } else if (activeFilter === "M") {
         const weekNumber = Math.ceil(date.getDate() / 7);
         key = `Semana ${weekNumber}`;
@@ -297,8 +324,8 @@ const MoodChart = () => {
       <CommonModal
         isOpen={showModal}
         onClose={() => setShowModal(false)}
-        onConfirm={() => {
-          user.addUserMoodEntry(mood);
+        onConfirm={async () => {
+          await user.addUserMoodEntry(mood);
           fetchActivities().then((data) => {
             setChartData(data);
           });
