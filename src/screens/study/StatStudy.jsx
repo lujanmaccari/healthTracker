@@ -35,7 +35,11 @@ const StudyStatsChart = () => {
         return;
       }
 
-      console.log("Datos obtenidos de time_study:", data?.length || 0, "registros");
+      console.log(
+        "Datos obtenidos de time_study:",
+        data?.length || 0,
+        "registros"
+      );
 
       if (!data || data.length === 0) {
         console.log("No hay datos en la tabla time_study");
@@ -87,7 +91,11 @@ const StudyStatsChart = () => {
         }
       });
 
-      console.log("Datos procesados por rangos:", Object.keys(groups).length, "rangos con datos");
+      console.log(
+        "Datos procesados por rangos:",
+        Object.keys(groups).length,
+        "rangos con datos"
+      );
 
       // Calcular promedios de score para cada rango
       const rangeLabels = studyRanges.map((r) => r.label);
@@ -137,18 +145,20 @@ const StudyStatsChart = () => {
   if (!chartData) return <p>Cargando datos...</p>;
 
   // Si no hay datos procesados, mostrar mensaje
-  if (chartData.datasets[0].data.every(value => value === 0)) {
+  if (chartData.datasets[0].data.every((value) => value === 0)) {
     return (
-      <div style={{
-        height: "50vh",
-        marginBottom: "10vh",
-        borderRadius: "12px",
-        padding: "16px",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        backgroundColor: "#f8f9fa"
-      }}>
+      <div
+        style={{
+          height: "50vh",
+          marginBottom: "10vh",
+          borderRadius: "12px",
+          padding: "16px",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          backgroundColor: "#f8f9fa",
+        }}
+      >
         <p>No hay datos suficientes para mostrar estadísticas de estudio.</p>
       </div>
     );
@@ -191,14 +201,6 @@ const StudyStatsChart = () => {
       },
     },
     plugins: {
-      title: {
-        display: true,
-        text: [
-          `¡Los estudiantes que estudian`,
-          `${chartData.bestRange} tienen`,
-          "el mejor rendimiento académico!",
-        ],
-      },
       legend: {
         display: false,
       },
@@ -214,9 +216,13 @@ const StudyStatsChart = () => {
         padding: "16px",
       }}
     >
+      <p style={{ color: "#333", marginBottom: "15px" }}>
+        ¡Los estudiantes que estudian {chartData.bestRange} tienen el mejor
+        rendimiento académico!
+      </p>
       <Bar data={chartData} options={options} />
     </div>
   );
 };
 
-export default StudyStatsChart; 
+export default StudyStatsChart;

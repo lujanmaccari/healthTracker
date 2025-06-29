@@ -162,14 +162,6 @@ const SleepStatsChart = () => {
       },
     },
     plugins: {
-      title: {
-        display: true,
-        text: [
-          "¡Los estudiantes que duermen",
-          "entre 7 y 8 horas tienen",
-          "el mejor rendimiento académico!",
-        ],
-      },
       legend: {
         display: false,
       },
@@ -185,6 +177,10 @@ const SleepStatsChart = () => {
         padding: "16px",
       }}
     >
+      <p style={{ color: "#333", marginBottom: "15px" }}>
+        ¡Los estudiantes que duermen entre 7 y 8 horas tienen el mejor
+        rendimiento académico!
+      </p>
       <Bar data={chartData} options={options} />
     </div>
   );

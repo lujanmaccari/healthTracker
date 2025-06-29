@@ -132,14 +132,6 @@ const StatFoodies = () => {
       },
     },
     plugins: {
-      title: {
-        display: true,
-        text: [
-          "¡Las personas que mantienen",
-          "una dieta sana reportan",
-          "el mayor bienestar emocional!",
-        ],
-      },
       legend: {
         display: false,
       },
@@ -155,6 +147,10 @@ const StatFoodies = () => {
         padding: "16px",
       }}
     >
+      <p style={{ color: "#333", marginBottom: "15px" }}>
+        ¡Las personas que mantienen una dieta sana reportan el mayor
+        bienestar emocional!
+      </p>
       <Bar data={chartData} options={options} />{" "}
     </div>
   );

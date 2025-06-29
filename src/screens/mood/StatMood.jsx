@@ -154,22 +154,6 @@ const ExamScoreBarChart = () => {
       },
     },
     plugins: {
-      title: {
-        display: true,
-        text: [
-          "¡Las personas con mejor estado de ánimo",
-          "alcanzan las calificaciones más altas",
-          "en sus exámenes!",
-        ],
-        font: {
-          size: 14,
-          weight: "bold",
-        },
-        padding: {
-          top: 0,
-          bottom: 50,
-        },
-      },
       legend: {
         display: false,
       },
@@ -179,14 +163,16 @@ const ExamScoreBarChart = () => {
   return (
     <div
       style={{
-        height: "360px",
-        width: "100%",
-        marginBottom: "6vh",
-        marginTop: "2vh",
+        height: "50vh",
+        marginBottom: "10vh",
         borderRadius: "12px",
         padding: "16px",
       }}
     >
+      <p style={{ color: "#333", marginBottom: "15px" }}>
+        ¡Las personas con mejor estado de ánimo alcanzan las calificaciones más
+        altas en sus exámenes!
+      </p>
       <Bar data={chartData} options={options} />
     </div>
   );
