@@ -18,6 +18,7 @@ import {
   CategoryScale,
 } from "chart.js";
 import ExamScoreBarChart from "./StatMood";
+import { useToast } from "../../contexts/ToastContext";
 
 ChartJS.register(
   PointElement,
@@ -63,6 +64,7 @@ const MoodChart = () => {
   const [mood, setMood] = useState(2);
   const [chartData, setChartData] = useState(null);
   const user = useUser();
+  const { showToast } = useToast();
 
   const fetchActivities = async () => {
     const { data, error } = await supabase
@@ -76,6 +78,24 @@ const MoodChart = () => {
       return [];
     }
     return data;
+  };
+  const addUserMoodEntry = async (mood) => {
+    const date = new Date();
+    date.setHours(date.getHours() - 3);
+    const isoDate = date.toISOString();
+    const { error } = await supabase
+      .from("user_mood")
+      .insert([{ user_id: user.id, value: mood, date: isoDate }]);
+
+    if (error) {
+      showToast("Error al guardar la actividad");
+      return;
+    }
+    showToast("Estado de ánimo guardado con éxito", "success");
+    fetchActivities().then((data) => {
+      setChartData(data);
+    });
+    setShowModal(false);
   };
 
   useEffect(() => {
@@ -325,11 +345,7 @@ const MoodChart = () => {
         isOpen={showModal}
         onClose={() => setShowModal(false)}
         onConfirm={async () => {
-          await user.addUserMoodEntry(mood);
-          fetchActivities().then((data) => {
-            setChartData(data);
-          });
-          setShowModal(false);
+          await addUserMoodEntry(mood);
         }}
         title="Estado de ánimo"
         confirmText="Agregar"
