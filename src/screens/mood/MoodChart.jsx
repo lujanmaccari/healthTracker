@@ -88,7 +88,7 @@ const MoodChart = () => {
       .insert([{ user_id: user.id, value: mood, date: isoDate }]);
 
     if (error) {
-      showToast("Error al guardar la actividad");
+      showToast("Error al guardar datos", "error");
       return;
     }
     showToast("Estado de ánimo guardado con éxito", "success");
