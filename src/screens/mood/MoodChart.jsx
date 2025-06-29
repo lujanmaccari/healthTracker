@@ -213,10 +213,7 @@ const MoodChart = () => {
     responsive: true,
     maintainAspectRatio: false,
     plugins: {
-      title: {
-        display: true,
-        text: "Estado de ánimo del usuario",
-      },
+     
       tooltip: {
         callbacks: {
           label: (ctx) => {
@@ -265,9 +262,7 @@ const MoodChart = () => {
   }
 
   return (
-    <Container
-      style={{ maxWidth: "800px", position: "relative", padding: "0 1rem" }}
-    >
+      <Container>
       <HeaderSection
         title="Estado de ánimo"
         buttonTitle="Agregar"
