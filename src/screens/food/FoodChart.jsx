@@ -13,12 +13,14 @@ ChartJS.register(ArcElement, Tooltip, Legend);
 const COLORS = { Buena: "#51b35c", Media: "#f4c542", Mala: "#f15b5b" };
 
 const normalize = (unit) => {
-  switch (unit) {
-    case "Good":
+  const lowerUnit = unit.toLowerCase();
+
+  switch (lowerUnit) {
+    case "good":
       return "Buena";
-    case "Fair":
+    case "fair":
       return "Media";
-    case "Poor":
+    case "poor":
       return "Mala";
     default:
       return null;
@@ -26,7 +28,7 @@ const normalize = (unit) => {
 };
 
 const colors = {
-  Buena: "#51b35c",
+  Buena: "#6e0f13",
   Media: "#b8848c",
   Mala: "#98444c",
 
