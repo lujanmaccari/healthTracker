@@ -188,9 +188,7 @@ const MoodChart = () => {
         type: "category",
         labels: allLabels,
         title: {
-          display: true,
-          text: "Período",
-          font: { size: 14 },
+          display: false,
         },
         ticks: {
           font: { size: 12 },
@@ -198,8 +196,7 @@ const MoodChart = () => {
       },
       y: {
         title: {
-          display: true,
-          text: "Valor del ánimo",
+          display: false,
         },
         min: 0,
         max: 4.5,

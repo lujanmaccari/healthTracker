@@ -7,9 +7,8 @@ import { useUser } from "../contexts/UserContext";
 import { supabase } from "../../supabaseClient";
 
 const foodToLabel = {
-  Good: "buena",
-  Fair: "media",
-  Bad: "mala",
+  Good: "excelente",
+  Fair: "adecuada",
 };
 
 function Home() {

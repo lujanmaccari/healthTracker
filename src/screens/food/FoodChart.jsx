@@ -193,7 +193,7 @@ const FoodChart = () => {
   return (
     <Container style={{ maxWidth: 800 }}>
       <HeaderSection
-        title="Calidad de Alimentación"
+        title="Alimentación"
         buttonTitle="Agregar datos"
         onClickButton={() => setShowModal(true)}
         buttonStyle={{ borderRadius: "50%", width: 40, height: 40, padding: 0 }}

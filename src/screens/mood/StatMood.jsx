@@ -185,8 +185,6 @@ const ExamScoreBarChart = () => {
         marginTop: "2vh",
         borderRadius: "12px",
         padding: "16px",
-        backgroundColor: "#fff",
-        boxShadow: "0 2px 8px rgba(0,0,0,0.05)",
       }}
     >
       <Bar data={chartData} options={options} />

@@ -10,31 +10,19 @@ export const AboutActivity = () => {
           borderRadius: "12px",
         }}
       >
-        <h5
-          style={{
-            color: "#333",
-            marginBottom: "12px",
-            fontWeight: "bold",
-            fontSize: "16px",
-          }}
-        >
-          ¿Sabías que tu salud mental mejora con el ejercicio?
+        <h5 style={{ color: "#333", marginBottom: "15px" }}>
+          Acerca de <b>Actividad</b>
         </h5>
-        <p
+       <p
           style={{
             color: "#666",
             lineHeight: "1.5",
-            fontSize: "14px",
+            fontSize: "clamp(13px, 3vw, 15px)",
+            textAlign: "justify",
           }}
         >
-          Registrar la actividad física en HealthTracker es clave para ayudarte
-          a mantener un estilo de vida saludable. Registrar tus ejercicios
-          diarios te permite visualizar tu progreso, mantener la motivación y
-          establecer metas alcanzables. Además, la actividad física regular
-          mejora la salud cardiovascular, reduce el estrés y aumenta tus niveles
-          de energía. Con HealthTracker, tenés el control de tu bienestar al
-          alcance de la mano. ¡Cuidás tu cuerpo, ganás bienestar y cada
-          movimiento te acerca a una mejor versión de vos!
+          Registrar tus ejercicios diarios te permite visualizar tu progreso,
+          mantener la motivación y establecer metas alcanzables.
         </p>
       </div>
     </div>

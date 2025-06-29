@@ -8,27 +8,18 @@ const AboutFood = () => (
         marginTop: 50,
       }}
     >
-      <h5
-        style={{
-          color: "#333",
-          marginBottom: "12px",
-          fontWeight: "bold",
-          fontSize: "16px",
-        }}
-      >
-        ¿Sabías que una buena alimentación te ayuda a tener más energía y
-        fortalecer tus defensas?
-      </h5>
-      <p
-        style={{
-          color: "#666",
-          lineHeight: "1.5",
-          fontSize: "14px",
-        }}
-      >
-        Con HealthTracker podés registrar tus hábitos alimenticios y motivarte a
-        comer de forma más equilibrada, ayudándote a sentirte mejor cada día.
-        ¡Cuidá tu cuerpo hoy y construí la mejor versión de vos mismo!
+       <h5 style={{ color: "#333", marginBottom: "15px" }}>
+          Acerca de <b>Alimentación</b>
+        </h5>
+       <p
+          style={{
+            color: "#666",
+            lineHeight: "1.5",
+            fontSize: "clamp(13px, 3vw, 15px)",
+            textAlign: "justify",
+          }}
+        >
+        Registrar tus hábitos alimenticios ayudará a cuidar tu cuerpo y construie la mejor versión de vos mismo.
       </p>
     </div>
   </div>

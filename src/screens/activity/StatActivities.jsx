@@ -74,7 +74,7 @@ const MentalHealthBarChart = () => {
       const maxY = Math.ceil(max + 1);
 
       setChartData({
-        labels: frequencies.map((f) => `${f} días`),
+        labels: frequencies.map((f) => `${f}`),
         datasets: [
           {
             label: "Promedio salud mental",
