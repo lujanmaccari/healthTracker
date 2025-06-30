@@ -144,8 +144,6 @@ const MoodChart = () => {
       return true;
     });
 
-    if (activeFilter === "W") console.log("Data de la semana", filteredData);
-
     for (const entry of filteredData) {
       const date = new Date(entry.date);
       let key;
@@ -156,8 +154,7 @@ const MoodChart = () => {
         key = String(rangeStart);
       } else if (activeFilter === "W") {
         const dayNames = ["Dom", "Lun", "Mar", "Mié", "Jue", "Vie", "Sáb"];
-        const dayNum = date.getDay() == 6 ? 0 : date.getDay() + 1;
-        key = dayNames[dayNum];
+        key = dayNames[date.getDay()];
       } else if (activeFilter === "M") {
         const weekNumber = Math.ceil(date.getDate() / 7);
         key = `Semana ${weekNumber}`;
@@ -213,7 +210,6 @@ const MoodChart = () => {
     responsive: true,
     maintainAspectRatio: false,
     plugins: {
-     
       tooltip: {
         callbacks: {
           label: (ctx) => {
@@ -262,7 +258,7 @@ const MoodChart = () => {
   }
 
   return (
-      <Container>
+    <Container>
       <HeaderSection
         title="Estado de ánimo"
         buttonTitle="Agregar"
