@@ -7,9 +7,8 @@ import { useUser } from "../contexts/UserContext";
 import { supabase } from "../../supabaseClient";
 
 const foodToLabel = {
-  Good: "buena",
-  Fair: "media",
-  Bad: "mala",
+  Good: "excelente",
+  Fair: "adecuada",
 };
 
 function Home() {
@@ -49,13 +48,12 @@ function Home() {
     <Container className="d-flex flex-column align-items-center mt-3 gap-3">
       <h3
         style={{
-          alignSelf: "flex-start",
           color: COLORS.DARK_TEXT,
           fontWeight: "bold",
         }}
         className="mb-3"
       >
-        Datos Anclados
+        Datos anclados de {user?.name}
       </h3>
 
       <GenericCard
@@ -137,7 +135,7 @@ function Home() {
                   fontSize: "clamp(1rem, 2.5vw, 1.5rem)",
                 }}
               >
-                {goals.study} horas de estudio semanales
+                {goals.study} minutos de estudio diarias
               </p>
             </div>
           )

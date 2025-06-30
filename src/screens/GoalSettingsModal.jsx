@@ -175,9 +175,8 @@ const GoalSettingsModal = ({ isOpen, onClose }) => {
                   value={values.food}
                   onChange={handleChange}
                 >
-                  <option value="Good">Buena</option>
-                  <option value="Fair">Media</option>
-                  <option value="Poor">Mala</option>
+                  <option value="Good">Excelente</option>
+                  <option value="Fair">Adecuada</option>
                 </Form.Select>
                 <Form.Control.Feedback type="invalid">
                   {errors.food}

@@ -43,7 +43,7 @@ const GenericBarChart = ({ title, handleOpenModal, chartData }) => {
     ? chartData[activeFilter]
     : { labels: [], data: [] };
   const totalHours = currentData.data.reduce((a, b) => a + b, 0);
-  const averageHours = totalHours / currentData.labels.length;
+  const averageHours = activeFilter == "D" ? totalHours : totalHours / currentData.labels.length;
   const maxValue = Math.max(...currentData.data);
   const dynamicMax = maxValue > 0 ? Math.ceil(maxValue * 1.2) : 1;
 

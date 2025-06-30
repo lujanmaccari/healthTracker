@@ -18,6 +18,7 @@ import {
   CategoryScale,
 } from "chart.js";
 import ExamScoreBarChart from "./StatMood";
+import { useToast } from "../../contexts/ToastContext";
 
 ChartJS.register(
   PointElement,
@@ -63,6 +64,7 @@ const MoodChart = () => {
   const [mood, setMood] = useState(2);
   const [chartData, setChartData] = useState(null);
   const user = useUser();
+  const { showToast } = useToast();
 
   const fetchActivities = async () => {
     const { data, error } = await supabase
@@ -76,6 +78,24 @@ const MoodChart = () => {
       return [];
     }
     return data;
+  };
+  const addUserMoodEntry = async (mood) => {
+    const date = new Date();
+    date.setHours(date.getHours() - 3);
+    const isoDate = date.toISOString();
+    const { error } = await supabase
+      .from("user_mood")
+      .insert([{ user_id: user.id, value: mood, date: isoDate }]);
+
+    if (error) {
+      showToast("Error al guardar datos", "error");
+      return;
+    }
+    showToast("Estado de ánimo guardado con éxito", "success");
+    fetchActivities().then((data) => {
+      setChartData(data);
+    });
+    setShowModal(false);
   };
 
   useEffect(() => {
@@ -193,10 +213,7 @@ const MoodChart = () => {
     responsive: true,
     maintainAspectRatio: false,
     plugins: {
-      title: {
-        display: true,
-        text: "Estado de ánimo del usuario",
-      },
+     
       tooltip: {
         callbacks: {
           label: (ctx) => {
@@ -215,9 +232,7 @@ const MoodChart = () => {
         type: "category",
         labels: allLabels,
         title: {
-          display: true,
-          text: "Período",
-          font: { size: 14 },
+          display: false,
         },
         ticks: {
           font: { size: 12 },
@@ -225,8 +240,7 @@ const MoodChart = () => {
       },
       y: {
         title: {
-          display: true,
-          text: "Valor del ánimo",
+          display: false,
         },
         min: 0,
         max: 4.5,
@@ -248,9 +262,7 @@ const MoodChart = () => {
   }
 
   return (
-    <Container
-      style={{ maxWidth: "800px", position: "relative", padding: "0 1rem" }}
-    >
+      <Container>
       <HeaderSection
         title="Estado de ánimo"
         buttonTitle="Agregar"
@@ -328,11 +340,7 @@ const MoodChart = () => {
         isOpen={showModal}
         onClose={() => setShowModal(false)}
         onConfirm={async () => {
-          await user.addUserMoodEntry(mood);
-          fetchActivities().then((data) => {
-            setChartData(data);
-          });
-          setShowModal(false);
+          await addUserMoodEntry(mood);
         }}
         title="Estado de ánimo"
         confirmText="Agregar"

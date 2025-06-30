@@ -74,7 +74,7 @@ const MentalHealthBarChart = () => {
       const maxY = Math.ceil(max + 1);
 
       setChartData({
-        labels: frequencies.map((f) => `${f} días`),
+        labels: frequencies.map((f) => `${f}`),
         datasets: [
           {
             label: "Promedio salud mental",
@@ -132,14 +132,6 @@ const MentalHealthBarChart = () => {
       },
     },
     plugins: {
-      title: {
-        display: true,
-        text: [
-          "¡Las personas que hacen",
-          "ejercicio 3 veces por semana",
-          "reportan el mayor bienestar emocional!",
-        ],
-      },
       legend: {
         display: false,
       },
@@ -155,6 +147,10 @@ const MentalHealthBarChart = () => {
         padding: "16px",
       }}
     >
+      <p style={{ color: "#333", marginBottom: "15px" }}>
+        ¡Las personas que hacen ejercicio 3 veces por semana reportan el mayor
+        bienestar emocional!
+      </p>
       <Bar data={chartData} options={options} />{" "}
     </div>
   );

@@ -13,12 +13,14 @@ ChartJS.register(ArcElement, Tooltip, Legend);
 const COLORS = { Buena: "#51b35c", Media: "#f4c542", Mala: "#f15b5b" };
 
 const normalize = (unit) => {
-  switch (unit) {
-    case "Good":
+  const lowerUnit = unit.toLowerCase();
+
+  switch (lowerUnit) {
+    case "good":
       return "Buena";
-    case "Fair":
+    case "fair":
       return "Media";
-    case "Poor":
+    case "poor":
       return "Mala";
     default:
       return null;
@@ -26,11 +28,10 @@ const normalize = (unit) => {
 };
 
 const colors = {
-  Buena: "#51b35c",
+  Buena: "#6e0f13",
   Media: "#b8848c",
   Mala: "#98444c",
-
-}
+};
 
 const FoodChart = () => {
   const [activeFilter, setActiveFilter] = useState("W");
@@ -132,13 +133,24 @@ const FoodChart = () => {
       datasets: [
         {
           data: [g, m, b],
-          backgroundColor: ['#6e0f13', '#b8848c', '#98444c'],
+          backgroundColor: ["#6e0f13", "#b8848c", "#98444c"],
           borderWidth: 2,
         },
       ],
     };
 
     return (
+      <>
+        <p>
+          Estas promediando una alimentación <b>{dominant[0]}</b>{" "}
+          {activeFilter === "D"
+            ? "hoy"
+            : activeFilter === "W"
+            ? "esta semana"
+            : activeFilter === "M"
+            ? "por semana este mes"
+            : ""}
+        </p>
       <div
         style={{
           height: 300,
@@ -151,9 +163,7 @@ const FoodChart = () => {
           margin: "auto",
         }}
       >
-        <p style={{ textAlign: "center", marginBottom: 10 }}>
-          Estas promediando una alimentación <strong>{dominant[0]}</strong>
-        </p>
+      
         <Doughnut
           data={chartData}
           options={{
@@ -165,7 +175,7 @@ const FoodChart = () => {
         <div
           style={{
             position: "absolute",
-            top: "56.5%",
+            top: "38%",
             left: "41%",
             textAlign: "center",
             pointerEvents: "none",
@@ -187,18 +197,20 @@ const FoodChart = () => {
           <div style={{ fontSize: 20, color: "#666" }}>{dominant[0]}</div>
         </div>
       </div>
+      </>
+
     );
   };
 
   return (
-    <Container style={{ maxWidth: 800 }}>
+    <Container>
+      {" "}
       <HeaderSection
-        title="Calidad de Alimentación"
+        title="Alimentación"
         buttonTitle="Agregar datos"
         onClickButton={() => setShowModal(true)}
         buttonStyle={{ borderRadius: "50%", width: 40, height: 40, padding: 0 }}
       />
-
       <div style={{ display: "flex", gap: 6, marginBottom: 20 }}>
         {["Día", "Semana", "Mes"].map((lbl, i) => {
           const id = ["D", "W", "M"][i];
@@ -223,11 +235,8 @@ const FoodChart = () => {
           );
         })}
       </div>
-
       <DonutBlock title="Periodo elegido" info={dataPeriodo} />
-
       <AboutFood />
-
       <StatFoodies
         dominantQuality={(() => {
           const d = dataPeriodo.percentages;
@@ -236,7 +245,6 @@ const FoodChart = () => {
         qualityEvaluation={{ text: "", color: "#fff" }}
         activeFilter={activeFilter}
       />
-
       <AddFood
         isOpen={showModal}
         onClose={() => setShowModal(false)}

@@ -47,7 +47,6 @@ useEffect(() => {
   fetchActivities().then((data) => {
     const chartData = prepareChartData(data);
     setChartData(chartData);
-    console.log(chartData);
   })
   ;
 }, [reloadData]);
